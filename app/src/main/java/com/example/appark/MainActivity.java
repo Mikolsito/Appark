@@ -26,8 +26,8 @@ public class MainActivity extends FragmentActivity {
         mAddFab = findViewById(R.id.add_fab);
         mAddHistorial = findViewById(R.id.add_historial_fab);
         mAddCotxe = findViewById(R.id.add_cotxe_fab);
-        addHistorialText = findViewById(R.id.add_alarm_action_text);
-        addCotxeText = findViewById(R.id.add_person_action_text);
+        addHistorialText = findViewById(R.id.historial);
+        addCotxeText = findViewById(R.id.tornar_cotxe);
         mAddHistorial.setVisibility(View.GONE);
         mAddCotxe.setVisibility(View.GONE);
         addHistorialText.setVisibility(View.GONE);

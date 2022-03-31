@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,6 +12,15 @@
          at the bottom right corner-->
     <!--After clicking the above button the following two buttons
         will pop up. So this button is considered as parent FAB-->
+
+    <androidx.constraintlayout.helper.widget.Layer
+        android:id="@+id/layer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="historial,tornar_cotxe"
+        tools:layout_editor_absoluteX="222dp"
+        tools:layout_editor_absoluteY="483dp" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_fab"
         android:layout_width="wrap_content"
@@ -82,14 +90,59 @@
     <!--Action name text for the add person button-->
     <!--Make sure that you are constraining this Text
         to the add Person FAB button-->
+
+    <fragment
+        android:id="@+id/map2"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        tools:context=".MainActivity"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
+
     <TextView
-        android:id="@+id/add_person_action_text"
+        android:id="@+id/historial"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:text="Tornar al Cotxe"
+        android:background="@color/teal_700"
+        android:gravity="top"
+        android:text="@string/veure_historial"
+        android:textColor="#000000"
+        android:textColorHighlight="#000000"
+        android:textColorHint="#000000"
+        android:textColorLink="#000000"
+        app:layout_constraintBottom_toBottomOf="@+id/add_historial_fab"
+        app:layout_constraintEnd_toStartOf="@+id/add_historial_fab"
+        app:layout_constraintTop_toTopOf="@+id/add_historial_fab" />
+
+    <TextView
+        android:id="@+id/tornar_cotxe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:background="@color/teal_700"
+        android:gravity="top"
+        android:text="@string/tornar_cotxe"
+        android:textColor="#000000"
+        android:textColorHighlight="#000000"
+        android:textColorHint="#000000"
+        android:textColorLink="#000000"
         app:layout_constraintBottom_toBottomOf="@+id/add_cotxe_fab"
         app:layout_constraintEnd_toStartOf="@+id/add_cotxe_fab"
         app:layout_constraintTop_toTopOf="@+id/add_cotxe_fab" />
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="358dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="48dp"
+        android:max="50"
+        android:progress="25"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/map2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
