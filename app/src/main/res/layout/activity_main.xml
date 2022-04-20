@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context=".Activities.MainActivity"
     tools:ignore="HardcodedText">
 
     <!--This will be the parent Floating Action Button-->
@@ -13,13 +14,7 @@
     <!--After clicking the above button the following two buttons
         will pop up. So this button is considered as parent FAB-->
 
-    <androidx.constraintlayout.helper.widget.Layer
-        android:id="@+id/layer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:constraint_referenced_ids="historial,tornar_cotxe"
-        tools:layout_editor_absoluteX="222dp"
-        tools:layout_editor_absoluteY="483dp" />
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_fab"
@@ -97,7 +92,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="bottom"
-        tools:context=".MainActivity"
+        tools:context=".Activities.MainActivity"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
 
@@ -134,15 +129,17 @@
         app:layout_constraintTop_toTopOf="@+id/add_cotxe_fab" />
 
     <SeekBar
-        android:id="@+id/seekBar"
-        android:layout_width="358dp"
-        android:layout_height="36dp"
-        android:layout_marginTop="48dp"
+        android:id="@+id/SeekBar"
+        android:layout_width="353dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="56dp"
         android:max="50"
         android:progress="25"
+        android:progressDrawable="@drawable/seek_bar"
+        android:thumb="@drawable/seek_thumb"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/map2" />
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
