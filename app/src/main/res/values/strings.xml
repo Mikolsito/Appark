@@ -3,4 +3,26 @@
     <string name="title_activity_maps">Appark</string>
     <string name="tornar_cotxe">Tornar al Cotxe</string>
     <string name="veure_historial">Veure Historial</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_userName">User Name</string>
+    <string name="nav_header_email">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_configuracio">Configuració</string>
+    <string name="menu_historialUbis">Historial ubi.</string>
+    <string name="menu_social">Social</string>
+    <string name="menu_tancaSessio">Tanca sessió</string>
+    <string name="menu_paginaPrincipal">Pàgina principal</string>
+    <string name="btnCancel">Cancel·la</string>
+    <string name="btnSave">Guarda</string>
+    <string name="titleConfiguration">Configuració</string>
+    <string name="titlePassword">Contrasenya</string>
+    <string name="nameOldPassword">Antiga contrasenya</string>
+    <string name="nameNewPassword">Nova contrasenya</string>
+    <string name="titleEmail">Correu</string>
+    <string name="nameOldEmail">Antic correu</string>
+    <string name="nameNewEmail">Nou correu</string>
 </resources>

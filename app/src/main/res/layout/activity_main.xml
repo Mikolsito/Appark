@@ -1,145 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.MainActivity"
-    tools:ignore="HardcodedText">
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
 
-    <!--This will be the parent Floating Action Button-->
-    <!--After the implementation the Floating Action Button
-         at the bottom right corner-->
-    <!--After clicking the above button the following two buttons
-        will pop up. So this button is considered as parent FAB-->
-
-
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:background="#000000"
-        android:backgroundTint="@color/teal_700"
-        android:src="@drawable/floating_action_button"
-        app:backgroundTint="#00000000"
-        app:fabCustomSize="70dp"
-        app:fabSize="normal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:maxImageSize="40dp" />
-
-    <!--Floating action button for add alarm-->
-    <!--Make sure that you are constraining this
-        button to the parent button-->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_historial_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:backgroundTint="@color/teal_700"
-        android:tint="#FF0000"
-        app:backgroundTint="#00FFFFFF"
-        app:fabCustomSize="70dp"
-        app:fabSize="normal"
-        app:layout_constraintBottom_toTopOf="@+id/add_fab"
-        app:layout_constraintEnd_toEndOf="@+id/add_fab"
-        app:layout_constraintStart_toStartOf="@+id/add_fab"
-        app:maxImageSize="40dp"
-        app:srcCompat="@drawable/historial" />
-
-    <!--Action name text for the add alarm button-->
-    <!--Make sure that you are constraining this Text to
-        the add Alarm FAB button-->
-    <TextView
-        android:id="@+id/add_alarm_action_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:text="Veure Historial"
-        app:layout_constraintBottom_toBottomOf="@+id/add_historial_fab"
-        app:layout_constraintEnd_toStartOf="@+id/add_historial_fab"
-        app:layout_constraintTop_toTopOf="@+id/add_historial_fab" />
-
-    <!--Floating action button for add person-->
-    <!--Make sure that you are constraining this
-        button to the add Alarm FAB button-->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_cotxe_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:backgroundTint="@color/teal_700"
-        app:backgroundTint="#00FFFFFF"
-        app:fabCustomSize="70dp"
-        app:layout_constraintBottom_toTopOf="@+id/add_historial_fab"
-        app:layout_constraintEnd_toEndOf="@+id/add_historial_fab"
-        app:layout_constraintStart_toStartOf="@+id/add_historial_fab"
-        app:maxImageSize="40dp"
-        app:srcCompat="@drawable/tornar_cotxe" />
-
-    <!--Action name text for the add person button-->
-    <!--Make sure that you are constraining this Text
-        to the add Person FAB button-->
-
-    <fragment
-        android:id="@+id/map2"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
+    <include
+        android:id="@+id/app_bar_main"
+        layout="@layout/app_bar_main"
         android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:gravity="bottom"
-        tools:context=".Activities.MainActivity"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp" />
-
-    <TextView
-        android:id="@+id/historial"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:background="@color/teal_700"
-        android:gravity="top"
-        android:text="@string/veure_historial"
-        android:textColor="#000000"
-        android:textColorHighlight="#000000"
-        android:textColorHint="#000000"
-        android:textColorLink="#000000"
-        app:layout_constraintBottom_toBottomOf="@+id/add_historial_fab"
-        app:layout_constraintEnd_toStartOf="@+id/add_historial_fab"
-        app:layout_constraintTop_toTopOf="@+id/add_historial_fab" />
-
-    <TextView
-        android:id="@+id/tornar_cotxe"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:background="@color/teal_700"
-        android:gravity="top"
-        android:text="@string/tornar_cotxe"
-        android:textColor="#000000"
-        android:textColorHighlight="#000000"
-        android:textColorHint="#000000"
-        android:textColorLink="#000000"
-        app:layout_constraintBottom_toBottomOf="@+id/add_cotxe_fab"
-        app:layout_constraintEnd_toStartOf="@+id/add_cotxe_fab"
-        app:layout_constraintTop_toTopOf="@+id/add_cotxe_fab" />
-
-    <SeekBar
-        android:id="@+id/SeekBar"
-        android:layout_width="353dp"
-        android:layout_height="34dp"
-        android:layout_marginTop="56dp"
-        android:max="50"
-        android:progress="25"
-        android:progressDrawable="@drawable/seek_bar"
-        android:thumb="@drawable/seek_thumb"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header_main"
+        app:menu="@menu/activity_main_drawer" />
+</androidx.drawerlayout.widget.DrawerLayout>
