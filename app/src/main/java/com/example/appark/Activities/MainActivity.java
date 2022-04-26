@@ -1,15 +1,16 @@
-package com.example.appark;
+package com.example.appark.Activities;
 
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.FragmentActivity;
 
-import com.example.appark.databinding.ActivityMainBinding;
+import com.example.appark.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends FragmentActivity {
@@ -18,6 +19,7 @@ public class MainActivity extends FragmentActivity {
     TextView addHistorialText, addCotxeText;
     Boolean isAllFabsVisible;
     Animation fabOpen, fabClose, rotateForward, rotateBackward;
+    SeekBar seekBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,13 +28,32 @@ public class MainActivity extends FragmentActivity {
         mAddFab = findViewById(R.id.add_fab);
         mAddHistorial = findViewById(R.id.add_historial_fab);
         mAddCotxe = findViewById(R.id.add_cotxe_fab);
-        addHistorialText = findViewById(R.id.add_alarm_action_text);
-        addCotxeText = findViewById(R.id.add_person_action_text);
+        addHistorialText = findViewById(R.id.historial);
+        addCotxeText = findViewById(R.id.tornar_cotxe);
         mAddHistorial.setVisibility(View.GONE);
         mAddCotxe.setVisibility(View.GONE);
         addHistorialText.setVisibility(View.GONE);
         addCotxeText.setVisibility(View.GONE);
         isAllFabsVisible = false;
+        seekBar =(SeekBar)findViewById(R.id.SeekBar);
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            int progressChangedValue = 0;
+
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                progressChangedValue = progress;
+                Toast.makeText(MainActivity.this, progressChangedValue + " Km de radi",
+                        Toast.LENGTH_SHORT).show();
+            }
+
+            public void onStartTrackingTouch(SeekBar seekBar) { //Al començar a arrossegar
+
+            }
+
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
         //Animacions
         fabOpen = AnimationUtils.loadAnimation(this,R.anim.fab_open);
         fabClose = AnimationUtils.loadAnimation(this,R.anim.fab_close);
