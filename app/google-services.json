@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "480818062036",
+    "project_id": "appark-d99a6",
+    "storage_bucket": "appark-d99a6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:480818062036:android:86126c497925ce3b851141",
+        "android_client_info": {
+          "package_name": "com.example.appark"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "480818062036-sv2vh2ti8bvdo44drff44dvhp9sea72q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4j97pVVoc9dfPiSAPJcaVy7f7DQnkAns"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "480818062036-sv2vh2ti8bvdo44drff44dvhp9sea72q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

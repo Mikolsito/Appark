@@ -10,7 +10,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:weightSum="0.8">
+        android:weightSum="0.8"
+        tools:layout_editor_absoluteX="111dp"
+        tools:layout_editor_absoluteY="-148dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -22,10 +25,11 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5">
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnCancel"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="#FFFFFF"
                     android:gravity="left"
                     android:text="@string/btnCancel" />
             </FrameLayout>
@@ -36,11 +40,12 @@
                 android:layout_gravity="right"
                 android:layout_weight="1.5">
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnSave"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
+                    android:backgroundTint="#FFFFFF"
                     android:foregroundGravity="right"
                     android:gravity="right"
                     android:text="@string/btnSave"

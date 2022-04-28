@@ -6,6 +6,12 @@
     app:startDestination="@+id/nav_configuracio">
 
     <fragment
+        android:id="@+id/nav_paginaprincipal"
+        android:name="com.example.appark.Activities.PaginaPrincipalFragment"
+        android:label="@string/menu_paginaPrincipal"
+        tools:layout="@layout/fragment_paginaprincipal" />
+
+    <fragment
         android:id="@+id/nav_configuracio"
         android:name="com.example.appark.Activities.ConfiguracioFragment"
         android:label="@string/menu_configuracio"
@@ -23,10 +29,6 @@
         android:label="@string/menu_social"
         tools:layout="@layout/fragment_social" />
 
-    <fragment
-        android:id="@+id/nav_paginaprincipal"
-        android:name="com.example.appark.Activities.PaginaPrincipalFragment"
-        android:label="@string/menu_paginaPrincipal"
-        tools:layout="@layout/fragment_paginaprincipal" />
+
 
 </navigation>
