@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context=".Activities.LoginActivity">
+
+    <EditText
+        android:id="@+id/et_email"
+        style="@android:style/Widget.AutoCompleteTextView"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_above="@id/et_password"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/login_custom_et"
+        android:fontFamily="@font/quicksand"
+        android:hint="@string/e_mail"
+        android:inputType="textEmailAddress"
+        android:padding="15dp"
+        android:textSize="15sp" />
+
+    <EditText
+        android:id="@+id/et_password"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/login_custom_et"
+        android:fontFamily="@font/quicksand"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        android:padding="15dp"
+        android:textSize="15sp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/et_password"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/login_custom_btn"
+        android:fontFamily="@font/quicksand"
+        android:text="@string/login"
+        android:textColor="@android:color/white"
+        app:rippleColor="@color/black" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_goToRegister"
+        android:layout_width="122dp"
+        android:layout_height="37dp"
+        android:layout_below="@id/et_password"
+        android:layout_alignParentEnd="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="129dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/login_custom_et"
+        android:fontFamily="@font/quicksand"
+        android:text="@string/registrat"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:rippleColor="@color/white" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="97dp"
+        android:layout_above="@+id/textView3"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/title_black" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="235dp"
+        android:layout_height="41dp"
+        android:layout_above="@+id/et_email"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="156dp"
+        android:layout_marginBottom="27dp"
+        android:fontFamily="@font/quicksand"
+        android:text="@string/Entrar"
+        android:textAlignment="textStart"
+        android:textColor="#000000"
+        android:textSize="34sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="217dp"
+        android:layout_height="34dp"
+        android:layout_above="@+id/et_email"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="156dp"
+        android:layout_marginBottom="-276dp"
+        android:fontFamily="@font/quicksand"
+        android:text="@string/crea_compte"
+        android:textAlignment="textStart"
+        android:textColor="#686464"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+</RelativeLayout>

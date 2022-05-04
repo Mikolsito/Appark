@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Activities.RegisterActivity">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="46dp" />
+
+    <TextView
+        android:id="@+id/tv_subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginBottom="50dp"
+        android:fontFamily="@font/asap"
+        android:text="@string/create_account"
+        android:textColor="#000000"
+        android:textSize="34sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/et_name"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/login_custom_et"
+        android:fontFamily="@font/asap"
+        android:hint="@string/your_name"
+        android:inputType="textPersonName"
+        android:padding="15dp"
+        android:textSize="15sp" />
+
+    <EditText
+        android:id="@+id/et_email_r"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="@string/e_mail"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
+        android:padding="15dp"
+        android:fontFamily="@font/asap"
+        android:inputType="textEmailAddress"
+        android:background="@drawable/login_custom_et"
+        android:textSize="15sp" />
+
+    <EditText
+        android:id="@+id/et_password_r"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/login_custom_et"
+        android:fontFamily="@font/asap"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        android:padding="15dp"
+        android:textSize="15sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="366dp"
+            android:layout_height="48dp"
+            android:layout_above="@+id/btn_register"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="22dp"
+            android:layout_marginBottom="129dp"
+            android:text="@string/Termes"
+            android:textColor="#878585" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/login_custom_btn"
+            android:fontFamily="@font/asap"
+            android:text="@string/register"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="191dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btn_register"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="70dp"
+            android:layout_marginTop="85dp"
+            android:layout_marginEnd="15dp"
+            android:layout_toStartOf="@+id/btn_tornarLogin"
+            android:text="@string/ja_tens_compte"
+            android:textAlignment="viewEnd" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_tornarLogin"
+            android:layout_width="115dp"
+            android:layout_height="67dp"
+            android:layout_below="@+id/btn_register"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="74dp"
+            android:layout_marginEnd="19dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="41dp"
+            android:background="@drawable/login_custom_et"
+            android:fontFamily="@font/asap"
+            android:text="@string/tornar_login"
+            android:textColor="@color/black" />
+
+    </RelativeLayout>
+
+</LinearLayout>

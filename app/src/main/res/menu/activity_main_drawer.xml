@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_paginaprincipal"
+            android:icon="@drawable/ic_paginaprincipal"
+            android:title="@string/menu_paginaPrincipal" />
+        <item
+            android:id="@+id/nav_configuracio"
+            android:icon="@drawable/ic_menu_settings"
+            android:title="@string/menu_configuracio" />
+        <item
+            android:id="@+id/nav_historialubis"
+            android:icon="@drawable/ic_menu_history"
+            android:title="@string/menu_historialUbis" />
+        <item
+            android:id="@+id/nav_social"
+            android:icon="@drawable/ic_menu_social"
+            android:title="@string/menu_social" />
+        <item
+            android:id="@+id/nav_tancasessio"
+            android:icon="@drawable/ic_menu_tancasessio"
+            android:title="@string/menu_tancaSessio" />
+    </group>
+</menu>

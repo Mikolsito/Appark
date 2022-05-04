@@ -2,136 +2,58 @@ package com.example.appark.Activities;
 
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.SeekBar;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.fragment.app.FragmentActivity;
+import android.view.Menu;
 
 import com.example.appark.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.navigation.NavigationView;
 
-public class MainActivity extends FragmentActivity {
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.AppCompatActivity;
 
-    FloatingActionButton mAddFab, mAddHistorial, mAddCotxe;
-    TextView addHistorialText, addCotxeText;
-    Boolean isAllFabsVisible;
-    Animation fabOpen, fabClose, rotateForward, rotateBackward;
-    SeekBar seekBar;
+import com.example.appark.databinding.ActivityMainBinding;
+
+public class MainActivity extends AppCompatActivity {
+
+    private AppBarConfiguration mAppBarConfiguration;
+    private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        mAddFab = findViewById(R.id.add_fab);
-        mAddHistorial = findViewById(R.id.add_historial_fab);
-        mAddCotxe = findViewById(R.id.add_cotxe_fab);
-        addHistorialText = findViewById(R.id.historial);
-        addCotxeText = findViewById(R.id.tornar_cotxe);
-        mAddHistorial.setVisibility(View.GONE);
-        mAddCotxe.setVisibility(View.GONE);
-        addHistorialText.setVisibility(View.GONE);
-        addCotxeText.setVisibility(View.GONE);
-        isAllFabsVisible = false;
-        seekBar =(SeekBar)findViewById(R.id.SeekBar);
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            int progressChangedValue = 0;
 
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                progressChangedValue = progress;
-                Toast.makeText(MainActivity.this, progressChangedValue + " Km de radi",
-                        Toast.LENGTH_SHORT).show();
-            }
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-            public void onStartTrackingTouch(SeekBar seekBar) { //Al començar a arrossegar
+        setSupportActionBar(binding.appBarMain.toolbar);
 
-            }
-
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-
-        //Animacions
-        fabOpen = AnimationUtils.loadAnimation(this,R.anim.fab_open);
-        fabClose = AnimationUtils.loadAnimation(this,R.anim.fab_close);
-        rotateForward = AnimationUtils.loadAnimation(this,R.anim.rotate_forward);
-        rotateBackward = AnimationUtils.loadAnimation(this,R.anim.rotate_backward);
-
-        mAddFab.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        //Primer veiem l'animació
-                        animateFab();
-                        if (!isAllFabsVisible) {
-
-                            // when isAllFabsVisible becomes
-                            // true make all the action name
-                            // texts and FABs VISIBLE.
-                            mAddHistorial.show();
-                            mAddCotxe.show();
-                            addHistorialText.setVisibility(View.VISIBLE);
-                            addCotxeText.setVisibility(View.VISIBLE);
-
-                            // make the boolean variable true as
-                            // we have set the sub FABs
-                            // visibility to GONE
-                            isAllFabsVisible = true;
-                        } else {
-
-                            // when isAllFabsVisible becomes
-                            // true make all the action name
-                            // texts and FABs GONE.
-                            mAddHistorial.hide();
-                            mAddCotxe.hide();
-                            addHistorialText.setVisibility(View.GONE);
-                            addCotxeText.setVisibility(View.GONE);
-
-                            // make the boolean variable false
-                            // as we have set the sub FABs
-                            // visibility to GONE
-                            isAllFabsVisible = false;
-                        }
-                    }
-                });
-
-        mAddCotxe.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Toast.makeText(MainActivity.this, "Falta implementar aquesta funcionalitat", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-        // below is the sample action to handle add alarm
-        // FAB. Here it shows simple Toast msg The Toast
-        // will be shown only when they are visible and only
-        // when user clicks on them
-        mAddHistorial.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Toast.makeText(MainActivity.this, "Falta implementar aquesta funcionalitat", Toast.LENGTH_SHORT).show();
-                    }
-                });
+        DrawerLayout drawer = binding.drawerLayout;
+        NavigationView navigationView = binding.navView;
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
+        mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_paginaprincipal,
+                R.id.nav_configuracio, R.id.nav_historialubis, R.id.nav_social)
+                .setOpenableLayout(drawer)
+                .build();
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+        NavigationUI.setupWithNavController(navigationView, navController);
     }
 
-    private void animateFab(){
-        if (isAllFabsVisible){
-            mAddFab.startAnimation(rotateBackward);
-            mAddHistorial.startAnimation(fabClose);
-            mAddCotxe.startAnimation(fabClose);
-            mAddHistorial.setClickable(false);
-            mAddCotxe.setClickable(false);
-        }else {
-            mAddFab.startAnimation(rotateForward);
-            mAddHistorial.startAnimation(fabOpen);
-            mAddCotxe.startAnimation(fabOpen);
-            mAddHistorial.setClickable(true);
-            mAddCotxe.setClickable(true);
-        }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
+    }
 }
