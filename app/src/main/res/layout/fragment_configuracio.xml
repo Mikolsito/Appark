@@ -67,7 +67,7 @@
                 android:layout_weight="1" />
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/textViewMail"
                 android:layout_width="wrap_content"
                 android:layout_height="44dp"
                 android:layout_weight="1"

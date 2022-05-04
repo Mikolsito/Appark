@@ -3,11 +3,16 @@ package com.example.appark.Activities;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.appark.Activities.src.User;
 import com.example.appark.R;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -17,14 +22,20 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.appark.databinding.ActivityMainBinding;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
 
+    private MainActivityViewModel mainActVM;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setLiveDataObservers(); //Inicializa los observers de esta Activity
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -56,5 +67,25 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    public void setLiveDataObservers() {
+        //Subscribe the activity to the observable
+        mainActVM = new ViewModelProvider(this).get(MainActivityViewModel.class);
+
+        final Observer<User> observer = new Observer<User>() {
+            @Override
+            public void onChanged(User us) {
+                NavigationView navigationView = findViewById(R.id.nav_view);
+                View headerView = navigationView.getHeaderView(0);
+                TextView navUsername = headerView.findViewById(R.id.textViewUserName);
+                TextView navUsermail = headerView.findViewById(R.id.textViewMail);
+
+                navUsername.setText(us.getName());
+                navUsermail.setText(us.getMail());
+            }
+        };
+
+        mainActVM.getUser().observe(this, observer);
     }
 }
