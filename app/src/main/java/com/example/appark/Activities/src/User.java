@@ -21,8 +21,10 @@ public class User {
 
         UUID uuid = UUID.randomUUID();
         this.userId = uuid.toString();
-
-        currentUser = this;
+        currentUser.userId = "user2";
+        currentUser.name = "Blanca";
+        currentUser.mail = "blanca@gmail.com";
+        currentUser.pwd = "pwd2";
     }
 
     public String getName() {
@@ -31,10 +33,21 @@ public class User {
     public String getMail() {
         return mail;
     }
+    public String getPwd() {
+        return pwd;
+    }
+    public String getUserId() {
+        return userId;
+    }
 
-    public void setUser(String name, String mail, String pwd){
-        this.name = name;
-        this.mail = mail;
-        this.pwd = pwd;
+
+    public void updateUser(String oldPwd, String newPwd, String oldMail, String newMail){
+        if (oldMail.equals(this.mail)){
+            mail = newMail;
+        }
+        if (oldPwd.equals(this.pwd)){
+            pwd = newPwd;
+        }
+        adapter.updateUser();
     }
 }

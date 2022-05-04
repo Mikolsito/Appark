@@ -9,8 +9,6 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.appark.Activities.src.DatabaseAdapter;
 import com.example.appark.Activities.src.User;
 
-import java.util.ArrayList;
-
 public class MainActivityViewModel extends AndroidViewModel implements DatabaseAdapter.vmInterface {
 
     private final MutableLiveData<User> user;
