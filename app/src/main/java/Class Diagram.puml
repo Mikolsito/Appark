@@ -1,0 +1,104 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+package "src" {
+    class DataBaseAdapter {
+        + {static} String TAG
+        + {static} FirebaseFirestore db
+        + {static} vmInterface listener
+        + {static} DataBaseAdapter databaseAdapter
+        + DatabaseAdapter(vmInterface listener)
+        + void updateUser()
+        + interface vmInterface
+        + void getUser()
+    }
+
+    class Loc_User {
+        - Integer idLoc
+        - Integer idUser
+        - LocalDateTime[] duration
+        + Loc_User(Integer idLoc, Integer idUser, LocalDateTime startTime)
+        + Integer getIdLoc()
+        + Integer getIdUser()
+        + LocalDateTime getStartTime()
+        + LocalDateTime getEndTime()
+        + void setEndTime(LocalDateTime endTime)
+    }
+
+    class Location {
+        - Integer id
+        - double[] position
+        - boolean isOccupied
+        + Location(int id, double latitude, double longitude)
+        + double[] getPosition()
+        + Integer getId()
+        + void occupy()
+        + void release()
+    }
+
+    class User {
+        - String userId
+        - String name
+        - String mail
+        - String pwd
+        - DatabaseAdapter databaseAdapter
+        + User(String name, String mail, String pwd)
+        + void updateUser(String oldPwd, String newPwd, String oldMail, String newMail)
+    }
+}
+
+class MainActivity {
+    + {static} User currentUser
+    - AppBarConfiguration mAppBarConfiguration
+    - ActivityMainBinding binding
+    - MainActivityViewModel mainActVM
+    # void onCreate(Bundle savedInstanceState)
+    + boolean onCreateOptionsMenu(Menu menu)
+    + boolean onSupportNavigateUp()
+    + void setLiveDataObservers()
+}
+
+class ConfiguracioFragment {
+    - AppCompatButton cancelaBtn
+    - AppCompatButton guardaBtn
+    - EditText antigaContrasenya
+    - EditText novaContrasenya
+    - EditText anticCorreu
+    - EditText nouCorreu
+    - ConfiguracioViewModel viewModel
+    + View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+}
+
+class ConfiguracioViewModel {
+    + ConfiguracioViewModel(Application application)
+    + void updateUser(String oldPwd, String newPwd, String oldMail, String newMail)
+}
+
+class HistorialAdapter {
+    - Random random
+    + HistorialAdapter(int seed)
+    + int getItemViewType(final int position)
+    + RecyclerViewHolderHistorial onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+    + void onBindViewHolder(@NonNull RecyclerViewHolderHistorial holder, int position)
+    + int getItemCount()
+}
+
+class HistorialUbisFragment extends Fragment {
+    - RecyclerView recyclerView
+    + View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+}
+
+class LoginActivity extends Activity {
+    - Button entra
+    - Button registre
+    - EditText mail
+    - EditText contrasenya
+    + LoginActivity()
+    + void onCreate(Bundle savedInstanceState
+}
+
+class MainActivityViewModel extends AndroidViewModel implements DatabaseAdapter.vmInterface {
+
+}
+
+@enduml

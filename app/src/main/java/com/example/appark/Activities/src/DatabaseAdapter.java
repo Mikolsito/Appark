@@ -43,11 +43,6 @@ public class DatabaseAdapter extends Activity {
         Map<String, Object> data = task.getResult().getDocuments().get(0).getData();*/
     }
 
-
-    public interface vmInterface{
-        void setUser(User user);
-    }
-
     public void getUser(){
         Log.d(TAG,"getUser method DatabaseAdapter");
         db.collection("Usuarios")
@@ -72,7 +67,6 @@ public class DatabaseAdapter extends Activity {
                 });
     }
 
-
     public void saveUser(User u) {
         Map<String, Object> usuari = new HashMap<>();
         usuari.put("name", u.getName());
@@ -96,4 +90,5 @@ public class DatabaseAdapter extends Activity {
                     }
                 });
     }
+
 }

@@ -33,7 +33,7 @@ public class PaginaPrincipalFragment extends Fragment {
         mAddFab = (FloatingActionButton) view.findViewById(R.id.add_fab);
         mAddHistorial = (FloatingActionButton) view.findViewById(R.id.add_historial_fab);
         mAddCotxe = (FloatingActionButton) view.findViewById(R.id.add_cotxe_fab);
-        addHistorialText = (TextView) view.findViewById(R.id.historial);
+        addHistorialText = (TextView) view.findViewById(R.id.text_historial);
         addCotxeText = (TextView) view.findViewById(R.id.tornar_cotxe);
         mAddHistorial.setVisibility(View.GONE);
         mAddCotxe.setVisibility(View.GONE);
