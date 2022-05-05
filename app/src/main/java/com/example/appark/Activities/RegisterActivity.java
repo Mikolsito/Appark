@@ -20,9 +20,9 @@ import com.example.appark.Activities.src.RegisterActivityViewModel;
 import com.example.appark.R;
 
 public class RegisterActivity extends AppCompatActivity {
-    Button registrarse, tornar;
-    EditText nom, correu, contrasenya, contrasenya2;
-    CheckBox termes;
+    private Button registrarse, tornar;
+    private EditText nom, correu, contrasenya, contrasenya2;
+    private CheckBox termes;
     RegisterActivityViewModel viewModel;
 
     public RegisterActivity() {}
@@ -49,11 +49,11 @@ public class RegisterActivity extends AppCompatActivity {
                 String password = contrasenya.getText().toString();
                 String confirm_password = contrasenya2.getText().toString();
 
-                if(name.equals("") || mail.equals("") || password.equals("") || confirm_password.equals("")){
+                if(name.equals("") || mail.equals("") || password.equals("") || confirm_password.equals("")) {
                     Toast.makeText(getApplicationContext(), "Nom, correu i contrasenya requerits", Toast.LENGTH_SHORT).show();
                 } else {
                     if(password.equals(confirm_password)) {
-                        if (isMail(mail)){
+                        if (isMail(mail)){ // TODO && !mailExists()) {
                             if (isPasswordSegur(password)) {
                                 if (termes.isChecked()) {
                                     viewModel.insertUserDB(name, mail, password);

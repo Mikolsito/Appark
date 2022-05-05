@@ -72,6 +72,31 @@ public class DatabaseAdapter extends Activity {
             });
     }
 
+    public void searchUser(String mail){
+        Log.d(TAG,"searchUser method DatabaseAdapter");
+        db.collection("Usuarios")
+                .whereEqualTo("mail", mail).limit(1)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            Map<String, Object> data = task.getResult().getDocuments().get(0).getData();
+                            String name = (String) data.get("name");
+                            String mail = (String) data.get("mail");
+                            String pwd = (String) data.get("password");
+
+                            MainActivity.currentUser.setUser(name, mail, pwd);
+
+                            listener.setUser(MainActivity.currentUser);
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+
+    }
+
     /* Classe que guarda l'usuari a la database
     * @param user
     * */
