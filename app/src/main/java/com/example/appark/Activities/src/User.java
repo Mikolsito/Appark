@@ -7,7 +7,6 @@ import com.example.appark.Activities.MainActivity;
 import java.util.UUID;
 
 public class User {
-    private String userId;
     private String name;
     private String mail;
     private String pwd;
@@ -19,9 +18,6 @@ public class User {
         this.name = name;
         this.mail = mail;
         this.pwd = pwd;
-
-        UUID uuid = UUID.randomUUID();
-        this.userId = uuid.toString();
     }
 
     public String getName() {
@@ -32,9 +28,6 @@ public class User {
     }
     public String getPwd() {
         return pwd;
-    }
-    public String getUserId() {
-        return userId;
     }
 
 
