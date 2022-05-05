@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
@@ -45,21 +46,17 @@ public class ConfiguracioFragment extends Fragment {
         anticCorreu = configView.findViewById(R.id.editOldEmail);
         nouCorreu = configView.findViewById(R.id.editNewEmail);
 
-        guardaBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //viewModel.updateUser(antigaContrasenya.getText().toString(), novaContrasenya.getText().toString(), anticCorreu.getText().toString(), nouCorreu.getText().toString());
-                //TODO: salta la excepcion public boolean performClick() {
-                //        throw new RuntimeException("Stub!");
-                //    }
-            }
-        });
-        cancelaBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
+        guardaBtn.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(getView().getContext(), "Falta implementar aquesta funcionalitat", Toast.LENGTH_SHORT).show();
+                        //viewModel.updateUser(antigaContrasenya.getText().toString(), novaContrasenya.getText().toString(), anticCorreu.getText().toString(), nouCorreu.getText().toString());
+                        //TODO: salta la excepcion public boolean performClick() {
+                        //        throw new RuntimeException("Stub!");
+                        //    }
+                    }
+                });
         return configView;
     }
 
