@@ -3,8 +3,12 @@ package com.example.appark.Activities.src;
 import android.app.Activity;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.example.appark.Activities.MainActivity;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -41,19 +45,19 @@ public class DatabaseAdapter extends Activity {
 
     public void getUser(){
         Log.d(TAG,"updateUsers");
-        DatabaseAdapter.db.collection("Usuarios").document("user2").get().
+        String id = MainActivity.currentUser.getUserId();
+        //provar whereEqualTo() enlloc de document()
+        DatabaseAdapter.db.collection("Usuarios").document(id).get().
                 addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        User user;
                         if(documentSnapshot.exists()){
                             String name = documentSnapshot.getString("name");
                             String mail = documentSnapshot.getString("mail");
                             String pwd = documentSnapshot.getString("password");
+                            MainActivity.currentUser.setUser(name, mail, pwd);
 
-                            user = new User(name, mail, pwd);
-
-                            listener.setUser(user);
+                            listener.setUser(MainActivity.currentUser);
                         }
                         else {
                             Log.d(TAG, "Error getting documents: the user with name .... does not exists");
@@ -63,8 +67,28 @@ public class DatabaseAdapter extends Activity {
 
     }
 
+    public void saveUser(User u) {
+        Map<String, Object> usuari = new HashMap<>();
+        usuari.put("id", u.getUserId());
+        usuari.put("name", u.getName());
+        usuari.put("mail", u.getMail());
+        usuari.put("pwd", u.getPwd());
 
-
-
-
+        Log.d(TAG, "saveUserDB");
+        // Add a new document with a generated ID
+        db.collection("Usuarios")
+                .add(usuari)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error adding document", e);
+                    }
+                });
+    }
 }

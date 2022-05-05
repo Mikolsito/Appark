@@ -35,8 +35,9 @@ public class LoginActivity extends Activity {
             public void onClick(View view) {
                 String username = mail.getText().toString();
                 String password = contrasenya.getText().toString();
-
-                if(true){ // if (databaseHelper.CheckLogin(username, password)) {
+                if (username.equals("") || password.equals("")) {
+                    Toast.makeText(getApplicationContext(), "Correu i contrasenya requerits", Toast.LENGTH_SHORT).show();
+                } else if(true){ // if (databaseHelper.CheckLogin(username, password)) {
                     Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_SHORT).show();
                     Intent processar_main = new Intent(view.getContext(), MainActivity.class);
                     startActivityForResult(processar_main, 0);

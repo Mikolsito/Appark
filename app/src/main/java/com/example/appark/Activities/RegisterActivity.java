@@ -8,14 +8,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.example.appark.Activities.src.RegisterActivityViewModel;
 import com.example.appark.R;
 
-public class RegisterActivity extends Activity {
+public class RegisterActivity extends AppCompatActivity {
     Button registrarse, tornar;
     EditText nom, mail, contrasenya, contrasenya2;
+    RegisterActivityViewModel viewModel;
 
     public RegisterActivity() {}
 
@@ -24,6 +30,7 @@ public class RegisterActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        viewModel = new ViewModelProvider(this).get(RegisterActivityViewModel.class);
         registrarse = (Button) findViewById(R.id.btn_register);
         tornar = (Button) findViewById(R.id.btn_tornarLogin);
         nom = (EditText) findViewById(R.id.et_name);
@@ -42,12 +49,13 @@ public class RegisterActivity extends Activity {
                 String password = contrasenya.getText().toString();
                 String confirm_password = contrasenya2.getText().toString();
 
-                if(username.equals("") || password.equals("") || confirm_password.equals("")){
-                    Toast.makeText(getApplicationContext(), "Correu i contrasenya requerits", Toast.LENGTH_SHORT).show();
+                if(name.equals("") || username.equals("") || password.equals("") || confirm_password.equals("")){
+                    Toast.makeText(getApplicationContext(), "Nom, correu i contrasenya requerits", Toast.LENGTH_SHORT).show();
                 } else {
                     if(password.equals(confirm_password)) {
                         if (true){ // if(databaseHelper.CheckUsername(username)){
                             if (true) { // if(databaseHelper.InsertToDB(username, password)){
+                                viewModel.createUserDB(name,username,password);
                                 Toast.makeText(getApplicationContext(), "Registrat amb èxit", Toast.LENGTH_SHORT).show();
                                 nom.setText("");
                                 mail.setText("");
