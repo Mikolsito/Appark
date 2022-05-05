@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         //setContentView(R.layout.fragment_configuracio);
         setSupportActionBar(binding.appBarMain.toolbar);
-        Snackbar arrived = Snackbar.make(findViewById(R.id.app_bar_main),"prova", Snackbar.LENGTH_SHORT);
+        //Snackbar arrived = Snackbar.make(findViewById(R.id.app_bar_main),"Log-In Successful", Snackbar.LENGTH_SHORT);
 
         arrived.show();
         DrawerLayout drawer = binding.drawerLayout;
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_paginaprincipal,
-                R.id.nav_configuracio, R.id.nav_historialubis, R.id.nav_social, R.id.nav_estadistiques)
+                R.id.nav_configuracio, R.id.nav_historialubis, R.id.nav_social, R.id.nav_estadistiques, R.id.nav_tancasessio)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);

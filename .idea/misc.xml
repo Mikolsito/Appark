@@ -36,7 +36,7 @@
         <entry key="app/src/main/res/layout/fragment_paginaprincipal.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_social.xml" value="0.165" />
         <entry key="app/src/main/res/layout/nav_header_main.xml" value="0.1" />
-        <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.1" />
+        <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.25" />
         <entry key="app/src/main/res/menu/main.xml" value="0.1361111111111111" />
       </map>
     </option>
