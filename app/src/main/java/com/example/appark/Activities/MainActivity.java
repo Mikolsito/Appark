@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         //setContentView(R.layout.fragment_configuracio);
         setSupportActionBar(binding.appBarMain.toolbar);
-        //Snackbar arrived = Snackbar.make(findViewById(R.id.app_bar_main),"Log-In Successful", Snackbar.LENGTH_SHORT);
+        Snackbar arrived = Snackbar.make(findViewById(R.id.app_bar_main),"Log-In Successful", Snackbar.LENGTH_SHORT);
 
         arrived.show();
         DrawerLayout drawer = binding.drawerLayout;
