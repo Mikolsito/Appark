@@ -14,7 +14,7 @@
 
     <string name="menu_estadistiques">Estadistiques</string>
     <string name="menu_configuracio">Configuració</string>
-    <string name="menu_historialUbis">Historial ubi.</string>
+    <string name="menu_historialUbis">Historial d\'ubicacions</string>
     <string name="menu_social">Social</string>
     <string name="menu_tancaSessio">Tanca sessió</string>
     <string name="menu_paginaPrincipal">Pàgina principal</string>

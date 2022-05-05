@@ -12,8 +12,8 @@ import android.widget.Toast;
 import com.example.appark.R;
 
 public class LoginActivity extends Activity {
-    Button entra, registre;
-    EditText mail, contrasenya;
+    private Button entra, registre;
+    private EditText mail, contrasenya;
 
     public LoginActivity() {}
 
