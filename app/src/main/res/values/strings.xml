@@ -27,13 +27,13 @@
     <string name="nameNewEmail">Nou correu</string>
 
     <string name="login">Entra</string>
-    <string name="password">Contrassenya</string>
+    <string name="password">Contrasenya</string>
     <string name="e_mail">Correu electrònic</string>
     <string name="create_account">Crea un compte</string>
     <string name="example_mail">example@gmail.com</string>
     <string name="Entrar">Entrar</string>
     <string name="register">Continuar</string>
-    <string name="re_type_password">Torna a escriure la contrassenya</string>
+    <string name="re_type_password">Confirma la contrasenya</string>
     <string name="your_name">Nom complet</string>
     <string name="Termes">Estic d\'acord amb els Termes de Servei i la Politica de Privacitat.</string>
     <string name="crea_compte">o si no tens cap compte</string>
