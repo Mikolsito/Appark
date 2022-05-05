@@ -27,26 +27,30 @@ public class PaginaPrincipalFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        //super.onCreate(savedInstanceState);
+        return inflater.inflate(R.layout.fragment_paginaprincipal, container, false);
+    }
+
+    /*@Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_main);
-        View view = inflater.inflate(R.layout.fragment_paginaprincipal, container, false);
-        mAddFab = (FloatingActionButton) view.findViewById(R.id.add_fab);
-        mAddHistorial = (FloatingActionButton) view.findViewById(R.id.add_historial_fab);
-        mAddCotxe = (FloatingActionButton) view.findViewById(R.id.add_cotxe_fab);
-        addHistorialText = (TextView) view.findViewById(R.id.historial);
-        addCotxeText = (TextView) view.findViewById(R.id.tornar_cotxe);
+        mAddFab = getView().findViewById(R.id.add_fab);
+        mAddHistorial = getView().findViewById(R.id.add_historial_fab);
+        mAddCotxe = getView().findViewById(R.id.add_cotxe_fab);
+        addHistorialText = getView().findViewById(R.id.historial);
+        addCotxeText = getView().findViewById(R.id.tornar_cotxe);
         mAddHistorial.setVisibility(View.GONE);
         mAddCotxe.setVisibility(View.GONE);
         addHistorialText.setVisibility(View.GONE);
         addCotxeText.setVisibility(View.GONE);
         isAllFabsVisible = false;
-        seekBar =(SeekBar) view.findViewById(R.id.SeekBar);
+        seekBar =(SeekBar)getView().findViewById(R.id.SeekBar);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int progressChangedValue = 0;
 
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 progressChangedValue = progress;
-                Toast.makeText(getView().getContext(), progressChangedValue + " Km de radi", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getView().getContext(), progressChangedValue + " Km de radi", Toast.LENGTH_SHORT);
             }
 
             public void onStartTrackingTouch(SeekBar seekBar) { //Al començar a arrossegar
@@ -59,47 +63,47 @@ public class PaginaPrincipalFragment extends Fragment {
         });
 
         //Animacions
-        fabOpen = AnimationUtils.loadAnimation(view.getContext(),R.anim.fab_open);
-        fabClose = AnimationUtils.loadAnimation(view.getContext(),R.anim.fab_close);
-        rotateForward = AnimationUtils.loadAnimation(view.getContext(),R.anim.rotate_forward);
-        rotateBackward = AnimationUtils.loadAnimation(view.getContext(),R.anim.rotate_backward);
+        fabOpen = AnimationUtils.loadAnimation(getView().getContext(),R.anim.fab_open);
+        fabClose = AnimationUtils.loadAnimation(getView().getContext(),R.anim.fab_close);
+        rotateForward = AnimationUtils.loadAnimation(getView().getContext(),R.anim.rotate_forward);
+        rotateBackward = AnimationUtils.loadAnimation(getView().getContext(),R.anim.rotate_backward);
 
         mAddFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Primer veiem l'animació
-                animateFab();
-                if (!isAllFabsVisible) {
+                    @Override
+                    public void onClick(View view) {
+                        //Primer veiem l'animació
+                        animateFab();
+                        if (!isAllFabsVisible) {
 
-                    // when isAllFabsVisible becomes
-                    // true make all the action name
-                    // texts and FABs VISIBLE.
-                    mAddHistorial.show();
-                    mAddCotxe.show();
-                    addHistorialText.setVisibility(View.VISIBLE);
-                    addCotxeText.setVisibility(View.VISIBLE);
+                            // when isAllFabsVisible becomes
+                            // true make all the action name
+                            // texts and FABs VISIBLE.
+                            mAddHistorial.show();
+                            mAddCotxe.show();
+                            addHistorialText.setVisibility(View.VISIBLE);
+                            addCotxeText.setVisibility(View.VISIBLE);
 
-                    // make the boolean variable true as
-                    // we have set the sub FABs
-                    // visibility to GONE
-                    isAllFabsVisible = true;
-                } else {
+                            // make the boolean variable true as
+                            // we have set the sub FABs
+                            // visibility to GONE
+                            isAllFabsVisible = true;
+                        } else {
 
-                    // when isAllFabsVisible becomes
-                    // true make all the action name
-                    // texts and FABs GONE.
-                    mAddHistorial.hide();
-                    mAddCotxe.hide();
-                    addHistorialText.setVisibility(View.GONE);
-                    addCotxeText.setVisibility(View.GONE);
+                            // when isAllFabsVisible becomes
+                            // true make all the action name
+                            // texts and FABs GONE.
+                            mAddHistorial.hide();
+                            mAddCotxe.hide();
+                            addHistorialText.setVisibility(View.GONE);
+                            addCotxeText.setVisibility(View.GONE);
 
-                    // make the boolean variable false
-                    // as we have set the sub FABs
-                    // visibility to GONE
-                    isAllFabsVisible = false;
-                }
-            }
-        });
+                            // make the boolean variable false
+                            // as we have set the sub FABs
+                            // visibility to GONE
+                            isAllFabsVisible = false;
+                        }
+                    }
+                });
 
         mAddCotxe.setOnClickListener(
                 new View.OnClickListener() {
@@ -120,8 +124,7 @@ public class PaginaPrincipalFragment extends Fragment {
                         Toast.makeText(getView().getContext(), "Falta implementar aquesta funcionalitat", Toast.LENGTH_SHORT).show();
                     }
                 });
-        return view;
-    }
+    }*/
 
     private void animateFab(){
         if (isAllFabsVisible){

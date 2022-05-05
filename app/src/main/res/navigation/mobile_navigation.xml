@@ -24,6 +24,12 @@
         tools:layout="@layout/fragment_social" />
 
     <fragment
+        android:id="@+id/nav_estadistiques"
+        android:name="com.example.appark.Activities.EstadistiquesFragment"
+        android:label="@string/menu_estadistiques"
+        tools:layout="@layout/fragment_estadistiques"/>
+
+    <fragment
         android:id="@+id/nav_paginaprincipal"
         android:name="com.example.appark.Activities.PaginaPrincipalFragment"
         android:label="@string/menu_paginaPrincipal"

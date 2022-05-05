@@ -5,6 +5,10 @@ import android.view.View;
 import android.view.Menu;
 
 import com.example.appark.R;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -17,10 +21,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.appark.databinding.ActivityMainBinding;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
+    public Snackbar arrived;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,20 +35,23 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        //setContentView(R.layout.fragment_configuracio);
         setSupportActionBar(binding.appBarMain.toolbar);
+        Snackbar arrived = Snackbar.make(findViewById(R.id.app_bar_main),"prova", Snackbar.LENGTH_SHORT);
 
+        arrived.show();
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_paginaprincipal,
-                R.id.nav_configuracio, R.id.nav_historialubis, R.id.nav_social)
+                R.id.nav_configuracio, R.id.nav_historialubis, R.id.nav_social, R.id.nav_estadistiques)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
     }
 
     @Override
