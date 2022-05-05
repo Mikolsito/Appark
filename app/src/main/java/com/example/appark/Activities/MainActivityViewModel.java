@@ -28,7 +28,7 @@ public class MainActivityViewModel extends AndroidViewModel implements vmInterfa
     }
 
     @Override
-    public void setUser(User us) {
+    public void getInfoUser(User us) {
         user.setValue(us);
     }
 }

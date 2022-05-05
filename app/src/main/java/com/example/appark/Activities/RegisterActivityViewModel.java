@@ -1,4 +1,4 @@
-package com.example.appark.Activities.src;
+package com.example.appark.Activities;
 
 import android.app.Application;
 
@@ -6,6 +6,9 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
 import com.example.appark.Activities.MainActivity;
+import com.example.appark.Activities.src.DatabaseAdapter;
+import com.example.appark.Activities.src.User;
+import com.example.appark.Activities.src.vmInterface;
 
 public class RegisterActivityViewModel extends AndroidViewModel implements vmInterface {
 
@@ -21,7 +24,7 @@ public class RegisterActivityViewModel extends AndroidViewModel implements vmInt
     }
 
     @Override
-    public void setUser(User user) {
+    public void getInfoUser(User user) {
 
     }
 }
