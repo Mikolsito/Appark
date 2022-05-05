@@ -32,13 +32,12 @@ public class User {
 
 
     public void updateUser(String oldPwd, String newPwd, String oldMail, String newMail){
-        if (oldMail.equals(this.mail)){
-            mail = newMail;
+        if (oldMail.equals(this.mail) && oldPwd.equals(this.pwd)){
+            adapter.updateUser(name, newMail, newPwd);
         }
-        if (oldPwd.equals(this.pwd)){
-            pwd = newPwd;
-        }
-        adapter.updateUser();
+
+
+
     }
 
     public void saveUser() {

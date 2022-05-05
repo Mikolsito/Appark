@@ -5,14 +5,6 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.appark.R;
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.navigation.NavigationView;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.Observer;
@@ -26,9 +18,7 @@ import com.example.appark.Activities.src.User;
 import com.example.appark.R;
 import com.example.appark.databinding.ActivityMainBinding;
 import com.google.android.material.navigation.NavigationView;
-
-
-import java.util.ArrayList;
+import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        //setSupportActionBar(binding.appBarMain.toolbar);
         setSupportActionBar(binding.appBarMain.toolbar);
         Snackbar arrived = Snackbar.make(findViewById(R.id.app_bar_main),"Log-In Successful", Snackbar.LENGTH_SHORT);
 

@@ -2,6 +2,7 @@ package com.example.appark.Activities.src;
 
 import android.app.Activity;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -16,6 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class DatabaseAdapter extends Activity {
@@ -31,18 +33,34 @@ public class DatabaseAdapter extends Activity {
         databaseAdapter = this;
     }
 
-    public void updateUser() {
+    public void updateUser(String name, String mail, String pwd) {
         Map<String, Object> map = new HashMap<>(); //.collection necesita de un HashMap
-        map.put("name", MainActivity.currentUser.getName());
-        map.put("mail", MainActivity.currentUser.getMail());
-        map.put("pwd", MainActivity.currentUser.getPwd());
+        map.put("name", name);
+        map.put("mail", mail);
+        map.put("pwd", pwd);
 
-        String docId = db.collection("Usuarios").whereEqualTo("mail", MainActivity.currentUser.
-                getMail()).limit(1).get().getResult().getDocuments().get(0).getId();
+
+        Task<QuerySnapshot> t = db.collection("Usuarios").whereEqualTo("mail", MainActivity.currentUser.
+                getMail()).get();
+        List<DocumentSnapshot> docs = t.getResult().getDocuments();
+        DocumentSnapshot doc = docs.get(0);
+        String id = doc.getId();
 
         // Update an existing document
-        db.collection("Usuarios").document(docId).update(map);
-
+        db.collection("Usuarios").document(id).update(map);
+                /*.addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Toast.makeText(getApplicationContext(), "Dades actualitzades correctament", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getApplicationContext(), "Error al actualitzar les dades", Toast.LENGTH_SHORT).show();
+            }
+        });*/
+        MainActivity.currentUser.setUser(name, mail, pwd);
+        //listener.getInfoUser(MainActivity.currentUser);
     }
 
     public void getUser(){
@@ -57,11 +75,11 @@ public class DatabaseAdapter extends Activity {
                             Map<String, Object> data = task.getResult().getDocuments().get(0).getData();
                             String name = (String) data.get("name");
                             String mail = (String) data.get("mail");
-                            String pwd = (String) data.get("password");
+                            String pwd = (String) data.get("pwd");
 
                             MainActivity.currentUser.setUser(name, mail, pwd);
 
-                            listener.setUser(MainActivity.currentUser);
+                            listener.getInfoUser(MainActivity.currentUser);
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }

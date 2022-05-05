@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_configuracio">
+    app:startDestination="@+id/nav_paginaprincipal">
 
     <fragment
         android:id="@+id/nav_configuracio"
@@ -15,7 +15,7 @@
         android:id="@+id/nav_historialubis"
         android:name="com.example.appark.Activities.HistorialUbisFragment"
         android:label="@string/menu_historialUbis"
-        tools:layout="@layout/fragment_historialubis" />
+        tools:layout="@layout/fragment_historial" />
 
     <fragment
         android:id="@+id/nav_social"

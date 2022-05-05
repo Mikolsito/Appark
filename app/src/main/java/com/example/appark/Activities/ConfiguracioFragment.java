@@ -1,6 +1,7 @@
 package com.example.appark.Activities;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,18 +38,29 @@ public class ConfiguracioFragment extends Fragment {
         View configView = inflater.inflate(R.layout.fragment_configuracio, container, false);
         viewModel = new ViewModelProvider(this).get(ConfiguracioViewModel.class);
 
-        cancelaBtn = configView.findViewById(R.id.btnCancel);
-        guardaBtn = configView.findViewById(R.id.btnSave);
+        cancelaBtn = configView.findViewById(R.id.btnCancela);
+        guardaBtn = configView.findViewById(R.id.btnGuardar);
         antigaContrasenya = configView.findViewById(R.id.editOldPassword);
         novaContrasenya = configView.findViewById(R.id.editNewPassword);
         anticCorreu = configView.findViewById(R.id.editOldEmail);
         nouCorreu = configView.findViewById(R.id.editNewEmail);
 
-        guardaBtn.setOnClickListener((v) -> {
-            viewModel.updateUser(antigaContrasenya.getText().toString(), novaContrasenya.getText().toString(),
-                    anticCorreu.getText().toString(), nouCorreu.getText().toString());
+        guardaBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //viewModel.updateUser(antigaContrasenya.getText().toString(), novaContrasenya.getText().toString(), anticCorreu.getText().toString(), nouCorreu.getText().toString());
+                //TODO: salta la excepcion public boolean performClick() {
+                //        throw new RuntimeException("Stub!");
+                //    }
+            }
         });
+        cancelaBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+            }
+        });
         return configView;
     }
+
 }

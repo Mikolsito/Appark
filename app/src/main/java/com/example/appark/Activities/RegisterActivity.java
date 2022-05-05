@@ -1,6 +1,5 @@
 package com.example.appark.Activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,12 +9,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelStoreOwner;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.example.appark.Activities.src.RegisterActivityViewModel;
 import com.example.appark.R;
 
 public class RegisterActivity extends AppCompatActivity {
