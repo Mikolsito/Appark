@@ -50,7 +50,7 @@
         app:layout_constraintEnd_toEndOf="@+id/add_fab"
         app:layout_constraintStart_toStartOf="@+id/add_fab"
         app:maxImageSize="40dp"
-        app:srcCompat="@drawable/historial" />
+        app:srcCompat="@drawable/ic_historial" />
 
     <!--Action name text for the add alarm button-->
     <!--Make sure that you are constraining this Text to
@@ -80,13 +80,13 @@
         app:layout_constraintEnd_toEndOf="@+id/add_historial_fab"
         app:layout_constraintStart_toStartOf="@+id/add_historial_fab"
         app:maxImageSize="40dp"
-        app:srcCompat="@drawable/tornar_cotxe" />
+        app:srcCompat="@drawable/ic_tornar_cotxe" />
 
     <!--Action name text for the add person button-->
     <!--Make sure that you are constraining this Text
         to the add Person FAB button-->
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/map2"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
@@ -97,7 +97,7 @@
         tools:layout_editor_absoluteY="0dp" />
 
     <TextView
-        android:id="@+id/historial"
+        android:id="@+id/text_historial"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"

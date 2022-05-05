@@ -7,8 +7,12 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appark.R;
+
+import java.util.ArrayList;
 
 public class SocialFragment extends Fragment {
 
@@ -17,4 +21,10 @@ public class SocialFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_social, container, false);
     }
+
+    private void initData() {
+
+    }
+
+
 }
