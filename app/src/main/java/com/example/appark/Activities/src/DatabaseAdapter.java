@@ -11,8 +11,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
@@ -37,10 +37,12 @@ public class DatabaseAdapter extends Activity {
         map.put("mail", MainActivity.currentUser.getMail());
         map.put("pwd", MainActivity.currentUser.getPwd());
 
-        //TODO: cambiar la isuginete linea y no buscar usuario por ID sino por documento
-        /*db.collection("Usuarios").whereEqualTo("mail", MainActivity.currentUser.
-                getMail()).limit(1).get().getResult().getDocuments().get(0).upd
-        Map<String, Object> data = task.getResult().getDocuments().get(0).getData();*/
+        String docId = db.collection("Usuarios").whereEqualTo("mail", MainActivity.currentUser.
+                getMail()).limit(1).get().getResult().getDocuments().get(0).getId();
+
+        // Update an existing document
+        db.collection("Usuarios").document(docId).update(map);
+
     }
 
     public void getUser(){

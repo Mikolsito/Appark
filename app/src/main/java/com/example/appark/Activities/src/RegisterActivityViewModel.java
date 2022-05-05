@@ -7,7 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 
 import com.example.appark.Activities.MainActivity;
 
-public class RegisterActivityViewModel extends AndroidViewModel implements DatabaseAdapter.vmInterface {
+public class RegisterActivityViewModel extends AndroidViewModel implements vmInterface {
 
     public RegisterActivityViewModel(@NonNull Application application) {
         super(application);
