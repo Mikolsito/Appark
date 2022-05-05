@@ -17,12 +17,12 @@ import com.example.appark.R;
 import com.google.android.material.navigation.NavigationView;
 
 public class ConfiguracioFragment extends Fragment {
-    AppCompatButton cancelaBtn;
-    AppCompatButton guardaBtn;
-    EditText antigaContrasenya;
-    EditText novaContrasenya;
-    EditText anticCorreu;
-    EditText nouCorreu;
+    private AppCompatButton cancelaBtn;
+    private AppCompatButton guardaBtn;
+    private EditText antigaContrasenya;
+    private EditText novaContrasenya;
+    private EditText anticCorreu;
+    private EditText nouCorreu;
 
     private ConfiguracioViewModel viewModel;
 
@@ -47,8 +47,5 @@ public class ConfiguracioFragment extends Fragment {
 
         return configView;
     }
-
-
-
 
 }

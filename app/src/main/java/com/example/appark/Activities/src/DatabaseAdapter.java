@@ -34,11 +34,6 @@ public class DatabaseAdapter extends Activity {
 
     }
 
-
-    public interface vmInterface{
-        void setUser(User user);
-    }
-
     public void getUser(){
         Log.d(TAG,"updateUsers");
         DatabaseAdapter.db.collection("Usuarios").document("user2").get().
@@ -62,9 +57,5 @@ public class DatabaseAdapter extends Activity {
                 });
 
     }
-
-
-
-
 
 }
