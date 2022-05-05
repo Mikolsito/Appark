@@ -17,6 +17,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class DatabaseAdapter extends Activity {
     public static final String TAG = "DatabaseAdapter";
@@ -31,42 +33,48 @@ public class DatabaseAdapter extends Activity {
         databaseAdapter = this;
     }
 
+    /* Modifica les dades d'un usuari a la database
+    * */
     public void updateUser() {
         Map<String, Object> map = new HashMap<>(); //.collection necesita de un HashMap
         map.put("name", MainActivity.currentUser.getName());
         map.put("mail", MainActivity.currentUser.getMail());
         map.put("pwd", MainActivity.currentUser.getPwd());
 
-        //TODO: cambiar la isuginete linea y no buscar usuario por ID sino por documento
-        /*db.collection("Usuarios").whereEqualTo("mail", MainActivity.currentUser.
-                getMail()).limit(1).get().getResult().getDocuments().get(0).upd
+        //TODO: cambiar la siguiente linea y no buscar usuario por ID sino por documento
+        /*db.collection("Usuarios").whereEqualTo("mail", MainActivity.currentUser. getMail())
+            .limit(1).get().getResult().getDocuments().get(0).upd
         Map<String, Object> data = task.getResult().getDocuments().get(0).getData();*/
     }
 
+    //Buscar usuari a la database mitjançant el mail del current user
     public void getUser(){
         Log.d(TAG,"getUser method DatabaseAdapter");
         db.collection("Usuarios")
-                .whereEqualTo("mail", MainActivity.currentUser.getMail()).limit(1)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            Map<String, Object> data = task.getResult().getDocuments().get(0).getData();
-                            String name = (String) data.get("name");
-                            String mail = (String) data.get("mail");
-                            String pwd = (String) data.get("password");
+            .whereEqualTo("mail", MainActivity.currentUser.getMail()).limit(1)
+            .get()
+            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        Map<String, Object> data = task.getResult().getDocuments().get(0).getData();
+                        String name = (String) data.get("name");
+                        String mail = (String) data.get("mail");
+                        String pwd = (String) data.get("password");
 
-                            MainActivity.currentUser.setUser(name, mail, pwd);
+                        MainActivity.currentUser.setUser(name, mail, pwd);
 
-                            listener.setUser(MainActivity.currentUser);
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-                        }
+                        listener.setUser(MainActivity.currentUser);
+                    } else {
+                        Log.d(TAG, "Error getting documents: ", task.getException());
                     }
-                });
+                }
+            });
     }
 
+    /* Classe que guarda l'usuari a la database
+    * @param user
+    * */
     public void saveUser(User u) {
         Map<String, Object> usuari = new HashMap<>();
         usuari.put("name", u.getName());
@@ -76,19 +84,19 @@ public class DatabaseAdapter extends Activity {
         Log.d(TAG, "saveUserDB");
         // Add a new document with a generated ID
         db.collection("Usuarios")
-                .add(usuari)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
-                    }
-                });
+            .add(usuari)
+            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                @Override
+                public void onSuccess(DocumentReference documentReference) {
+                    Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                }
+            })
+            .addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.w(TAG, "Error adding document", e);
+                }
+            });
     }
 
 }

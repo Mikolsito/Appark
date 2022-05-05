@@ -17,8 +17,8 @@ public class MainActivityViewModel extends AndroidViewModel implements vmInterfa
     public MainActivityViewModel(Application application) {
         super(application);
         user = new MutableLiveData<>();
-        DatabaseAdapter da = new DatabaseAdapter(this);
-        da.getUser();
+        DatabaseAdapter db = new DatabaseAdapter(this);
+        db.getUser();
 
     }
 
