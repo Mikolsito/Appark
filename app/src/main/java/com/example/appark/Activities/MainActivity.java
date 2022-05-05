@@ -1,30 +1,28 @@
 package com.example.appark.Activities;
 
 import android.os.Bundle;
-import android.view.View;
 import android.view.Menu;
+import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.appark.Activities.src.User;
-import com.example.appark.R;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.navigation.NavigationView;
-
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.appark.Activities.src.User;
+import com.example.appark.R;
 import com.example.appark.databinding.ActivityMainBinding;
+import com.google.android.material.navigation.NavigationView;
 
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+
+    public static User currentUser = new User("dummyCurrentUser", "dummy@gmail.com", "dummyPwd");
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;

@@ -3,6 +3,7 @@ package com.example.appark.Activities.src;
 import android.app.Activity;
 import android.util.Log;
 
+import com.example.appark.Activities.MainActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -25,11 +26,11 @@ public class DatabaseAdapter extends Activity {
 
     public void updateUser() {
         Map<String, Object> map = new HashMap<>(); //.collection necesita de un HashMap
-        map.put("name", User.currentUser.getName());
-        map.put("mail", User.currentUser.getMail());
-        map.put("pwd", User.currentUser.getPwd());
+        map.put("name", MainActivity.currentUser.getName());
+        map.put("mail", MainActivity.currentUser.getMail());
+        map.put("pwd", MainActivity.currentUser.getPwd());
 
-        db.collection("Usuarios").document(User.currentUser.getUserId()).update(map);
+        db.collection("Usuarios").document(MainActivity.currentUser.getUserId()).update(map);
 
     }
 

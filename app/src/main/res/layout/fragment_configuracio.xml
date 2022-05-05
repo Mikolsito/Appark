@@ -18,8 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.25"
-            android:orientation="horizontal"
-            android:baselineAligned="false">
+            android:orientation="horizontal">
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -68,7 +67,7 @@
                 android:layout_weight="1" />
 
             <TextView
-                android:id="@+id/textViewMail"
+                android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="44dp"
                 android:layout_weight="1"

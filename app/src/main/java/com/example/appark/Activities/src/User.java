@@ -2,6 +2,8 @@ package com.example.appark.Activities.src;
 
 import android.util.Log;
 
+import com.example.appark.Activities.MainActivity;
+
 import java.util.UUID;
 
 public class User {
@@ -10,7 +12,6 @@ public class User {
     private String mail;
     private String pwd;
 
-    public static User currentUser;
 
     private final DatabaseAdapter adapter = DatabaseAdapter.databaseAdapter;
 
@@ -21,10 +22,9 @@ public class User {
 
         UUID uuid = UUID.randomUUID();
         this.userId = uuid.toString();
-        currentUser.userId = "user2";
-        currentUser.name = "Blanca";
-        currentUser.mail = "blanca@gmail.com";
-        currentUser.pwd = "pwd2";
+
+        MainActivity.currentUser = this; //el currentUser es el usuario que se ha creado desde loggin
+
     }
 
     public String getName() {

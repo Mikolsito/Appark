@@ -16,7 +16,7 @@ public class ConfiguracioViewModel extends AndroidViewModel {
     }
 
     public void updateUser(String oldPwd, String newPwd, String oldMail, String newMail){
-        User.currentUser.updateUser(oldPwd, newPwd, oldMail, newMail);
+        MainActivity.currentUser.updateUser(oldPwd, newPwd, oldMail, newMail);
 
     }
 
