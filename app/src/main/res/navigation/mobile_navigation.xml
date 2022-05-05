@@ -6,12 +6,6 @@
     app:startDestination="@+id/nav_configuracio">
 
     <fragment
-        android:id="@+id/nav_paginaprincipal"
-        android:name="com.example.appark.Activities.PaginaPrincipalFragment"
-        android:label="@string/menu_paginaPrincipal"
-        tools:layout="@layout/fragment_paginaprincipal" />
-
-    <fragment
         android:id="@+id/nav_configuracio"
         android:name="com.example.appark.Activities.ConfiguracioFragment"
         android:label="@string/menu_configuracio"
@@ -21,7 +15,7 @@
         android:id="@+id/nav_historialubis"
         android:name="com.example.appark.Activities.HistorialUbisFragment"
         android:label="@string/menu_historialUbis"
-        />
+        tools:layout="@layout/fragment_historialubis" />
 
     <fragment
         android:id="@+id/nav_social"
@@ -29,6 +23,23 @@
         android:label="@string/menu_social"
         tools:layout="@layout/fragment_social" />
 
+    <fragment
+        android:id="@+id/nav_estadistiques"
+        android:name="com.example.appark.Activities.EstadistiquesFragment"
+        android:label="@string/menu_estadistiques"
+        tools:layout="@layout/fragment_estadistiques"/>
+
+    <fragment
+        android:id="@+id/nav_paginaprincipal"
+        android:name="com.example.appark.Activities.PaginaPrincipalFragment"
+        android:label="@string/menu_paginaPrincipal"
+        tools:layout="@layout/fragment_paginaprincipal" />
+
+    <activity
+        android:id="@+id/nav_tancasessio"
+        android:name="com.example.appark.Activities.LoginActivity"
+        android:label="Tanca sessió"
+        tools:layout="@layout/activity_login" />
 
 
 </navigation>

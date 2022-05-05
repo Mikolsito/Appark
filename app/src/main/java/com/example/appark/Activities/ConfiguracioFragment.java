@@ -9,12 +9,16 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.appark.Activities.src.User;
 import com.example.appark.R;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.ArrayList;
 
 public class ConfiguracioFragment extends Fragment {
     private AppCompatButton cancelaBtn;
@@ -47,5 +51,4 @@ public class ConfiguracioFragment extends Fragment {
 
         return configView;
     }
-
 }
