@@ -2,15 +2,16 @@
 'https://plantuml.com/class-diagram
 
 package "src" {
-    class DataBaseAdapter {
+    class DataBaseAdapter extends Activity{
         + {static} String TAG
         + {static} FirebaseFirestore db
         + {static} vmInterface listener
         + {static} DataBaseAdapter databaseAdapter
         + DatabaseAdapter(vmInterface listener)
-        + void updateUser()
-        + interface vmInterface
+        + void updateUser(String name, String mail, String pwd)
+        + vmInterface listener
         + void getUser()
+        + void saveUser(User u)
     }
 
     class Loc_User {
@@ -37,20 +38,29 @@ package "src" {
     }
 
     class User {
-        - String userId
         - String name
         - String mail
         - String pwd
-        - DatabaseAdapter databaseAdapter
+        - DatabaseAdapter adapter
         + User(String name, String mail, String pwd)
+        + String getName()
+        + String getMail()
+        + String getPwd()
         + void updateUser(String oldPwd, String newPwd, String oldMail, String newMail)
+        + void saveUser()
+        + void setUser(String name, String mail, String pwd)
+    }
+
+    interface vmInterface {
+        + getInfoUser(User user)
     }
 }
 
-class MainActivity {
+class MainActivity extends Activity{
     + {static} User currentUser
     - AppBarConfiguration mAppBarConfiguration
     - ActivityMainBinding binding
+    + Snackbar arrived
     - MainActivityViewModel mainActVM
     # void onCreate(Bundle savedInstanceState)
     + boolean onCreateOptionsMenu(Menu menu)
@@ -58,7 +68,7 @@ class MainActivity {
     + void setLiveDataObservers()
 }
 
-class ConfiguracioFragment {
+class ConfiguracioFragment extends Fragment{
     - AppCompatButton cancelaBtn
     - AppCompatButton guardaBtn
     - EditText antigaContrasenya
@@ -74,7 +84,7 @@ class ConfiguracioViewModel {
     + void updateUser(String oldPwd, String newPwd, String oldMail, String newMail)
 }
 
-class HistorialAdapter {
+class HistorialAdapter extends RecyclerView.Adapter{
     - Random random
     + HistorialAdapter(int seed)
     + int getItemViewType(final int position)
@@ -97,8 +107,86 @@ class LoginActivity extends Activity {
     + void onCreate(Bundle savedInstanceState
 }
 
-class MainActivityViewModel extends AndroidViewModel implements DatabaseAdapter.vmInterface {
-
+class MainActivityViewModel extends AndroidViewModel implements vmInterface {
+    - MutableLiveData<User> user
+    + MainActivityViewModel(Application application)
+    + LiveData<User> getUser()
+    + void getInfoUser(User us)
 }
+
+class PaginaPrincipalFragment extends Fragment {
+    - FloatingActionButton mAddFab
+    - FloatingActionButton mAddHistorial
+    - FloatingActionButton mAddCotxe
+    - TextView addHistorialText
+    - TextView addCotxeText
+    - Boolean isAllFabsVisible
+    - Animation fabOpen
+    - Animation fabClose
+    - Animation rotateForward
+    - Animation rotateBackward
+    - SeekBar seekbar
+    + View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    - void animateFab()
+}
+
+class RecyclerViewHolderHistorial extends RecyclerView.ViewHolder {
+    - TextView view
+    + RecyclerViewHolderHistorial(@NonNull View itemView)
+    + TextView getView()
+}
+
+class RegisterActivity extends Activity {
+    - Button registrarse
+    - Button tornar
+    - EditText nom
+    - EditText mail
+    - EditText contrasenya
+    - EditText contrasenya2
+    - RegisterActivityViewModel viewModel
+    + RegisterActivity()
+    + void onCreate(Bundle savedInstanceState)
+    + boolean isMail(String correu)
+    + boolean isPasswordSegur(String password)
+}
+
+class SocialFragment extends Fragment {
+    + View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    - void initData()
+}
+
+class RegisterActivityViewModel extends AndroidViewModel implements vmInterface {
+    + RegisterActivityViewModel(@NonNull Application application)
+    + void createUserDB(String name, String mail, String pwd)
+    + void getInfoUser(User user)
+}
+
+class EstadistiquesFragment extends Fragment {
+    - LineChart linechart
+    - LineDataSet lineDataSet
+    - BarChart barchart
+    - BarDataSet barDataSet
+    - PieChart piechart
+    - PieDataSet pieDataSet
+    + View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    + void onViewCreated(View view, Bundle savedInstanceState)
+    - BarData generateBarData()
+    - LineData generateLineData()
+    - PieData generatePieData()
+}
+
+HistorialUbisFragment -- "mostra"HistorialAdapter
+HistorialAdapter "dona valors"-- RecyclerViewHolderHistorial
+LoginActivity "Logueja" -- User
+MainActivity "Navega" -- PaginaPrincipalFragment
+MainActivity "Navega" -- ConfiguracioFragment
+MainActivity "Navega" -- EstadistiquesFragment
+MainActivity "Navega" -- HistorialUbisFragment
+MainActivity "Navega" -- SocialFragment
+RegisterActivity "Registra" -- User
+ConfiguracioViewModel -- ConfiguracioFragment
+LoginActivity - "Navega" RegisterActivity
+MainActivity - MainActivityViewModel
+RegisterActivity -- RegisterActivityViewModel
 
 @enduml

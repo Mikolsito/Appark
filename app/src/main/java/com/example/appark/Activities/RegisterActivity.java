@@ -16,9 +16,9 @@ import java.util.regex.Pattern;
 import com.example.appark.R;
 
 public class RegisterActivity extends AppCompatActivity {
-    Button registrarse, tornar;
-    EditText nom, mail, contrasenya, contrasenya2;
-    RegisterActivityViewModel viewModel;
+    private Button registrarse, tornar;
+    private EditText nom, mail, contrasenya, contrasenya2;
+    private RegisterActivityViewModel viewModel;
 
     public RegisterActivity() {}
 

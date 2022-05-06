@@ -11,6 +11,7 @@ import com.example.appark.R;
 public class RecyclerViewHolderHistorial extends RecyclerView.ViewHolder {
 
     private TextView view;
+
     public RecyclerViewHolderHistorial(@NonNull View itemView) {
         super(itemView);
         view = itemView.findViewById(R.id.nom_ubicacio);

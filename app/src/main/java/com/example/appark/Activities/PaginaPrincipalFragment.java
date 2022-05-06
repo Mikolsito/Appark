@@ -18,11 +18,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class PaginaPrincipalFragment extends Fragment {
 
-    FloatingActionButton mAddFab, mAddHistorial, mAddCotxe;
-    TextView addHistorialText, addCotxeText;
-    Boolean isAllFabsVisible;
-    Animation fabOpen, fabClose, rotateForward, rotateBackward;
-    SeekBar seekBar;
+    private FloatingActionButton mAddFab, mAddHistorial, mAddCotxe;
+    private TextView addHistorialText, addCotxeText;
+    private Boolean isAllFabsVisible;
+    private Animation fabOpen, fabClose, rotateForward, rotateBackward;
+    private SeekBar seekBar;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
