@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
                 String password = contrasenya.getText().toString();
                 if (mail.equals("") || password.equals("")) {
                     Toast.makeText(getApplicationContext(), "Correu i contrasenya requerits", Toast.LENGTH_SHORT).show();
-                } else if(true) { //TODO mailExists()) {
+                } else if (viewModel.insertUserDB(mail, password)) { //TODO mailExists()) { ???? viewModel.insertUserDB(mail, password) { ????
                     Intent processar_main = new Intent(view.getContext(), MainActivity.class);
                     startActivityForResult(processar_main, 0);
                 } else {

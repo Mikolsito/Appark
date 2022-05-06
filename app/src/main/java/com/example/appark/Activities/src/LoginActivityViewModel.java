@@ -15,7 +15,7 @@ public class LoginActivityViewModel extends AndroidViewModel implements vmInterf
         db = new DatabaseAdapter(this);
     }
 
-    public boolean searchUserDB(String mail, String pwd) {
+    public boolean insertUserDB(String mail, String pwd) {
         db.searchUser(mail);
         User user = MainActivity.currentUser;
         return user.getMail().equals(mail) && user.getPwd().equals(pwd);
