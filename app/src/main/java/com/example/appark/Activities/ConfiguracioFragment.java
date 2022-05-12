@@ -50,8 +50,8 @@ public class ConfiguracioFragment extends Fragment {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Toast.makeText(getView().getContext(), "Falta implementar aquesta funcionalitat", Toast.LENGTH_SHORT).show();
-                        //viewModel.updateUser(antigaContrasenya.getText().toString(), novaContrasenya.getText().toString(), anticCorreu.getText().toString(), nouCorreu.getText().toString());
+                        //Toast.makeText(getView().getContext(), "Falta implementar aquesta funcionalitat", Toast.LENGTH_SHORT).show();
+                        viewModel.updateUser(antigaContrasenya.getText().toString(), novaContrasenya.getText().toString(), anticCorreu.getText().toString(), nouCorreu.getText().toString());
                         //TODO: salta la excepcion public boolean performClick() {
                         //        throw new RuntimeException("Stub!");
                         //    }

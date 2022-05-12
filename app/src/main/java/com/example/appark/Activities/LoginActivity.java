@@ -1,6 +1,5 @@
 package com.example.appark.Activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -9,11 +8,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.example.appark.R;
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends AppCompatActivity {
     private Button entra, registre;
-    private EditText mail, contrasenya;
+    private EditText correu, contrasenya;
+    LoginActivityViewModel viewModel;
 
     public LoginActivity() {}
 
@@ -22,29 +25,30 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        viewModel = new ViewModelProvider(this).get(LoginActivityViewModel.class);
         entra = (Button) findViewById(R.id.btn_login);
         registre = (Button) findViewById(R.id.btn_goToRegister);
-        mail = (EditText) findViewById(R.id.et_email);
+        correu = (EditText) findViewById(R.id.et_email);
         contrasenya = (EditText) findViewById(R.id.et_password);
-
-        //TODO crear una classe DataBaseHelper per a gestionar la base de dades
-        //databaseHelper = new DatabaseHelper(this);
 
         entra.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String username = mail.getText().toString();
+                String mail = correu.getText().toString();
                 String password = contrasenya.getText().toString();
-                if (username.equals("") || password.equals("")) {
+                if (mail.equals("") || password.equals("")) {
                     Toast.makeText(getApplicationContext(), "Correu i contrasenya requerits", Toast.LENGTH_SHORT).show();
-                } else if(true){ // if (databaseHelper.CheckLogin(username, password)) {
-                    Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_SHORT).show();
-                    Intent processar_main = new Intent(view.getContext(), MainActivity.class);
-                    startActivityForResult(processar_main, 0);
+                }
+                boolean info = viewModel.getRegisteredUserDB(mail, password);
+                if (info) { //TODO mailExists()) { ???? viewModel.insertUserDB(mail, password) { ????
+                    Toast.makeText(getApplicationContext(), "Login coreecte", Toast.LENGTH_SHORT).show();
+                    //Intent processar_main = new Intent(view.getContext(), MainActivity.class);
+                    //startActivityForResult(processar_main, 0);
                 } else {
-                    Toast.makeText(getApplicationContext(), "Correu o contrasenya invalids", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Correu o contrasenya incorrectes", Toast.LENGTH_SHORT).show();
                 }
             }
+            // TODO: nos salta una excepcion al acabar el onClick pero todas las llamadasfuncionan correctamente
         });
 
         registre.setOnClickListener(new View.OnClickListener() {
@@ -54,10 +58,6 @@ public class LoginActivity extends Activity {
                 startActivityForResult(processar_reg, 0);
             }
         });
-
-
-
-
 
     }
 }

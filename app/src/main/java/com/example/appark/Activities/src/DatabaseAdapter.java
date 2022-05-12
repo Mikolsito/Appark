@@ -47,8 +47,8 @@ public class DatabaseAdapter extends Activity {
         String id = doc.getId();
 
         // Update an existing document
-        db.collection("Usuarios").document(id).update(map);
-                /*.addOnSuccessListener(new OnSuccessListener<Void>() {
+        db.collection("Usuarios").document(id).update(map)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 Toast.makeText(getApplicationContext(), "Dades actualitzades correctament", Toast.LENGTH_SHORT).show();
@@ -58,7 +58,7 @@ public class DatabaseAdapter extends Activity {
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(getApplicationContext(), "Error al actualitzar les dades", Toast.LENGTH_SHORT).show();
             }
-        });*/
+        });
         MainActivity.currentUser.setUser(name, mail, pwd);
         //listener.getInfoUser(MainActivity.currentUser);
     }
@@ -109,6 +109,24 @@ public class DatabaseAdapter extends Activity {
                         Log.w(TAG, "Error adding document", e);
                     }
                 });
+    }
+
+    public boolean searchUserDB(String mail){
+        Log.d(TAG,"searchUser method DatabaseAdapter");
+
+        Task<QuerySnapshot> t = db.collection("Usuarios").whereEqualTo("mail", mail).get();
+        List<DocumentSnapshot> docs = t.getResult().getDocuments();
+        DocumentSnapshot doc = docs.get(0);
+        Map<String, Object> data = doc.getData();
+
+        if(data != null){
+            MainActivity.currentUser.setUser(data.get("name").toString(), data.get("mail").toString(), data.get("pwd").toString());
+            return true;
+        }
+        else{
+            return false;
+        }
+
     }
 
 }

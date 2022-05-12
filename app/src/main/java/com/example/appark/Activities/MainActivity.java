@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        //setSupportActionBar(binding.appBarMain.toolbar);
         setSupportActionBar(binding.appBarMain.toolbar);
         Snackbar arrived = Snackbar.make(findViewById(R.id.app_bar_main),"Log-In Successful", Snackbar.LENGTH_SHORT);
 
