@@ -52,8 +52,8 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Nom, correu i contrasenya requerits", Toast.LENGTH_SHORT).show();
                 } else {
                     if(password.equals(confirm_password)) {
-                        if (isMail(correu)){ // TODO && !mailExists()) {
-                            if (isPasswordSegur(password)) {
+                        if (true /*isMail(correu)*/){ // TODO && !mailExists()) {
+                            if (true /*isPasswordSegur(password)*/) {
                                 if (true /*termes.isChecked()*/) {
                                     viewModel.createUserDB(name, correu, password);
                                     Toast.makeText(getApplicationContext(), "Registrat amb èxit", Toast.LENGTH_SHORT).show();

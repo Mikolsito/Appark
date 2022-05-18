@@ -4,30 +4,38 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.appark.Activities.src.DatabaseAdapter;
 import com.example.appark.Activities.src.User;
 import com.example.appark.Activities.src.vmInterface;
 
 public class LoginActivityViewModel extends AndroidViewModel implements vmInterface {
-    DatabaseAdapter db;
+
+    private final MutableLiveData<User> mUser;
+    DatabaseAdapter adapter;
 
     public LoginActivityViewModel(@NonNull Application application) {
         super(application);
-        db = new DatabaseAdapter(this);
+        adapter = new DatabaseAdapter(this);
+        mUser = new MutableLiveData<>();
     }
 
-    public boolean getRegisteredUserDB(String mail, String pwd) {
-        if(db.searchUserDB(mail)){
+    public LiveData<User> getUser(){
+        return mUser;
+    }
+
+    public void getRegisteredUserDB(String mail) {
+        /*if(adapter.searchUserDB(mail)){
             User user = MainActivity.currentUser;
             return user.getMail().equals(mail) && user.getPwd().equals(pwd);
-        }
-        return false;
-
+        }*/
+        adapter.getUser(mail);
     }
 
     @Override
     public void getInfoUser(User user) {
-        MainActivity.currentUser = user;
+        mUser.setValue(user);
     }
 }
