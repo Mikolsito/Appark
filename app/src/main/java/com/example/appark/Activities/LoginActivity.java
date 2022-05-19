@@ -1,5 +1,6 @@
 package com.example.appark.Activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -22,14 +23,14 @@ public class LoginActivity extends AppCompatActivity {
     private EditText correu, contrasenya;
     private LoginActivityViewModel viewModel;
 
-    boolean userExists = false;
+    Context context;
 
     public LoginActivity() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        context = this.getApplicationContext();
         setLiveDataObservers(); //Inicializa los observers de esta Activity
 
         setContentView(R.layout.activity_login);
@@ -49,10 +50,6 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Correu i contrasenya requerits", Toast.LENGTH_SHORT).show();
                 }
                 viewModel.getRegisteredUserDB(mail);
-                if(userExists){
-                    Intent processar_main = new Intent(view.getContext(), MainActivity.class);
-                    startActivityForResult(processar_main, 0);
-                }
 
                 /*if (info) { //TODO mailExists()) { ???? viewModel.insertUserDB(mail, password) { ????
                     Toast.makeText(getApplicationContext(), "Login coreecte", Toast.LENGTH_SHORT).show();
@@ -81,18 +78,11 @@ public class LoginActivity extends AppCompatActivity {
         final Observer<User> observer = new Observer<User>() {
             @Override
             public void onChanged(User us) {
-                /*NavigationView navigationView = findViewById(R.id.nav_view);
-                View headerView = navigationView.getHeaderView(0);
-                TextView navUsername = headerView.findViewById(R.id.textViewUserName);
-                TextView navUsermail = headerView.findViewById(R.id.textViewMail);
-
-                navUsername.setText(us.getName());
-                navUsermail.setText(us.getMail());*/
-
                 if(us.getPwd().equals(contrasenya.getText().toString())){
                     MainActivity.currentUser = us;
-                    Toast.makeText(getApplicationContext(), "Login correcte", Toast.LENGTH_SHORT).show();
-                    userExists = true; //TODO: cambiar estrategia para avisar de que el usuario se ha encontrado en la db
+                    Intent processar_main = new Intent(context, MainActivity.class);
+                    startActivityForResult(processar_main, 0);
+
                 }
                 else{
                     Toast.makeText(getApplicationContext(), "Login incorrecte", Toast.LENGTH_SHORT).show();
