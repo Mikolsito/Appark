@@ -34,7 +34,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setLiveDataObservers(); //Inicializa los observers de esta Activity
+        //User us = MainActivity.currentUser;
+        //setLiveDataObservers(); //Inicializa los observers de esta Activity
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -54,6 +55,18 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        setName_Email_SideBar();
+    }
+
+    private void setName_Email_SideBar() {
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = headerView.findViewById(R.id.textViewUserName);
+        TextView navUsermail = headerView.findViewById(R.id.textViewMail);
+
+        navUsername.setText(MainActivity.currentUser.getName());
+        navUsermail.setText(MainActivity.currentUser.getMail());
     }
 
     @Override
