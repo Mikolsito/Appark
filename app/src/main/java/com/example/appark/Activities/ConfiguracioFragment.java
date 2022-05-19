@@ -62,6 +62,7 @@ public class ConfiguracioFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
                         MainActivity.currentUser.updateUser(antigaContrasenya.getText().toString(), novaContrasenya.getText().toString(), anticCorreu.getText().toString(), nouCorreu.getText().toString());
+                        Toast.makeText(view.getContext(), "S'han actualitzat correctament les dades", Toast.LENGTH_SHORT).show();
                     }
                 });
         return configView;

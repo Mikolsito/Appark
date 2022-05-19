@@ -35,7 +35,7 @@ public class User {
         if (oldMail.equals(this.mail) && oldPwd.equals(this.pwd)){
             this.mail = newMail;
             this.pwd = newPwd;
-            adapter.updateUser(name, newMail, newPwd);
+            adapter.updateUser(name, oldMail, newMail, newPwd);
         }
 
 

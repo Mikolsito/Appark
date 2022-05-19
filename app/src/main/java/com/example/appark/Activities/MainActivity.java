@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         setName_Email_SideBar();
     }
 
-    private void setName_Email_SideBar() {
+    public void setName_Email_SideBar() {
         NavigationView navigationView = findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
         TextView navUsername = headerView.findViewById(R.id.textViewUserName);

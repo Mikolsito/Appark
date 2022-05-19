@@ -1,6 +1,7 @@
 package com.example.appark.Activities.src;
 
 import android.app.Activity;
+import android.nfc.Tag;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -33,25 +34,50 @@ public class DatabaseAdapter extends Activity {
         databaseAdapter = this;
     }
 
-    public void updateUser(String name, String mail, String pwd) {
+    public void updateUser(String name, String oldEmail, String newEmail, String pwd) {
+        Log.d(TAG,"updateUser");
         Map<String, Object> map = new HashMap<>(); //.collection necesita de un HashMap
         map.put("name", name);
-        map.put("mail", mail);
+        map.put("mail", newEmail);
         map.put("pwd", pwd);
 
 
-        Task<QuerySnapshot> t = db.collection("Usuarios").whereEqualTo("mail", mail).get();
+        /*Task<QuerySnapshot> t = db.collection("Usuarios").whereEqualTo("mail", oldEmail).get();
         List<DocumentSnapshot> docs = t.getResult().getDocuments();
         DocumentSnapshot doc = docs.get(0);
-        String id = doc.getId();
+        String id = doc.getId();*/
 
-        // Update an existing document
-        db.collection("Usuarios").document(id).update(map);
-        Toast.makeText(getApplicationContext(), "Dades actualitzades correctament", Toast.LENGTH_SHORT).show();
+        db.collection("Usuarios").whereEqualTo("mail", oldEmail).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                Log.d(TAG, "user finded in DB");
 
-        User retrieved_User = new User(name, mail, pwd);
+                String id = queryDocumentSnapshots.getDocuments().get(0).getId();
+                // Update an existing document
+                db.collection("Usuarios").document(id).update(map).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d(TAG, "user updated on DB");
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(TAG, "error while uPdating user");
+                    }
+                });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d(TAG, "error while serching the user on DB");
+            }
+        });
 
-        listener.getInfoUser(retrieved_User);
+
+
+        //User retrieved_User = new User(name, mail, pwd);
+
+        //listener.getInfoUser(retrieved_User);
 
     }
 
@@ -93,6 +119,9 @@ public class DatabaseAdapter extends Activity {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+
+                        User newUser = new User(name, mail, pwd);
+                        listener.getInfoUser(newUser);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
