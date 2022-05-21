@@ -34,8 +34,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //User us = MainActivity.currentUser;
-        //setLiveDataObservers(); //Inicializa los observers de esta Activity
+        setLiveDataObservers(); //Inicializa los observers de esta Activity
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());

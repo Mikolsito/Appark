@@ -42,62 +42,58 @@ public class DatabaseAdapter extends Activity {
         map.put("pwd", pwd);
 
 
-        /*Task<QuerySnapshot> t = db.collection("Usuarios").whereEqualTo("mail", oldEmail).get();
-        List<DocumentSnapshot> docs = t.getResult().getDocuments();
-        DocumentSnapshot doc = docs.get(0);
-        String id = doc.getId();*/
-
-        db.collection("Usuarios").whereEqualTo("mail", oldEmail).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                Log.d(TAG, "user finded in DB");
-
-                String id = queryDocumentSnapshots.getDocuments().get(0).getId();
-                // Update an existing document
-                db.collection("Usuarios").document(id).update(map).addOnSuccessListener(new OnSuccessListener<Void>() {
+        db.collection("Usuarios")
+                .whereEqualTo("mail", oldEmail).get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
-                    public void onSuccess(Void unused) {
-                        Log.d(TAG, "user updated on DB");
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        Log.d(TAG, "user finded in DB");
+
+                        String id = queryDocumentSnapshots.getDocuments().get(0).getId();
+                        // Update an existing document
+                        db.collection("Usuarios").document(id).update(map).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Log.d(TAG, "user updated on DB");
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.d(TAG, "error while uPdating user");
+                            }
+                        });
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.d(TAG, "error while uPdating user");
+                        Log.d(TAG, "error while serching the user on DB");
                     }
                 });
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.d(TAG, "error while serching the user on DB");
-            }
-        });
 
-
-
-        //User retrieved_User = new User(name, mail, pwd);
-
-        //listener.getInfoUser(retrieved_User);
+        User retrieved_User = new User(name, newEmail, pwd);
+        listener.getInfoUser(retrieved_User);
 
     }
 
     public void getUser(String mail){
         Log.d(TAG,"getUser method DatabaseAdapter");
+
         db.collection("Usuarios")
-                .whereEqualTo("mail", mail).limit(1)
-                .get()
+                .whereEqualTo("mail", mail).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
+                            Log.d(TAG, "User finded");
+
                             Map<String, Object> data = task.getResult().getDocuments().get(0).getData();
                             String name = (String) data.get("name");
                             String mail = (String) data.get("mail");
                             String pwd = (String) data.get("pwd");
 
                             User retrieved_User = new User(name, mail, pwd);
-
                             listener.getInfoUser(retrieved_User);
+
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }

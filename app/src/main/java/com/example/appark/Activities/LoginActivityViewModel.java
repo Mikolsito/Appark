@@ -27,7 +27,7 @@ public class LoginActivityViewModel extends AndroidViewModel implements vmInterf
     }
 
     public void getRegisteredUserDB(String mail) {
-        /*if(adapter.searchUserDB(mail)){
+        /*if(adapter.getUser(mail)){
             User user = MainActivity.currentUser;
             return user.getMail().equals(mail) && user.getPwd().equals(pwd);
         }*/
@@ -35,7 +35,7 @@ public class LoginActivityViewModel extends AndroidViewModel implements vmInterf
     }
 
     @Override
-    public void getInfoUser(User user) {
-        mUser.setValue(user);
+    public void getInfoUser(User us) {
+        mUser.setValue(us);
     }
 }

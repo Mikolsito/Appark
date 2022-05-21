@@ -31,15 +31,14 @@ public class User {
     }
 
 
-    public void updateUser(String oldPwd, String newPwd, String oldMail, String newMail){
+    public boolean updateUser(String oldPwd, String newPwd, String oldMail, String newMail){
         if (oldMail.equals(this.mail) && oldPwd.equals(this.pwd)){
             this.mail = newMail;
             this.pwd = newPwd;
             adapter.updateUser(name, oldMail, newMail, newPwd);
+            return true;
         }
-
-
-
+        return false;
     }
 
     public void saveUser() {

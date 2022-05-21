@@ -61,8 +61,13 @@ public class ConfiguracioFragment extends Fragment {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        MainActivity.currentUser.updateUser(antigaContrasenya.getText().toString(), novaContrasenya.getText().toString(), anticCorreu.getText().toString(), nouCorreu.getText().toString());
-                        Toast.makeText(view.getContext(), "S'han actualitzat correctament les dades", Toast.LENGTH_SHORT).show();
+                        if (MainActivity.currentUser.updateUser(antigaContrasenya.getText().toString(), novaContrasenya.getText().toString(), anticCorreu.getText().toString(), nouCorreu.getText().toString())){
+                            Toast.makeText(view.getContext(), "S'han actualitzat correctament les dades", Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            Toast.makeText(view.getContext(), "La contrasenya o el mail no corresponen amb els actuals", Toast.LENGTH_SHORT).show();
+                        }
+
                     }
                 });
         return configView;
