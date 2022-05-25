@@ -120,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
         if(requestCode == 1 && resultCode==RESULT_OK && data != null && data.getData() != null){
             profImgUri = data.getData();
             profileImg.setImageURI(profImgUri);
+            //uploadPicture();
         }
     }
 }

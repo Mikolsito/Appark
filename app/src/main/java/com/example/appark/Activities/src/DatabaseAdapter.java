@@ -1,6 +1,7 @@
 package com.example.appark.Activities.src;
 
 import android.app.Activity;
+import android.net.Uri;
 import android.nfc.Tag;
 import android.util.Log;
 import android.widget.Toast;
@@ -16,7 +17,11 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +30,7 @@ public class DatabaseAdapter extends Activity {
     public static final String TAG = "DatabaseAdapter";
 
     public static FirebaseFirestore db = FirebaseFirestore.getInstance();
+    public static FirebaseStorage storage = FirebaseStorage.getInstance();
 
     public static vmInterface listener;
     public static DatabaseAdapter databaseAdapter;
@@ -128,22 +134,29 @@ public class DatabaseAdapter extends Activity {
                 });
     }
 
-    public boolean searchUserDB(String mail){
-        Log.d(TAG,"searchUser method DatabaseAdapter");
+    public void saveImage(String path){
+        Uri file = Uri.fromFile(new File("path/to/images/rivers.jpg")); //TODO: pasar el path correcto
+        StorageReference storageRef = storage.getReference();
+        StorageReference imgRef = storageRef.child("images/"+file.getLastPathSegment());
+        UploadTask uploadTask = imgRef.putFile(file);
 
-        Task<QuerySnapshot> t = db.collection("Usuarios").whereEqualTo("mail", mail).get();
-        List<DocumentSnapshot> docs = t.getResult().getDocuments();
-        DocumentSnapshot doc = docs.get(0);
-        Map<String, Object> data = doc.getData();
+        //TODO: preguntar por que continueWithTask del proyecto de ejemplo
 
-        if(data != null){
-            MainActivity.currentUser.setUser(data.get("name").toString(), data.get("mail").toString(), data.get("pwd").toString());
-            return true;
-        }
-        else{
-            return false;
-        }
-
+        // Register observers to listen for when the download is done or if it fails
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                //TODO: es correcto añadir toasts en el adapter???
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                // ...
+            }
+        });
     }
+
+    //TODO: como asignar una imagen a cada usuario?
 
 }
