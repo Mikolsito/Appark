@@ -1,10 +1,14 @@
 package com.example.appark.Activities;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.Observer;
@@ -27,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
     public Snackbar arrived;
+    private ImageView profileImg;
+    public Uri profImgUri;
 
     private MainActivityViewModel mainActVM;
 
@@ -55,18 +61,18 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        setName_Email_SideBar();
-    }
-
-    public void setName_Email_SideBar() {
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        //Encontramos la imagen de perfil y añadimos onClickListener para escoger foto de la galeria
         View headerView = navigationView.getHeaderView(0);
-        TextView navUsername = headerView.findViewById(R.id.textViewUserName);
-        TextView navUsermail = headerView.findViewById(R.id.textViewMail);
+        profileImg = headerView.findViewById(R.id.profileImage);
+        profileImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                choosePicture();
+            }
+        });
 
-        navUsername.setText(MainActivity.currentUser.getName());
-        navUsermail.setText(MainActivity.currentUser.getMail());
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -81,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
     }
 
-    public void setLiveDataObservers() {
+    private void setLiveDataObservers() {
         //Subscribe the activity to the observable
         mainActVM = new ViewModelProvider(this).get(MainActivityViewModel.class);
 
@@ -99,5 +105,21 @@ public class MainActivity extends AppCompatActivity {
         };
 
         mainActVM.getUser().observe(this, observer);
+    }
+
+    private void choosePicture(){
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, 1); //aqui llamaremos a onActivityResult
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1 && resultCode==RESULT_OK && data != null && data.getData() != null){
+            profImgUri = data.getData();
+            profileImg.setImageURI(profImgUri);
+        }
     }
 }
