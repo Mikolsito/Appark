@@ -1,28 +1,50 @@
 package com.example.appark.Activities;
 
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.PopupWindow;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.example.appark.Activities.src.Location;
 import com.example.appark.R;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class PaginaPrincipalFragment extends Fragment {
+import java.util.HashMap;
+import java.util.Map;
 
-    FloatingActionButton mAddFab, mAddHistorial, mAddCotxe;
-    TextView addHistorialText, addCotxeText;
-    Boolean isAllFabsVisible;
-    Animation fabOpen, fabClose, rotateForward, rotateBackward;
-    SeekBar seekBar;
+public class PaginaPrincipalFragment extends Fragment implements OnMapReadyCallback,
+        GoogleMap.OnMarkerClickListener,
+        GoogleMap.OnInfoWindowClickListener {
+
+    private UiSettings mUiSettings;
+    private GoogleMap mMap;
+    private FloatingActionButton mAddFab, mAddHistorial, mAddCotxe;
+    private TextView addHistorialText, addCotxeText;
+    private Boolean isAllFabsVisible;
+    private Animation fabOpen, fabClose, rotateForward, rotateBackward;
+    private SeekBar seekBar;
+    private HashMap<LatLng, Location> ubis;
+    private PaginaPrincipalViewModel viewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -57,6 +79,8 @@ public class PaginaPrincipalFragment extends Fragment {
 
             }
         });
+        setLiveDataObservers();
+
 
         //Animacions
         fabOpen = AnimationUtils.loadAnimation(view.getContext(),R.anim.fab_open);
@@ -139,4 +163,72 @@ public class PaginaPrincipalFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onInfoWindowClick(@NonNull Marker marker) {
+        //Per futures implementacions
+    }
+
+    @Override
+    public boolean onMarkerClick(@NonNull Marker marker) {
+        View popup = getLayoutInflater().inflate(R.layout.popup_layout, null);
+        PopupWindow popupWindow = new PopupWindow(popup, 800, 600);
+        popupWindow.setFocusable(true);
+        popupWindow.setBackgroundDrawable(new ColorDrawable());
+        popupWindow.showAtLocation(getView().findViewById(R.id.map), Gravity.CENTER, 0, 0);
+
+        /* Trobar items afegits al layout
+        // TextInputLayout saveDescr = popup.findViewById(R.id.note_description);
+        //Button saveButton = popup.findViewById(R.id.save_button);
+        saveButton.setOnClickListener((v) -> {
+            String text = saveDescr.getEditText().getText().toString();
+            Toast.makeText(getView().getContext(), "Ubicació Guardada", Toast.LENGTH_SHORT).show();
+            popupWindow.dismiss();
+        });
+         */
+        return true;
+    }
+
+    /**
+     * Manipulates the map once available.
+     * This callback is triggered when the map is ready to be used.
+     * This is where we can add markers or lines, add listeners or move the camera.
+     * If Google Play services is not installed on the device, the user will be prompted to install
+     * it inside the SupportMapFragment. This method will only be triggered once the user has
+     * installed Google Play services and returned to the app.
+     */
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        mMap.setOnMarkerClickListener(this);
+        mMap.setOnInfoWindowClickListener(this);
+        mUiSettings = mMap.getUiSettings();
+        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ubis.get(0).getLatLng(), 20));  //Activem un zoom inicial a la primera ubicacio
+        mUiSettings.setZoomGesturesEnabled(true);   //Activa doble tap per fer zoom
+        showUbis();
+    }
+
+    public void showUbis() {
+        for(Map.Entry<LatLng, Location> set: ubis.entrySet()) {
+
+            mMap.addMarker(new MarkerOptions().position(set.getValue().getLatLng()));
+        }
+    }
+
+    public void setLiveDataObservers() {
+        //Subscribe the activity to the observable
+        viewModel = new ViewModelProvider(this).get(PaginaPrincipalViewModel.class);
+
+        final Observer<HashMap<LatLng, Location>> observer = new Observer<HashMap<LatLng, Location>>() {
+            @Override
+            public void onChanged(HashMap<LatLng, Location> latLngLocationHashMap) {
+                if(latLngLocationHashMap != null) {
+                    ubis = latLngLocationHashMap;
+                    showUbis();
+                }
+            }
+        };
+
+        viewModel.getUbicacions().observe(getViewLifecycleOwner(), observer);
+    }
 }
