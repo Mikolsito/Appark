@@ -53,7 +53,7 @@ public class ConfiguracioFragment extends Fragment {
         cancelaBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(), "Falta implementar esto con FragmentManager", Toast.LENGTH_SHORT).show();
+                MainActivity.navController.navigate(R.id.nav_paginaprincipal);
             }
         });
 
@@ -63,6 +63,7 @@ public class ConfiguracioFragment extends Fragment {
                     public void onClick(View view) {
                         if (MainActivity.currentUser.updateUser(antigaContrasenya.getText().toString(), novaContrasenya.getText().toString(), anticCorreu.getText().toString(), nouCorreu.getText().toString())){
                             Toast.makeText(view.getContext(), "S'han actualitzat correctament les dades", Toast.LENGTH_SHORT).show();
+                            MainActivity.navController.navigate(R.id.nav_paginaprincipal);
                         }
                         else{
                             Toast.makeText(view.getContext(), "La contrasenya o el mail no corresponen amb els actuals", Toast.LENGTH_SHORT).show();

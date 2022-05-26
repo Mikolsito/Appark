@@ -27,6 +27,7 @@ import com.google.android.material.snackbar.Snackbar;
 public class MainActivity extends AppCompatActivity {
 
     public static User currentUser = new User("dummyCurrentUser", "dummy@gmail.com", "dummyPwd");
+    public static NavController navController;
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                 R.id.nav_configuracio, R.id.nav_historialubis, R.id.nav_social, R.id.nav_estadistiques, R.id.nav_tancasessio)
                 .setOpenableLayout(drawer)
                 .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
