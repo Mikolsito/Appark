@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.appark.Activities.MainActivity;
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -61,6 +62,8 @@ public class DatabaseAdapter extends Activity {
                             @Override
                             public void onSuccess(Void unused) {
                                 Log.d(TAG, "user updated on DB");
+                                User retrieved_User = new User(name, newEmail, pwd);
+                                listener.getInfoUser(retrieved_User);
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
@@ -76,8 +79,7 @@ public class DatabaseAdapter extends Activity {
                     }
                 });
 
-        User retrieved_User = new User(name, newEmail, pwd);
-        listener.getInfoUser(retrieved_User);
+
 
     }
 
@@ -134,29 +136,75 @@ public class DatabaseAdapter extends Activity {
                 });
     }
 
-    public void saveImage(String path){
+    public void saveImage(String email, String path){
         Uri file = Uri.fromFile(new File("path/to/images/rivers.jpg")); //TODO: pasar el path correcto
         StorageReference storageRef = storage.getReference();
         StorageReference imgRef = storageRef.child("images/"+file.getLastPathSegment());
         UploadTask uploadTask = imgRef.putFile(file);
 
-        //TODO: preguntar por que continueWithTask del proyecto de ejemplo
+        Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
+                }
 
-        // Register observers to listen for when the download is done or if it fails
-        uploadTask.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                //TODO: es correcto añadir toasts en el adapter???
+                // Continue with the task to get the download URL
+                return imgRef.getDownloadUrl();
             }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
             @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                // ...
+            public void onComplete(@NonNull Task<Uri> task) {
+                if (task.isSuccessful()) {
+                    Uri downloadUri = task.getResult();
+                    saveURLImage(email, downloadUri.toString()); //asignamos la URL de la imagen al usuario
+                } else {
+                    // Handle failures
+                    // ...
+                }
             }
         });
     }
 
-    //TODO: como asignar una imagen a cada usuario?
+    public void saveURLImage(String email, String url){
+        Log.d(TAG,"saveURLImage");
+        Map<String, Object> map = new HashMap<>(); //.collection necesita de un HashMap
+        map.put("url", url);
+
+
+        db.collection("Usuarios")
+                .whereEqualTo("mail", email).get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        Log.d(TAG, "user finded in DB");
+
+                        String id = queryDocumentSnapshots.getDocuments().get(0).getId();
+                        // Update an existing document
+                        db.collection("Usuarios").document(id).update(map).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Log.d(TAG, "url image saved in db");
+                                listener.getURLImage(url);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.d(TAG, "error while saving url image");
+                            }
+                        });
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d(TAG, "error while serching the user on DB");
+            }
+        });
+
+
+
+    }
+
+
 
 }

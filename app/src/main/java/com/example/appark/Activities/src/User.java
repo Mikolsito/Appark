@@ -10,6 +10,7 @@ public class User {
     private String name;
     private String mail;
     private String pwd;
+    private String url;
 
 
     private final DatabaseAdapter adapter = DatabaseAdapter.databaseAdapter;
@@ -18,6 +19,7 @@ public class User {
         this.name = name;
         this.mail = mail;
         this.pwd = pwd;
+        this.url = null;
     }
 
     public String getName() {
@@ -28,6 +30,9 @@ public class User {
     }
     public String getPwd() {
         return pwd;
+    }
+    public void setUrl(String url){
+        this.url = url;
     }
 
 

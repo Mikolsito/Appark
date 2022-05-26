@@ -105,7 +105,17 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
+        final Observer<String> observerURL = new Observer<String>() {
+            @Override
+            public void onChanged(String url) {
+                MainActivity.currentUser.setUrl(url);
+                //profileImg.set //TODO: me he quedado aqui
+
+            }
+        };
+
         mainActVM.getUser().observe(this, observer);
+        mainActVM.getURL().observe(this, observerURL);
     }
 
     private void choosePicture(){

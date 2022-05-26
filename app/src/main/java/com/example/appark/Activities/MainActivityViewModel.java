@@ -13,10 +13,12 @@ import com.example.appark.Activities.src.vmInterface;
 public class MainActivityViewModel extends AndroidViewModel implements vmInterface {
 
     private final MutableLiveData<User> mUser;
+    private final MutableLiveData<String> mURL;
 
     public MainActivityViewModel(Application application) {
         super(application);
         mUser = new MutableLiveData<>();
+        mURL = new MutableLiveData<>();
         DatabaseAdapter da = new DatabaseAdapter(this);
         da.getUser(MainActivity.currentUser.getMail());
     }
@@ -26,8 +28,17 @@ public class MainActivityViewModel extends AndroidViewModel implements vmInterfa
         return mUser;
     }
 
+    public LiveData<String> getURL(){
+        return mURL;
+    }
+
     @Override
     public void getInfoUser(User us) {
         mUser.setValue(us);
+    }
+
+    @Override
+    public void getURLImage(String url) {
+        mURL.setValue(url);
     }
 }
