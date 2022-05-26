@@ -1,11 +1,16 @@
 package com.example.appark.Activities;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
+import com.example.appark.Activities.src.RegisterActivityViewModel;
+import com.example.appark.Activities.src.User;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.YAxis;
@@ -21,19 +26,22 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.google.firebase.firestore.GeoPoint;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 //Crea set de dades (ara random, despres en base a dades del firebase)
 public class EstadistiquesFragment extends Fragment {
-
+    public static ArrayList<Pair<String, Integer>> PlacesBarri = new ArrayList<Pair<String, Integer>>();
    private LineChart linechart;
    private LineDataSet lineDataSet;
    private BarChart barchart;
    private BarDataSet barDataSet;
    private PieChart piechart;
    private PieDataSet pieDataSet;
+   EstadistiquesViewModel viewModel;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -53,6 +61,9 @@ public class EstadistiquesFragment extends Fragment {
             lineEntries.add(new Entry((float) i,(float)y));
             barEntries.add(new BarEntry((float) i, (float)x));
         }
+        //User user=new User("hola", "u@u.com", "pwd");
+        //String id= "5";
+        //viewModel.createPositionDB(id,user,345, 345);
         pieDataSet=new PieDataSet(pieEntries, "Exemple zones");
         barDataSet=new BarDataSet(barEntries, "Exemple aparcaments");
         lineDataSet=new LineDataSet(lineEntries,"Exemple temps");
@@ -74,6 +85,12 @@ public class EstadistiquesFragment extends Fragment {
         barchart.setData(generateBarData());
         linechart.setData(generateLineData());
         piechart.setData(generatePieData());
+
+        viewModel = new ViewModelProvider(this).get(EstadistiquesViewModel.class);
+        User user=new User("hola", "u@u.com", "pwd");
+        String id= "5";
+        viewModel.createPositionDB(id,user,30, 45);
+        viewModel.getPlacesBarrisDB();
     }
 
     private BarData generateBarData() {
