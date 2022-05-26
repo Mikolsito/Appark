@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
                 viewModel.getRegisteredUserDB(mail);
 
                 /*if (info) { //TODO mailExists()) { ???? viewModel.insertUserDB(mail, password) { ????
-                    Toast.makeText(getApplicationContext(), "Login coreecte", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Login correcte", Toast.LENGTH_SHORT).show();
                     //Intent processar_main = new Intent(view.getContext(), MainActivity.class);
                     //startActivityForResult(processar_main, 0);
                 } else {
