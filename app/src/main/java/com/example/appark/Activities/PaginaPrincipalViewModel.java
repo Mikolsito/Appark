@@ -10,12 +10,13 @@ import com.example.appark.Activities.src.Location;
 import com.example.appark.Activities.src.vmInterfaceUbicacio;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class PaginaPrincipalViewModel extends AndroidViewModel implements vmInterfaceUbicacio {
 
-    private MutableLiveData<HashMap<LatLng, Location>> mUbicacions;
-    private final MutableLiveData<String> mToast;
+    private MutableLiveData<ArrayList<Location>> mUbicacions;
 
     public static final String TAG = "ViewModel";
 
@@ -24,37 +25,27 @@ public class PaginaPrincipalViewModel extends AndroidViewModel implements vmInte
         super(application);
 
         mUbicacions = new MutableLiveData<>();
-        mToast = new MutableLiveData<>();
         PaginaPrincipalAdapter da = new PaginaPrincipalAdapter(this);
         da.getCollection();
     }
 
     //public getter. Not mutable , read-only
-    public LiveData<HashMap<LatLng, Location>> getUbicacions(){
+    public LiveData<ArrayList<Location>> getUbicacions(){
         return mUbicacions;
     }
 
-    public Location getUbicacio(LatLng idx){
-        return mUbicacions.getValue().get(idx);
-    }
-
-    public void addUbicacio(String nom, double lat, double lon, int placesTotals, int placesLliures, String barri){
-        Location u = new Location(nom, lat, lon, placesTotals, placesLliures, barri);
-        if (u != null) {
-            mUbicacions.getValue().put(u.getLatLng(), u);
-            // Inform observer.
-            mUbicacions.setValue(mUbicacions.getValue());
-            u.saveUbi();
+    public Location getUbicacio(LatLng idx) throws Exception {
+        for (Location l : mUbicacions.getValue()) {
+            if (l.getLatLng() == idx) {
+                return l;
+            }
         }
-    }
-
-    public LiveData<String> getToast(){
-        return mToast;
+        throw new Exception("No s'ha trobat la ubicació");
     }
 
     //communicates user inputs and updates the result in the viewModel
     @Override
-    public void setCollection(HashMap<LatLng, Location> map) {
-        mUbicacions.setValue(map);
+    public void updateCollection(ArrayList<Location> l) {
+        mUbicacions.setValue(l);
     }
 }

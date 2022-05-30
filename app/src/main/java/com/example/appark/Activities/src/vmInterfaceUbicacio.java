@@ -1,7 +1,7 @@
 package com.example.appark.Activities.src;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 
 public interface vmInterfaceUbicacio {
-    void setCollection(HashMap<com.google.android.gms.maps.model.LatLng, Location> ubicacioHashMap);
+    void updateCollection(ArrayList<Location> l);
 }

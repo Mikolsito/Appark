@@ -69,8 +69,4 @@ public class Location {
         return places;
     }
 
-    public void saveUbi() {
-        Log.d("saveUbi", "saveUbi-> saveDocument");
-        adapter.saveDocumentWithFile(nom, ubi, places, placesLliures, barri);
-    }
 }

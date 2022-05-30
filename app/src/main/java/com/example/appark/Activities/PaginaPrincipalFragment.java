@@ -2,6 +2,7 @@ package com.example.appark.Activities;
 
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +30,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,7 +45,7 @@ public class PaginaPrincipalFragment extends Fragment implements OnMapReadyCallb
     private Boolean isAllFabsVisible;
     private Animation fabOpen, fabClose, rotateForward, rotateBackward;
     private SeekBar seekBar;
-    private HashMap<LatLng, Location> ubis;
+    private ArrayList<Location> ubis;
     private PaginaPrincipalViewModel viewModel;
 
     @Override
@@ -79,6 +81,8 @@ public class PaginaPrincipalFragment extends Fragment implements OnMapReadyCallb
 
             }
         });
+        ubis = new ArrayList<>();
+        ubis.add(new Location("xd", 30, 45, 23, 9, "Eixample"));
         setLiveDataObservers();
 
 
@@ -125,8 +129,7 @@ public class PaginaPrincipalFragment extends Fragment implements OnMapReadyCallb
             }
         });
 
-        mAddCotxe.setOnClickListener(
-                new View.OnClickListener() {
+        mAddCotxe.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Toast.makeText(getView().getContext(), "Falta implementar aquesta funcionalitat", Toast.LENGTH_SHORT).show();
@@ -209,26 +212,22 @@ public class PaginaPrincipalFragment extends Fragment implements OnMapReadyCallb
     }
 
     public void showUbis() {
-        for(Map.Entry<LatLng, Location> set: ubis.entrySet()) {
-
-            mMap.addMarker(new MarkerOptions().position(set.getValue().getLatLng()));
+        for(Location u: ubis) {
+            mMap.addMarker(new MarkerOptions().position(u.getLatLng()));
         }
     }
 
     public void setLiveDataObservers() {
         //Subscribe the activity to the observable
-        viewModel = new ViewModelProvider(this).get(PaginaPrincipalViewModel.class);
+        viewModel = new ViewModelProvider(getActivity()).get(PaginaPrincipalViewModel.class);
 
-        final Observer<HashMap<LatLng, Location>> observer = new Observer<HashMap<LatLng, Location>>() {
+        final Observer<ArrayList<Location>> observer = new Observer<ArrayList<Location>>() {
             @Override
-            public void onChanged(HashMap<LatLng, Location> latLngLocationHashMap) {
-                if(latLngLocationHashMap != null) {
-                    ubis = latLngLocationHashMap;
-                    showUbis();
-                }
+            public void onChanged(ArrayList<Location> latLngLocationList) {
+                Log.d("PAGINA PRINCIPAL FRAGMENT", "OnChangedListener");
+                ubis = latLngLocationList;
             }
         };
-
         viewModel.getUbicacions().observe(getViewLifecycleOwner(), observer);
     }
 }
