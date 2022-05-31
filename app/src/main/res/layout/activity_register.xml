@@ -92,9 +92,9 @@
             android:layout_above="@+id/btn_register"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="46dp"
+            android:layout_marginTop="19dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="68dp"
+            android:layout_marginBottom="95dp"
             android:text="@string/Termes"
             android:textColor="#878585" />
 
@@ -140,6 +140,17 @@
             android:fontFamily="@font/asap"
             android:text="@string/tornar_login"
             android:textColor="@color/black" />
+
+        <ProgressBar
+            android:id="@+id/circular_progressbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="2dp"
+            android:layout_marginBottom="221dp"
+            android:indeterminateDrawable="@drawable/circular_progressbar"
+            android:indeterminateDuration="@android:integer/config_longAnimTime" />
 
     </RelativeLayout>
 

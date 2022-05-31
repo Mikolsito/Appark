@@ -47,9 +47,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.appBarMain.toolbar);
-        Snackbar arrived = Snackbar.make(findViewById(R.id.app_bar_main),"Log-In Successful", Snackbar.LENGTH_SHORT);
 
-        arrived.show();
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
         // Passing each menu ID as a set of Ids because each

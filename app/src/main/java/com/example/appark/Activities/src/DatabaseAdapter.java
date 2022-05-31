@@ -9,6 +9,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.appark.Activities.MainActivity;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -40,7 +42,7 @@ public class DatabaseAdapter extends Activity {
         databaseAdapter = this;
     }
 
-    public void updateUser(String name, String oldEmail, String newEmail, String pwd) {
+    public void updateUser(String name, String oldEmail, String newEmail, String pwd) { //Configuració
         Log.d(TAG,"updateUser");
         Map<String, Object> map = new HashMap<>(); //.collection necesita de un HashMap
         map.put("name", name);
@@ -81,16 +83,15 @@ public class DatabaseAdapter extends Activity {
 
     }
 
-    public void getUser(String mail){
+    public void getUser(String mail){ //Login
         Log.d(TAG,"getUser method DatabaseAdapter");
-
         db.collection("Usuarios")
                 .whereEqualTo("mail", mail).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            Log.d(TAG, "User finded");
+                            Log.d(TAG, "User found");
 
                             Map<String, Object> data = task.getResult().getDocuments().get(0).getData();
                             String name = (String) data.get("name");
@@ -107,7 +108,7 @@ public class DatabaseAdapter extends Activity {
                 });
     }
 
-    public void saveUser(String name, String mail, String pwd) {
+    public void saveUser(String name, String mail, String pwd) { //Registre
         Map<String, Object> usuari = new HashMap<>();
         usuari.put("name", name);
         usuari.put("mail", mail);
@@ -159,4 +160,33 @@ public class DatabaseAdapter extends Activity {
 
     //TODO: como asignar una imagen a cada usuario?
 
+
+    public void saveLocation(String nom, LatLng ubi, int places, int placesLliures, String barri) {
+        Map<String, Object> localitzacio = new HashMap<>();
+        localitzacio.put("Nom", nom);
+        localitzacio.put("Ubicacio", ubi);
+        localitzacio.put("PlacesTotals", places);
+        localitzacio.put("PlacesLliures", placesLliures);
+        localitzacio.put("Barri", barri);
+
+        Log.d(TAG, "saveLocationDB");
+        // Add a new document with a generated ID
+        db.collection("Ubicacions")
+                .add(localitzacio)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+
+                        Location newLoc = new Location(nom, ubi, places, placesLliures, barri);
+                        listener.getInfoLocation(newLoc);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error adding document", e);
+                    }
+                });
+    }
 }

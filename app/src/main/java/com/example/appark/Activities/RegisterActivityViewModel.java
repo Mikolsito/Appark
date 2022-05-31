@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.appark.Activities.src.DatabaseAdapter;
+import com.example.appark.Activities.src.Location;
 import com.example.appark.Activities.src.User;
 import com.example.appark.Activities.src.vmInterface;
 
@@ -17,7 +18,7 @@ public class RegisterActivityViewModel extends AndroidViewModel implements vmInt
     public RegisterActivityViewModel(@NonNull Application application) {
         super(application);
         mUser = new MutableLiveData<>();
-        DatabaseAdapter da = new DatabaseAdapter(this);
+        DatabaseAdapter db = new DatabaseAdapter(this);
     }
 
     public void createUserDB(String name, String mail, String pwd) {
@@ -29,5 +30,10 @@ public class RegisterActivityViewModel extends AndroidViewModel implements vmInt
     @Override
     public void getInfoUser(User us) {
         mUser.setValue(us);
+    }
+
+    @Override
+    public void getInfoLocation(Location loc) {
+
     }
 }

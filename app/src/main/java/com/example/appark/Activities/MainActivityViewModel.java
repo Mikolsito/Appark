@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.appark.Activities.src.DatabaseAdapter;
+import com.example.appark.Activities.src.Location;
 import com.example.appark.Activities.src.User;
 import com.example.appark.Activities.src.vmInterface;
 
@@ -17,8 +18,8 @@ public class MainActivityViewModel extends AndroidViewModel implements vmInterfa
     public MainActivityViewModel(Application application) {
         super(application);
         mUser = new MutableLiveData<>();
-        DatabaseAdapter da = new DatabaseAdapter(this);
-        da.getUser(MainActivity.currentUser.getMail());
+        DatabaseAdapter db = new DatabaseAdapter(this);
+        db.getUser(MainActivity.currentUser.getMail());
     }
 
     //public getter. Not mutable , read-only
@@ -29,5 +30,10 @@ public class MainActivityViewModel extends AndroidViewModel implements vmInterfa
     @Override
     public void getInfoUser(User us) {
         mUser.setValue(us);
+    }
+
+    @Override
+    public void getInfoLocation(Location loc) {
+
     }
 }

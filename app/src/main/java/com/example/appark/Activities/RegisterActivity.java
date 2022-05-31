@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +22,7 @@ public class RegisterActivity extends AppCompatActivity {
     EditText nom, mail, contrasenya, contrasenya2;
     RegisterActivityViewModel viewModel;
     CheckBox termes;
+    private ProgressBar progressBar;
 
     public RegisterActivity() {}
 
@@ -36,6 +38,10 @@ public class RegisterActivity extends AppCompatActivity {
         mail = (EditText) findViewById(R.id.et_email_r);
         contrasenya = (EditText) findViewById(R.id.et_password_r);
         contrasenya2 = (EditText) findViewById(R.id.et_password2_r);
+        progressBar = (ProgressBar) findViewById(R.id.circular_progressbar);
+
+        progressBar.setVisibility(View.GONE);
+
 
         //TODO crear DataBaseHelper per a gestionar la base de dades
         //databaseHelper = new DatabaseHelper(this);
@@ -54,7 +60,7 @@ public class RegisterActivity extends AppCompatActivity {
                     if(password.equals(confirm_password)) {
                         if (true /*isMail(correu)*/){ // TODO && !mailExists()) {
                             if (true /*isPasswordSegur(password)*/) {
-                                if (true /*termes.isChecked()*/) {
+                                if (termes.isChecked()) {
                                     viewModel.createUserDB(name, correu, password);
                                     Toast.makeText(getApplicationContext(), "Registrat amb èxit", Toast.LENGTH_SHORT).show();
                                     nom.setText("");
@@ -87,8 +93,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
-
-    //TODO afegir aquests dos metodes a la classe de la database, dins de CheckUsername
 
     /* Classe per a comprovar si un mail és valid (minim una majuscula,
      * format correcte, etc)

@@ -106,4 +106,15 @@
         android:textSize="16sp"
         android:textStyle="bold" />
 
+    <ProgressBar
+        android:id="@+id/circular_progressbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="6dp"
+        android:layout_marginBottom="96dp"
+        android:indeterminateDrawable="@drawable/circular_progressbar"
+        android:indeterminateDuration="@android:integer/config_longAnimTime" />
+
 </RelativeLayout>

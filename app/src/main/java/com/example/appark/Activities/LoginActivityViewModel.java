@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.appark.Activities.src.DatabaseAdapter;
+import com.example.appark.Activities.src.Location;
 import com.example.appark.Activities.src.User;
 import com.example.appark.Activities.src.vmInterface;
 
@@ -37,5 +38,10 @@ public class LoginActivityViewModel extends AndroidViewModel implements vmInterf
     @Override
     public void getInfoUser(User us) {
         mUser.setValue(us);
+    }
+
+    @Override
+    public void getInfoLocation(Location loc) {
+
     }
 }

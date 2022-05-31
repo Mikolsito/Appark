@@ -11,12 +11,21 @@ public class Location {
     private String barri;   //Aixo es nou
     private int placesLliures;
     private int places;
-    //private final PaginaPrincipalAdapter adapter = PaginaPrincipalAdapter.databaseAdapter;
+
+    private final DatabaseAdapter adapter = DatabaseAdapter.databaseAdapter;
 
     public Location(String nom, double lat, double lon, int placesTotals, int placesLliures, String barri) {
         this.nom = nom;
-        ubi = new LatLng(lat, lon);
-        places = placesTotals;
+        this.ubi = new LatLng(lat, lon);
+        this.places = placesTotals;
+        this.placesLliures = placesLliures;
+        this.barri = barri;
+    }
+
+    public Location(String nom, LatLng ubi, int placesTotals, int placesLliures, String barri) {
+        this.nom = nom;
+        this.ubi = ubi;
+        this.places = placesTotals;
         this.placesLliures = placesLliures;
         this.barri = barri;
     }
@@ -60,6 +69,11 @@ public class Location {
     }
     public int getPlaces() {
         return places;
+    }
+
+    public void savePosition() {
+        Log.d("saveUbi", "saveUbi-> saveDocument");
+        adapter.saveLocation(nom, ubi, places, placesLliures, barri);
     }
 
     /*public void saveUbi() {
