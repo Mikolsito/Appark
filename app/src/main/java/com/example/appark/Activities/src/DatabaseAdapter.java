@@ -54,7 +54,7 @@ public class DatabaseAdapter extends Activity {
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        Log.d(TAG, "user finded in DB");
+                        Log.d(TAG, "user found in DB");
 
                         String id = queryDocumentSnapshots.getDocuments().get(0).getId();
                         // Update an existing document
@@ -92,14 +92,18 @@ public class DatabaseAdapter extends Activity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            Log.d(TAG, "User finded");
+                            Log.d(TAG, "User found");
 
                             Map<String, Object> data = task.getResult().getDocuments().get(0).getData();
                             String name = (String) data.get("name");
                             String mail = (String) data.get("mail");
                             String pwd = (String) data.get("pwd");
+                            String url = (String) data.get("url");
 
                             User retrieved_User = new User(name, mail, pwd);
+                            if(url != null){
+                                retrieved_User.setUrl(url);
+                            }
                             listener.getInfoUser(retrieved_User);
 
                         } else {
@@ -109,11 +113,12 @@ public class DatabaseAdapter extends Activity {
                 });
     }
 
-    public void saveUser(String name, String mail, String pwd) {
+    public void saveUser(String name, String mail, String pwd, String url) {
         Map<String, Object> usuari = new HashMap<>();
         usuari.put("name", name);
         usuari.put("mail", mail);
         usuari.put("pwd", pwd);
+        usuari.put("url", url);
 
         Log.d(TAG, "saveUserDB");
         // Add a new document with a generated ID
@@ -136,11 +141,11 @@ public class DatabaseAdapter extends Activity {
                 });
     }
 
-    public void saveImage(String email, String path){
-        Uri file = Uri.fromFile(new File("path/to/images/rivers.jpg")); //TODO: pasar el path correcto
+    public void uploadProfImage(String mail, Uri imgUri){
+        Log.d(TAG, "uploadProfImage");
         StorageReference storageRef = storage.getReference();
-        StorageReference imgRef = storageRef.child("images/"+file.getLastPathSegment());
-        UploadTask uploadTask = imgRef.putFile(file);
+        StorageReference imgRef = storageRef.child("images"+File.separator+mail+"_profImg.jpg");
+        UploadTask uploadTask = imgRef.putFile(imgUri);
 
         Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
             @Override
@@ -150,14 +155,16 @@ public class DatabaseAdapter extends Activity {
                 }
 
                 // Continue with the task to get the download URL
-                return imgRef.getDownloadUrl();
+                Log.d(TAG, "uploadTask");
+                return imgRef.getDownloadUrl(); //esto es la url que tiene que guardar el usuario en firebase
             }
         }).addOnCompleteListener(new OnCompleteListener<Uri>() {
             @Override
             public void onComplete(@NonNull Task<Uri> task) {
                 if (task.isSuccessful()) {
+                    Log.d(TAG, "successful upload task");
                     Uri downloadUri = task.getResult();
-                    saveURLImage(email, downloadUri.toString()); //asignamos la URL de la imagen al usuario
+                    saveProfImageUser(mail, downloadUri.toString());
                 } else {
                     // Handle failures
                     // ...
@@ -165,45 +172,42 @@ public class DatabaseAdapter extends Activity {
             }
         });
     }
-
-    public void saveURLImage(String email, String url){
-        Log.d(TAG,"saveURLImage");
-        Map<String, Object> map = new HashMap<>(); //.collection necesita de un HashMap
+    public void saveProfImageUser(String email, String url){
+        Log.d(TAG, "saveProfImageUser");
+        Map<String, Object> map = new HashMap<>();
+        map.put("email", email);
         map.put("url", url);
-
 
         db.collection("Usuarios")
                 .whereEqualTo("mail", email).get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        Log.d(TAG, "user finded in DB");
+                        Log.d(TAG, "user found in DB");
 
                         String id = queryDocumentSnapshots.getDocuments().get(0).getId();
                         // Update an existing document
                         db.collection("Usuarios").document(id).update(map).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
-                                Log.d(TAG, "url image saved in db");
-                                listener.getURLImage(url);
+                                Log.d(TAG, "profile image assigned to user on DB");
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Log.d(TAG, "error while saving url image");
+                                Log.d(TAG, "error assigning image to user");
                             }
                         });
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.d(TAG, "error while serching the user on DB");
+                Log.d(TAG, "error while searching the user on DB");
             }
         });
-
-
-
     }
+
+
 
 
 

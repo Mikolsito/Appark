@@ -35,6 +35,9 @@ public class User {
         this.url = url;
     }
 
+    public String getUrl() {
+        return url;
+    }
 
     public boolean updateUser(String oldPwd, String newPwd, String oldMail, String newMail){
         if (oldMail.equals(this.mail) && oldPwd.equals(this.pwd)){
@@ -47,7 +50,7 @@ public class User {
     }
 
     public void saveUser() {
-        adapter.saveUser(this.name, this.mail, this.pwd);
+        adapter.saveUser(this.name, this.mail, this.pwd, this.url);
     }
 
     public void setUser(String name, String mail, String pwd) {

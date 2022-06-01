@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,8 +24,12 @@ import com.example.appark.R;
 import com.example.appark.databinding.ActivityMainBinding;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
+    public static final String TAG = "MainActivity";
 
     public static User currentUser = new User("dummyCurrentUser", "dummy@gmail.com", "dummyPwd");
     public static NavController navController;
@@ -32,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
     public Snackbar arrived;
-    private ImageView profileImg;
+    private CircleImageView profileImg;
     public Uri profImgUri;
 
     private MainActivityViewModel mainActVM;
@@ -102,23 +107,17 @@ public class MainActivity extends AppCompatActivity {
 
                 navUsername.setText(us.getName());
                 navUsermail.setText(us.getMail());
+
+                if(us.getUrl() != null){
+                    Picasso.with(getApplicationContext()).load(us.getUrl()).into(profileImg);
+                }
             }
         };
-
-        final Observer<String> observerURL = new Observer<String>() {
-            @Override
-            public void onChanged(String url) {
-                MainActivity.currentUser.setUrl(url);
-                //profileImg.set //TODO: me he quedado aqui
-
-            }
-        };
-
         mainActVM.getUser().observe(this, observer);
-        mainActVM.getURL().observe(this, observerURL);
     }
 
     private void choosePicture(){
+        Log.d(TAG, "choosePicture");
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -127,11 +126,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        Log.d(TAG, "onActivityResult");
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 1 && resultCode==RESULT_OK && data != null && data.getData() != null){
             profImgUri = data.getData();
             profileImg.setImageURI(profImgUri);
-            //uploadPicture();
+        }
+        if (profImgUri != null) {
+            mainActVM.uploadProfileImage(profImgUri);
         }
     }
 }
