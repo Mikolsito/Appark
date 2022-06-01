@@ -5,12 +5,12 @@ import java.time.LocalDateTime;
 public class Loc_User {
     private Integer idLoc;
     private Integer idUser;
-    private LocalDateTime[] duration;
+    private double tempsAparcat;
 
-    public Loc_User(Integer idLoc, Integer idUser, LocalDateTime startTime){
+    public Loc_User(Integer idLoc, Integer idUser, double time){
         this.idLoc = idLoc;
         this.idUser = idUser;
-        duration[0] = startTime;
+        this.tempsAparcat = time;
     }
 
     public Integer getIdLoc() {
@@ -21,17 +21,7 @@ public class Loc_User {
         return idUser;
     }
 
-    public LocalDateTime getStartTime() {
-        return duration[0];
+    public double getTempsAparcat() {
+        return tempsAparcat;
     }
-
-    public LocalDateTime getEndTime() {
-        return duration[1];
-    }
-
-    public void setEndTime(LocalDateTime endTime){
-        duration[1] = endTime;
-    }
-
-
 }

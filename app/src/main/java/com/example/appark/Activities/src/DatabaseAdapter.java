@@ -9,6 +9,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.appark.Activities.MainActivity;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -41,7 +43,7 @@ public class DatabaseAdapter extends Activity {
         databaseAdapter = this;
     }
 
-    public void updateUser(String name, String oldEmail, String newEmail, String pwd) {
+    public void updateUser(String name, String oldEmail, String newEmail, String pwd) { //Configuració
         Log.d(TAG,"updateUser");
         Map<String, Object> map = new HashMap<>(); //.collection necesita de un HashMap
         map.put("name", name);
@@ -83,9 +85,8 @@ public class DatabaseAdapter extends Activity {
 
     }
 
-    public void getUser(String mail){
+    public void getUser(String mail){ //Login
         Log.d(TAG,"getUser method DatabaseAdapter");
-
         db.collection("Usuarios")
                 .whereEqualTo("mail", mail).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -112,6 +113,7 @@ public class DatabaseAdapter extends Activity {
                     }
                 });
     }
+
 
     public void saveUser(String name, String mail, String pwd, String url) {
         Map<String, Object> usuari = new HashMap<>();
@@ -206,9 +208,5 @@ public class DatabaseAdapter extends Activity {
             }
         });
     }
-
-
-
-
 
 }

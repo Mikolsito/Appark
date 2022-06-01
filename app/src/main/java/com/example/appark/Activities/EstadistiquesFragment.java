@@ -34,6 +34,9 @@ public class EstadistiquesFragment extends Fragment {
    private BarDataSet barDataSet;
    private PieChart piechart;
    private PieDataSet pieDataSet;
+   private EstadistiquesViewModel viewModel;
+
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -41,7 +44,7 @@ public class EstadistiquesFragment extends Fragment {
         ArrayList<Entry> lineEntries = new ArrayList<Entry>();
         ArrayList<BarEntry> barEntries = new ArrayList<BarEntry>();
         ArrayList<PieEntry> pieEntries = new ArrayList<PieEntry>();
-        List<String> barris=new ArrayList<String>();
+        List<String> barris = new ArrayList<String>();
         barris.addAll(Arrays.asList("Eixample", "Sarrià", "Gracia", "Horta", "Sagrada Familia", "Sant Gervasi", "Poblenou", "Raval", "Sant Marti"));
 
         for (int i = 0; i<8; i++){

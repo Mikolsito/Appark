@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.appark.Activities.src.DatabaseAdapter;
+import com.example.appark.Activities.src.Location;
 import com.example.appark.Activities.src.User;
 import com.example.appark.Activities.src.vmInterface;
 

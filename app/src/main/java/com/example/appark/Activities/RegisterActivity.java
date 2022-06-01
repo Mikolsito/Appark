@@ -3,9 +3,11 @@ package com.example.appark.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +23,7 @@ public class RegisterActivity extends AppCompatActivity {
     EditText nom, mail, contrasenya, contrasenya2;
     RegisterActivityViewModel viewModel;
     CheckBox termes;
+    private ProgressBar progressBar;
 
     public RegisterActivity() {}
 
@@ -36,6 +39,12 @@ public class RegisterActivity extends AppCompatActivity {
         mail = (EditText) findViewById(R.id.et_email_r);
         contrasenya = (EditText) findViewById(R.id.et_password_r);
         contrasenya2 = (EditText) findViewById(R.id.et_password2_r);
+        progressBar = (ProgressBar) findViewById(R.id.circular_progressbar);
+
+        InputMethodManager imm = (InputMethodManager) getSystemService(LoginActivity.INPUT_METHOD_SERVICE);
+
+        progressBar.setVisibility(View.GONE);
+
 
         //TODO crear DataBaseHelper per a gestionar la base de dades
         //databaseHelper = new DatabaseHelper(this);
@@ -54,13 +63,14 @@ public class RegisterActivity extends AppCompatActivity {
                     if(password.equals(confirm_password)) {
                         if (true /*isMail(correu)*/){ // TODO && !mailExists()) {
                             if (true /*isPasswordSegur(password)*/) {
-                                if (true /*termes.isChecked()*/) {
-                                    viewModel.createUserDB(name, correu, password);
-                                    Toast.makeText(getApplicationContext(), "Registrat amb èxit", Toast.LENGTH_SHORT).show();
+                                if (termes.isChecked()) {
+                                    imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0); //treiem el teclat
                                     nom.setText("");
                                     mail.setText("");
                                     contrasenya.setText("");
                                     contrasenya2.setText("");
+                                    viewModel.createUserDB(name, correu, password);
+                                    Toast.makeText(getApplicationContext(), "Registrat amb èxit", Toast.LENGTH_SHORT).show();
                                     Intent processar_main = new Intent(view.getContext(), MainActivity.class);
                                     startActivityForResult(processar_main, 0);
                                 } else {
@@ -87,8 +97,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
-
-    //TODO afegir aquests dos metodes a la classe de la database, dins de CheckUsername
 
     /* Classe per a comprovar si un mail és valid (minim una majuscula,
      * format correcte, etc)
