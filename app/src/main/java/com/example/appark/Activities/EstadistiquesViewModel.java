@@ -59,7 +59,7 @@ public class EstadistiquesViewModel extends AndroidViewModel implements vmInterf
     /*public LiveData<Location> getLocations() {
         getLocationsFromDB();
         return mLocations;
-    }*/
+    }
 
     public void createLocationDB(String id, User us, double latitude, double longitude) {
         GeoPoint pos = new GeoPoint(latitude,longitude);
@@ -68,7 +68,7 @@ public class EstadistiquesViewModel extends AndroidViewModel implements vmInterf
         //MainActivity.currentUser = user; //el currentUser es el usuario actual
     }
 
-    /*public void getPlacesBarrisDB(){
+    public void getPlacesBarrisDB(){
         DatabaseAdapter da = new DatabaseAdapter(this);
         List<String> barris=new ArrayList<String>();
         barris.addAll(Arrays.asList("Eixample", "Sarrià", "Gracia", "Horta", "Sagrada Familia", "Sant Gervasi", "Poblenou", "Raval", "Sant Marti"));
@@ -84,11 +84,6 @@ public class EstadistiquesViewModel extends AndroidViewModel implements vmInterf
 
     @Override
     public void getInfoUser(User us) {
-
-    }
-
-    @Override
-    public void getInfoLocation(Location loc) {
 
     }
 }

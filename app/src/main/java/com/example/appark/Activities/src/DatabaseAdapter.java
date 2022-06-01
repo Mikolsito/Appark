@@ -160,33 +160,4 @@ public class DatabaseAdapter extends Activity {
 
     //TODO: como asignar una imagen a cada usuario?
 
-
-    public void saveLocation(String nom, LatLng ubi, int places, int placesLliures, String barri) {
-        Map<String, Object> localitzacio = new HashMap<>();
-        localitzacio.put("Nom", nom);
-        localitzacio.put("Ubicacio", ubi);
-        localitzacio.put("PlacesTotals", places);
-        localitzacio.put("PlacesLliures", placesLliures);
-        localitzacio.put("Barri", barri);
-
-        Log.d(TAG, "saveLocationDB");
-        // Add a new document with a generated ID
-        db.collection("Ubicacions")
-                .add(localitzacio)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-
-                        Location newLoc = new Location(nom, ubi, places, placesLliures, barri);
-                        listener.getInfoLocation(newLoc);
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
-                    }
-                });
-    }
 }

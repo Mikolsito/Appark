@@ -23,17 +23,12 @@ public class RegisterActivityViewModel extends AndroidViewModel implements vmInt
 
     public void createUserDB(String name, String mail, String pwd) {
         User user = new User(name, mail, pwd);
-        MainActivity.currentUser = user; //el currentUser es el usuario que se ha creado desde loggin
+        MainActivity.currentUser = user; //el currentUser es el usuario que se ha creado desde login
         MainActivity.currentUser.saveUser();
     }
 
     @Override
     public void getInfoUser(User us) {
         mUser.setValue(us);
-    }
-
-    @Override
-    public void getInfoLocation(Location loc) {
-
     }
 }

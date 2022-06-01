@@ -39,9 +39,4 @@ public class LoginActivityViewModel extends AndroidViewModel implements vmInterf
     public void getInfoUser(User us) {
         mUser.setValue(us);
     }
-
-    @Override
-    public void getInfoLocation(Location loc) {
-
-    }
 }

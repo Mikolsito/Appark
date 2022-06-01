@@ -42,4 +42,6 @@
     <string name="registrat">Registrar-se</string>
     <string name="ja_tens_compte">o si ja tens un compte</string>
     <string name="tornar_login">Tornar</string>
+    <string name="tancar_sessio">Tancant sessió…</string>
+
 </resources>

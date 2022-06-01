@@ -31,9 +31,4 @@ public class MainActivityViewModel extends AndroidViewModel implements vmInterfa
     public void getInfoUser(User us) {
         mUser.setValue(us);
     }
-
-    @Override
-    public void getInfoLocation(Location loc) {
-
-    }
 }

@@ -3,6 +3,7 @@ package com.example.appark.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -40,6 +41,8 @@ public class RegisterActivity extends AppCompatActivity {
         contrasenya2 = (EditText) findViewById(R.id.et_password2_r);
         progressBar = (ProgressBar) findViewById(R.id.circular_progressbar);
 
+        InputMethodManager imm = (InputMethodManager) getSystemService(LoginActivity.INPUT_METHOD_SERVICE);
+
         progressBar.setVisibility(View.GONE);
 
 
@@ -61,12 +64,13 @@ public class RegisterActivity extends AppCompatActivity {
                         if (true /*isMail(correu)*/){ // TODO && !mailExists()) {
                             if (true /*isPasswordSegur(password)*/) {
                                 if (termes.isChecked()) {
-                                    viewModel.createUserDB(name, correu, password);
-                                    Toast.makeText(getApplicationContext(), "Registrat amb èxit", Toast.LENGTH_SHORT).show();
+                                    imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0); //treiem el teclat
                                     nom.setText("");
                                     mail.setText("");
                                     contrasenya.setText("");
                                     contrasenya2.setText("");
+                                    viewModel.createUserDB(name, correu, password);
+                                    Toast.makeText(getApplicationContext(), "Registrat amb èxit", Toast.LENGTH_SHORT).show();
                                     Intent processar_main = new Intent(view.getContext(), MainActivity.class);
                                     startActivityForResult(processar_main, 0);
                                 } else {

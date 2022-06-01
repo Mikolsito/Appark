@@ -71,12 +71,12 @@ public class Location {
         return places;
     }
 
-    public void savePosition() {
+    /*public void savePosition() {
         Log.d("saveUbi", "saveUbi-> saveDocument");
         adapter.saveLocation(nom, ubi, places, placesLliures, barri);
     }
 
-    /*public void saveUbi() {
+    public void saveUbi() {
         Log.d("saveUbi", "saveUbi-> saveDocument");
         adapter.saveDocumentWithFile(nom, ubi, places, placesLliures, barri);
     }*/
