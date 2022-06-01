@@ -49,17 +49,9 @@ public class LoginActivity extends AppCompatActivity {
                 if (mail.equals("") || password.equals("")) {
                     Toast.makeText(getApplicationContext(), "Correu i contrasenya requerits", Toast.LENGTH_SHORT).show();
                 }
+                //TODO: progressDialog
                 viewModel.getRegisteredUserDB(mail);
-
-                /*if (info) { //TODO mailExists()) { ???? viewModel.insertUserDB(mail, password) { ????
-                    Toast.makeText(getApplicationContext(), "Login correcte", Toast.LENGTH_SHORT).show();
-                    //Intent processar_main = new Intent(view.getContext(), MainActivity.class);
-                    //startActivityForResult(processar_main, 0);
-                } else {
-                    Toast.makeText(getApplicationContext(), "Correu o contrasenya incorrectes", Toast.LENGTH_SHORT).show();
-                }*/
             }
-            // TODO: nos salta una excepcion al acabar el onClick pero todas las llamadasfuncionan correctamente
         });
 
         registre.setOnClickListener(new View.OnClickListener() {
