@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import com.example.appark.Activities.MainActivity;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCanceledListener;
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -55,7 +56,7 @@ public class DatabaseAdapter extends Activity {
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        Log.d(TAG, "user finded in DB");
+                        Log.d(TAG, "user found in DB");
 
                         String id = queryDocumentSnapshots.getDocuments().get(0).getId();
                         // Update an existing document
@@ -63,6 +64,8 @@ public class DatabaseAdapter extends Activity {
                             @Override
                             public void onSuccess(Void unused) {
                                 Log.d(TAG, "user updated on DB");
+                                User retrieved_User = new User(name, newEmail, pwd);
+                                listener.getInfoUser(retrieved_User);
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
@@ -78,8 +81,7 @@ public class DatabaseAdapter extends Activity {
                     }
                 });
 
-        User retrieved_User = new User(name, newEmail, pwd);
-        listener.getInfoUser(retrieved_User);
+
 
     }
 
@@ -97,8 +99,12 @@ public class DatabaseAdapter extends Activity {
                             String name = (String) data.get("name");
                             String mail = (String) data.get("mail");
                             String pwd = (String) data.get("pwd");
+                            String url = (String) data.get("url");
 
                             User retrieved_User = new User(name, mail, pwd);
+                            if(url != null){
+                                retrieved_User.setUrl(url);
+                            }
                             listener.getInfoUser(retrieved_User);
 
                         } else {
@@ -108,11 +114,13 @@ public class DatabaseAdapter extends Activity {
                 });
     }
 
-    public void saveUser(String name, String mail, String pwd) { //Registre
+
+    public void saveUser(String name, String mail, String pwd, String url) {
         Map<String, Object> usuari = new HashMap<>();
         usuari.put("name", name);
         usuari.put("mail", mail);
         usuari.put("pwd", pwd);
+        usuari.put("url", url);
 
         Log.d(TAG, "saveUserDB");
         // Add a new document with a generated ID
@@ -135,29 +143,70 @@ public class DatabaseAdapter extends Activity {
                 });
     }
 
-    public void saveImage(String path){
-        Uri file = Uri.fromFile(new File("path/to/images/rivers.jpg")); //TODO: pasar el path correcto
+    public void uploadProfImage(String mail, Uri imgUri){
+        Log.d(TAG, "uploadProfImage");
         StorageReference storageRef = storage.getReference();
-        StorageReference imgRef = storageRef.child("images/"+file.getLastPathSegment());
-        UploadTask uploadTask = imgRef.putFile(file);
+        StorageReference imgRef = storageRef.child("images"+File.separator+mail+"_profImg.jpg");
+        UploadTask uploadTask = imgRef.putFile(imgUri);
 
-        //TODO: preguntar por que continueWithTask del proyecto de ejemplo
-
-        // Register observers to listen for when the download is done or if it fails
-        uploadTask.addOnFailureListener(new OnFailureListener() {
+        Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
             @Override
-            public void onFailure(@NonNull Exception exception) {
-                //TODO: es correcto añadir toasts en el adapter???
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
+                }
+
+                // Continue with the task to get the download URL
+                Log.d(TAG, "uploadTask");
+                return imgRef.getDownloadUrl(); //esto es la url que tiene que guardar el usuario en firebase
             }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
             @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                // ...
+            public void onComplete(@NonNull Task<Uri> task) {
+                if (task.isSuccessful()) {
+                    Log.d(TAG, "successful upload task");
+                    Uri downloadUri = task.getResult();
+                    saveProfImageUser(mail, downloadUri.toString());
+                } else {
+                    // Handle failures
+                    // ...
+                }
             }
         });
     }
+    public void saveProfImageUser(String email, String url){
+        Log.d(TAG, "saveProfImageUser");
+        Map<String, Object> map = new HashMap<>();
+        map.put("email", email);
+        map.put("url", url);
 
-    //TODO: como asignar una imagen a cada usuario?
+        db.collection("Usuarios")
+                .whereEqualTo("mail", email).get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        Log.d(TAG, "user found in DB");
+
+                        String id = queryDocumentSnapshots.getDocuments().get(0).getId();
+                        // Update an existing document
+                        db.collection("Usuarios").document(id).update(map).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Log.d(TAG, "profile image assigned to user on DB");
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.d(TAG, "error assigning image to user");
+                            }
+                        });
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d(TAG, "error while searching the user on DB");
+            }
+        });
+    }
 
 }

@@ -10,6 +10,7 @@ public class User {
     private String name;
     private String mail;
     private String pwd;
+    private String url;
 
 
     private final DatabaseAdapter adapter = DatabaseAdapter.databaseAdapter;
@@ -18,6 +19,7 @@ public class User {
         this.name = name;
         this.mail = mail;
         this.pwd = pwd;
+        this.url = null;
     }
 
     public String getName() {
@@ -29,7 +31,13 @@ public class User {
     public String getPwd() {
         return pwd;
     }
+    public void setUrl(String url){
+        this.url = url;
+    }
 
+    public String getUrl() {
+        return url;
+    }
 
     public boolean updateUser(String oldPwd, String newPwd, String oldMail, String newMail){
         if (oldMail.equals(this.mail) && oldPwd.equals(this.pwd)){
@@ -42,7 +50,7 @@ public class User {
     }
 
     public void saveUser() {
-        adapter.saveUser(this.name, this.mail, this.pwd);
+        adapter.saveUser(this.name, this.mail, this.pwd, this.url);
     }
 
     public void setUser(String name, String mail, String pwd) {
