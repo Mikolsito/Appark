@@ -93,7 +93,7 @@
         android:layout_height="match_parent"
         android:gravity="bottom"
         tools:context=".Activities.PaginaPrincipalFragment"
-        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteX="28dp"
         tools:layout_editor_absoluteY="0dp" />
 
     <TextView
@@ -132,7 +132,7 @@
         android:id="@+id/SeekBar"
         android:layout_width="353dp"
         android:layout_height="34dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="88dp"
         android:max="50"
         android:progress="25"
         android:progressDrawable="@drawable/seek_bar"
@@ -140,6 +140,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="128dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/logo_transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/SeekBar"
+        app:layout_constraintTop_toTopOf="@+id/map2" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
