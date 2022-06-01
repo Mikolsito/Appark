@@ -65,18 +65,17 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 progressBar.setVisibility(View.VISIBLE);
+                for (int i = 0; i < 100000; i++); //delay per a mostrar la progressbar
                 String mail = correu.getText().toString();
                 String password = contrasenya.getText().toString();
                 if (mail.equals("") || password.equals("")) {
                     Toast.makeText(getApplicationContext(), "Correu i contrasenya requerits", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
                 }
-                else {
+                else /*TODO if mailExists())*/ {
                     imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0); //treiem el teclat
-                    for (int i = 0; i < 100000; i++); //delay per a mostrar la progressbar
-                    viewModel.getRegisteredUserDB(mail); /*TODO && mailExists())*/
+                    viewModel.getRegisteredUserDB(mail);
                 }
-                progressBar.setVisibility(View.GONE);
-
 
                 /*if (info) {  { ???? viewModel.insertUserDB(mail, password) { ????
 
@@ -119,17 +118,17 @@ public class LoginActivity extends AppCompatActivity {
                     editor.putString("user", us.getMail());
                     editor.putString("pwd", us.getPwd());
                     editor.apply();
-
+                    progressBar.setVisibility(View.GONE);
                     Intent processar_main = new Intent(context, MainActivity.class);
                     startActivityForResult(processar_main, 0);
                 }
-
                 else {
                     Toast.makeText(getApplicationContext(), "Correu o contrasenya incorrectes", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
                 }
             }
-        };
 
+        };
         viewModel.getUser().observe(this, observer);
     }
 }

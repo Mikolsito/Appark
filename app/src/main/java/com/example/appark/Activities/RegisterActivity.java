@@ -1,6 +1,8 @@
 package com.example.appark.Activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -19,10 +21,10 @@ import java.util.regex.Pattern;
 import com.example.appark.R;
 
 public class RegisterActivity extends AppCompatActivity {
-    Button registrarse, tornar;
-    EditText nom, mail, contrasenya, contrasenya2;
-    RegisterActivityViewModel viewModel;
-    CheckBox termes;
+    private Button registrarse, tornar;
+    private EditText nom, mail, contrasenya, contrasenya2;
+    private RegisterActivityViewModel viewModel;
+    private CheckBox termes;
     private ProgressBar progressBar;
 
     public RegisterActivity() {}
@@ -40,18 +42,15 @@ public class RegisterActivity extends AppCompatActivity {
         contrasenya = (EditText) findViewById(R.id.et_password_r);
         contrasenya2 = (EditText) findViewById(R.id.et_password2_r);
         progressBar = (ProgressBar) findViewById(R.id.circular_progressbar);
-
-        InputMethodManager imm = (InputMethodManager) getSystemService(LoginActivity.INPUT_METHOD_SERVICE);
+        termes = (CheckBox) findViewById(R.id.checkBox);
 
         progressBar.setVisibility(View.GONE);
-
-
-        //TODO crear DataBaseHelper per a gestionar la base de dades
-        //databaseHelper = new DatabaseHelper(this);
 
         registrarse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressBar.setVisibility(View.VISIBLE);
+                for (int i = 0; i < 10000000; i++); //delay per a mostrar la progressbar
                 String name = nom.getText().toString();
                 String correu = mail.getText().toString();
                 String password = contrasenya.getText().toString();
@@ -61,31 +60,38 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Nom, correu i contrasenya requerits", Toast.LENGTH_SHORT).show();
                 } else {
                     if(password.equals(confirm_password)) {
-                        if (true /*isMail(correu)*/){ // TODO && !mailExists()) {
-                            if (true /*isPasswordSegur(password)*/) {
+                        if (isMail(correu)){ // TODO && !mailExists()) {
+                            if (isPasswordSegur(password)) {
                                 if (termes.isChecked()) {
-                                    imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0); //treiem el teclat
-                                    nom.setText("");
-                                    mail.setText("");
-                                    contrasenya.setText("");
-                                    contrasenya2.setText("");
+                                    nom.setText(""); mail.setText(""); contrasenya.setText(""); contrasenya2.setText("");
+                                    //Creem l'usuari i el guardem a la base de dades
                                     viewModel.createUserDB(name, correu, password);
+                                    //Guardem l'user a SharedPreferences
+                                    SharedPreferences sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    editor.putBoolean("logged", true);
+                                    editor.putString("name", name);
+                                    editor.putString("user", correu);
+                                    editor.putString("pwd", password);
+                                    editor.apply();
                                     Toast.makeText(getApplicationContext(), "Registrat amb èxit", Toast.LENGTH_SHORT).show();
+                                    //Fem l'intent
                                     Intent processar_main = new Intent(view.getContext(), MainActivity.class);
                                     startActivityForResult(processar_main, 0);
                                 } else {
-                                    Toast.makeText(getApplicationContext(), "Has d'acceptar els termes i polítiques", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), "Has d'acceptar els termes i polítiques.", Toast.LENGTH_SHORT).show();
                                 }
                             } else {
-                                Toast.makeText(getApplicationContext(),"Contrasenya - mínim 8 caràcters, 1 majúscula, 1 minuscula, 1 numero", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(),"Contrasenya - mínim 8 caràcters, 1 majúscula, 1 minuscula, 1 numero.", Toast.LENGTH_SHORT).show();
                             }
                         } else {
-                            Toast.makeText(getApplicationContext(), "Correu no vàlid", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Correu no vàlid.", Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        Toast.makeText(getApplicationContext(), "Les contrasenyes no són iguals", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Les contrasenyes no són iguals.", Toast.LENGTH_SHORT).show();
                     }
                 }
+                progressBar.setVisibility(View.GONE);
             }
         });
 
