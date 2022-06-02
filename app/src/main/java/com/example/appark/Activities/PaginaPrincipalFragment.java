@@ -71,15 +71,16 @@ public class PaginaPrincipalFragment extends Fragment implements OnMapReadyCallb
 
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 progressChangedValue = progress;
-                Toast.makeText(getView().getContext(), progressChangedValue + " Km de radi", Toast.LENGTH_SHORT).show();
             }
 
             public void onStartTrackingTouch(SeekBar seekBar) { //Al començar a arrossegar
-
+                //progressChangedValue = seekBar.getProgress();
+                //Toast.makeText(getView().getContext(), progressChangedValue + " Km de radi", Toast.LENGTH_SHORT).show();
             }
 
             public void onStopTrackingTouch(SeekBar seekBar) {
-
+                progressChangedValue = seekBar.getProgress();
+                Toast.makeText(getView().getContext(), progressChangedValue + " Km de radi", Toast.LENGTH_SHORT).show();
             }
         });
         ubis = new ArrayList<>();

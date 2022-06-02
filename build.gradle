@@ -2,6 +2,7 @@
 buildscript {
     repositories {
         google()  // Google's Maven repository
+        jcenter()
     }
     dependencies {
         classpath 'com.google.gms:google-services:4.3.10'  // Google Services plugin

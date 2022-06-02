@@ -14,7 +14,6 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.Observer;
@@ -27,9 +26,6 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.appark.Activities.src.User;
 import com.example.appark.R;
 import com.example.appark.databinding.ActivityMainBinding;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
@@ -49,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
     public Snackbar arrived;
     private CircleImageView profileImg;
     public Uri profImgUri;
-    private SupportMapFragment mMapFragment;
 
     private MainActivityViewModel mainActVM;
 
@@ -89,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -13,6 +13,7 @@ public class User {
     private String name;
     private String mail;
     private String pwd;
+    private String url;
     private ArrayList<Estacionament> estacionaments;      //Aixo es nou
 
 
@@ -22,6 +23,7 @@ public class User {
         this.name = name;
         this.mail = mail;
         this.pwd = pwd;
+        this.url = null;
     }
 
     public String getName() {
@@ -32,6 +34,12 @@ public class User {
     }
     public String getPwd() {
         return pwd;
+    }
+    public String getUrl() {
+        return url;
+    }
+    public void setUrl(String url) {
+        this.url = url;
     }
 
 
@@ -46,7 +54,7 @@ public class User {
     }
 
     public void saveUser() {
-        adapter.saveUser(this.name, this.mail, this.pwd);
+        adapter.saveUser(this.name, this.mail, this.pwd, this.url);
     }
 
     public void setUser(String name, String mail, String pwd) {
