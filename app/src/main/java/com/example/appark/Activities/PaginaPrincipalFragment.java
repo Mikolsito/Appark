@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -24,22 +25,22 @@ import com.example.appark.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class PaginaPrincipalFragment extends Fragment implements OnMapReadyCallback,
         GoogleMap.OnMarkerClickListener,
         GoogleMap.OnInfoWindowClickListener {
 
     private UiSettings mUiSettings;
-    private GoogleMap mMap;
+    private SupportMapFragment mMapFragment;
+    private GoogleMap mMapç;
     private FloatingActionButton mAddFab, mAddHistorial, mAddCotxe;
     private TextView addHistorialText, addCotxeText;
     private Boolean isAllFabsVisible;
@@ -82,7 +83,10 @@ public class PaginaPrincipalFragment extends Fragment implements OnMapReadyCallb
             }
         });
         ubis = new ArrayList<>();
-        ubis.add(new Location("xd", 30, 45, 23, 9, "Eixample"));
+
+        mMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        mMapFragment.getMapAsync(this);
+
         setLiveDataObservers();
 
 
@@ -179,15 +183,13 @@ public class PaginaPrincipalFragment extends Fragment implements OnMapReadyCallb
         popupWindow.setBackgroundDrawable(new ColorDrawable());
         popupWindow.showAtLocation(getView().findViewById(R.id.map), Gravity.CENTER, 0, 0);
 
-        /* Trobar items afegits al layout
-        // TextInputLayout saveDescr = popup.findViewById(R.id.note_description);
-        //Button saveButton = popup.findViewById(R.id.save_button);
+        TextInputLayout saveDescr = popup.findViewById(R.id.note_description);
+        Button saveButton = popup.findViewById(R.id.save_button);
         saveButton.setOnClickListener((v) -> {
             String text = saveDescr.getEditText().getText().toString();
-            Toast.makeText(getView().getContext(), "Ubicació Guardada", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Ubicació Guardada", Toast.LENGTH_SHORT).show();
             popupWindow.dismiss();
         });
-         */
         return true;
     }
 
@@ -201,19 +203,23 @@ public class PaginaPrincipalFragment extends Fragment implements OnMapReadyCallb
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-        mMap.setOnMarkerClickListener(this);
-        mMap.setOnInfoWindowClickListener(this);
-        mUiSettings = mMap.getUiSettings();
-        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ubis.get(0).getLatLng(), 20));  //Activem un zoom inicial a la primera ubicacio
+        Log.d("MAPA", "maps");
+        mMapç = googleMap;
+        mMapç.setOnMarkerClickListener(this);
+        mMapç.setOnInfoWindowClickListener(this);
+        mUiSettings = mMapç.getUiSettings();
+        mMapç.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        mMapç.setIndoorEnabled(false);
+
+        mMapç.moveCamera(CameraUpdateFactory.newLatLngZoom(ubis.get(0).getLatLng(), 18));  //Activem un zoom inicial a la primera ubicacio
         mUiSettings.setZoomGesturesEnabled(true);   //Activa doble tap per fer zoom
         showUbis();
     }
 
     public void showUbis() {
+        //Log.d("SHOW UBIS", "maps");
         for(Location u: ubis) {
-            mMap.addMarker(new MarkerOptions().position(u.getLatLng()));
+            mMapç.addMarker(new MarkerOptions().position(u.getLatLng()));
         }
     }
 
@@ -224,7 +230,7 @@ public class PaginaPrincipalFragment extends Fragment implements OnMapReadyCallb
         final Observer<ArrayList<Location>> observer = new Observer<ArrayList<Location>>() {
             @Override
             public void onChanged(ArrayList<Location> latLngLocationList) {
-                Log.d("PAGINA PRINCIPAL FRAGMENT", "OnChangedListener");
+                //Log.d("OnChanged", "maps");
                 ubis = latLngLocationList;
             }
         };
