@@ -1,5 +1,8 @@
 package com.example.appark.Activities.src;
 
 public interface vmInterface {
-    void getInfoUser(User user);
+    void getInfoUser(User us);
 }
+
+
+

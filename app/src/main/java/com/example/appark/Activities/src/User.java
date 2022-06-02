@@ -1,7 +1,6 @@
 package com.example.appark.Activities.src;
 
 import android.util.Log;
-import android.util.Pair;
 
 import com.example.appark.Activities.MainActivity;
 import com.google.firebase.Timestamp;
@@ -36,15 +35,14 @@ public class User {
     }
 
 
-    public void updateUser(String oldPwd, String newPwd, String oldMail, String newMail){
+    public boolean updateUser(String oldPwd, String newPwd, String oldMail, String newMail){
         if (oldMail.equals(this.mail) && oldPwd.equals(this.pwd)){
-            adapter.updateUser(name, newMail, newPwd);
             this.mail = newMail;
             this.pwd = newPwd;
+            adapter.updateUser(name, oldMail, newMail, newPwd);
+            return true;
         }
-
-
-
+        return false;
     }
 
     public void saveUser() {
