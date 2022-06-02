@@ -6,11 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.lifecycle.ViewModel;
@@ -36,6 +38,7 @@ public class ConfiguracioFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
         View configView = inflater.inflate(R.layout.fragment_configuracio, container, false);
         viewModel = new ViewModelProvider(this).get(ConfiguracioViewModel.class);
 
@@ -50,8 +53,9 @@ public class ConfiguracioFragment extends Fragment {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Toast.makeText(getView().getContext(), "Falta implementar aquesta funcionalitat", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getView().getContext(), "Falta implementar aquesta funcionalitat", Toast.LENGTH_SHORT).show();
                         //viewModel.updateUser(antigaContrasenya.getText().toString(), novaContrasenya.getText().toString(), anticCorreu.getText().toString(), nouCorreu.getText().toString());
+                        MainActivity.currentUser.updateUser(antigaContrasenya.getText().toString(), novaContrasenya.getText().toString(), anticCorreu.getText().toString(), nouCorreu.getText().toString());
                         //TODO: salta la excepcion public boolean performClick() {
                         //        throw new RuntimeException("Stub!");
                         //    }
@@ -59,5 +63,6 @@ public class ConfiguracioFragment extends Fragment {
                 });
         return configView;
     }
+
 
 }

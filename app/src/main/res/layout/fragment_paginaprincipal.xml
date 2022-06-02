@@ -15,7 +15,6 @@
         will pop up. So this button is considered as parent FAB-->
 
 
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_fab"
         android:layout_width="wrap_content"
@@ -87,7 +86,7 @@
         to the add Person FAB button-->
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/map2"
+        android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

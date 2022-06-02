@@ -10,6 +10,8 @@ import com.example.appark.Activities.src.User;
 
 public class ConfiguracioViewModel extends AndroidViewModel {
 
+
+
     //Constructor
     public ConfiguracioViewModel(Application application){
         super(application);

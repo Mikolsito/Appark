@@ -40,33 +40,25 @@ public class DatabaseAdapter extends Activity {
         map.put("pwd", pwd);
 
 
-        Task<QuerySnapshot> t = db.collection("Usuarios").whereEqualTo("mail", MainActivity.currentUser.
-                getMail()).get();
+        Task<QuerySnapshot> t = db.collection("Usuarios").whereEqualTo("mail", mail).get();
         List<DocumentSnapshot> docs = t.getResult().getDocuments();
         DocumentSnapshot doc = docs.get(0);
         String id = doc.getId();
 
         // Update an existing document
         db.collection("Usuarios").document(id).update(map);
-                /*.addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                Toast.makeText(getApplicationContext(), "Dades actualitzades correctament", Toast.LENGTH_SHORT).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getApplicationContext(), "Error al actualitzar les dades", Toast.LENGTH_SHORT).show();
-            }
-        });*/
-        MainActivity.currentUser.setUser(name, mail, pwd);
-        //listener.getInfoUser(MainActivity.currentUser);
+        Toast.makeText(getApplicationContext(), "Dades actualitzades correctament", Toast.LENGTH_SHORT).show();
+
+        User retrieved_User = new User(name, mail, pwd);
+
+        listener.getInfoUser(retrieved_User);
+
     }
 
-    public void getUser(){
+    public void getUser(String mail){
         Log.d(TAG,"getUser method DatabaseAdapter");
         db.collection("Usuarios")
-                .whereEqualTo("mail", MainActivity.currentUser.getMail()).limit(1)
+                .whereEqualTo("mail", mail).limit(1)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -77,9 +69,9 @@ public class DatabaseAdapter extends Activity {
                             String mail = (String) data.get("mail");
                             String pwd = (String) data.get("pwd");
 
-                            MainActivity.currentUser.setUser(name, mail, pwd);
+                            User retrieved_User = new User(name, mail, pwd);
 
-                            listener.getInfoUser(MainActivity.currentUser);
+                            listener.getInfoUser(retrieved_User);
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
@@ -87,11 +79,11 @@ public class DatabaseAdapter extends Activity {
                 });
     }
 
-    public void saveUser(User u) {
+    public void saveUser(String name, String mail, String pwd) {
         Map<String, Object> usuari = new HashMap<>();
-        usuari.put("name", u.getName());
-        usuari.put("mail", u.getMail());
-        usuari.put("pwd", u.getPwd());
+        usuari.put("name", name);
+        usuari.put("mail", mail);
+        usuari.put("pwd", pwd);
 
         Log.d(TAG, "saveUserDB");
         // Add a new document with a generated ID
@@ -109,6 +101,24 @@ public class DatabaseAdapter extends Activity {
                         Log.w(TAG, "Error adding document", e);
                     }
                 });
+    }
+
+    public boolean searchUserDB(String mail){
+        Log.d(TAG,"searchUser method DatabaseAdapter");
+
+        Task<QuerySnapshot> t = db.collection("Usuarios").whereEqualTo("mail", mail).get();
+        List<DocumentSnapshot> docs = t.getResult().getDocuments();
+        DocumentSnapshot doc = docs.get(0);
+        Map<String, Object> data = doc.getData();
+
+        if(data != null){
+            MainActivity.currentUser.setUser(data.get("name").toString(), data.get("mail").toString(), data.get("pwd").toString());
+            return true;
+        }
+        else{
+            return false;
+        }
+
     }
 
 }

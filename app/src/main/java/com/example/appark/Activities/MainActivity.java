@@ -5,6 +5,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.Observer;
@@ -17,16 +18,20 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.appark.Activities.src.User;
 import com.example.appark.R;
 import com.example.appark.databinding.ActivityMainBinding;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     public static User currentUser = new User("dummyCurrentUser", "dummy@gmail.com", "dummyPwd");
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
     public Snackbar arrived;
+    private SupportMapFragment mMapFragment;
 
     private MainActivityViewModel mainActVM;
 
@@ -39,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        //setSupportActionBar(binding.appBarMain.toolbar);
         setSupportActionBar(binding.appBarMain.toolbar);
         Snackbar arrived = Snackbar.make(findViewById(R.id.app_bar_main),"Log-In Successful", Snackbar.LENGTH_SHORT);
 
@@ -55,6 +59,10 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        //MAPA
+        //mMapFragment = (SupportMapFragment) this.getSupportFragmentManager().findFragmentById(R.id.map);
+        //mMapFragment.getMapAsync(this);
     }
 
     @Override
@@ -88,5 +96,10 @@ public class MainActivity extends AppCompatActivity {
         };
 
         mainActVM.getUser().observe(this, observer);
+    }
+
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+
     }
 }

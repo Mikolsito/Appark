@@ -1,15 +1,20 @@
 package com.example.appark.Activities.src;
 
 import android.util.Log;
+import android.util.Pair;
 
 import com.example.appark.Activities.MainActivity;
+import com.google.firebase.Timestamp;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.UUID;
 
 public class User {
     private String name;
     private String mail;
     private String pwd;
+    private ArrayList<Estacionament> estacionaments;      //Aixo es nou
 
 
     private final DatabaseAdapter adapter = DatabaseAdapter.databaseAdapter;
@@ -34,6 +39,8 @@ public class User {
     public void updateUser(String oldPwd, String newPwd, String oldMail, String newMail){
         if (oldMail.equals(this.mail) && oldPwd.equals(this.pwd)){
             adapter.updateUser(name, newMail, newPwd);
+            this.mail = newMail;
+            this.pwd = newPwd;
         }
 
 
@@ -41,7 +48,7 @@ public class User {
     }
 
     public void saveUser() {
-        adapter.saveUser(this);
+        adapter.saveUser(this.name, this.mail, this.pwd);
     }
 
     public void setUser(String name, String mail, String pwd) {

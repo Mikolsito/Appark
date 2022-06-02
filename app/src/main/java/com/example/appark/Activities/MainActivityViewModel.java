@@ -12,23 +12,22 @@ import com.example.appark.Activities.src.vmInterface;
 
 public class MainActivityViewModel extends AndroidViewModel implements vmInterface {
 
-    private final MutableLiveData<User> user;
+    private final MutableLiveData<User> mUser;
 
     public MainActivityViewModel(Application application) {
         super(application);
-        user = new MutableLiveData<>();
+        mUser = new MutableLiveData<>();
         DatabaseAdapter da = new DatabaseAdapter(this);
-        da.getUser();
-
+        da.getUser(MainActivity.currentUser.getMail());
     }
 
     //public getter. Not mutable , read-only
     public LiveData<User> getUser(){
-        return user;
+        return mUser;
     }
 
     @Override
     public void getInfoUser(User us) {
-        user.setValue(us);
+        mUser.setValue(us);
     }
 }

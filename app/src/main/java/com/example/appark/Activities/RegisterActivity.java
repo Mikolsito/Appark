@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -16,9 +17,10 @@ import java.util.regex.Pattern;
 import com.example.appark.R;
 
 public class RegisterActivity extends AppCompatActivity {
-    private Button registrarse, tornar;
-    private EditText nom, mail, contrasenya, contrasenya2;
-    private RegisterActivityViewModel viewModel;
+    Button registrarse, tornar;
+    EditText nom, mail, contrasenya, contrasenya2;
+    RegisterActivityViewModel viewModel;
+    CheckBox termes;
 
     public RegisterActivity() {}
 
@@ -42,25 +44,30 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String name = nom.getText().toString();
-                String username = mail.getText().toString();
+                String correu = mail.getText().toString();
                 String password = contrasenya.getText().toString();
                 String confirm_password = contrasenya2.getText().toString();
 
-                if(name.equals("") || username.equals("") || password.equals("") || confirm_password.equals("")){
+                if(name.equals("") || correu.equals("") || password.equals("") || confirm_password.equals("")) {
                     Toast.makeText(getApplicationContext(), "Nom, correu i contrasenya requerits", Toast.LENGTH_SHORT).show();
                 } else {
                     if(password.equals(confirm_password)) {
-                        if (true){ // if(databaseHelper.CheckUsername(username)){
-                            if (true) { // if(databaseHelper.InsertToDB(username, password)){
-                                viewModel.createUserDB(name,username,password);
-                                Toast.makeText(getApplicationContext(), "Registrat amb èxit", Toast.LENGTH_SHORT).show();
-                                nom.setText("");
-                                mail.setText("");
-                                contrasenya.setText("");
-                                contrasenya2.setText("");
-                                //Intent
-                                Intent processar_main = new Intent(view.getContext(), MainActivity.class);
-                                startActivityForResult(processar_main, 0);
+                        if (true /*isMail(correu)*/){ // TODO && !mailExists()) {
+                            if (true /*isPasswordSegur(password)*/) {
+                                if (true /*termes.isChecked()*/) {
+                                    viewModel.createUserDB(name, correu, password);
+                                    Toast.makeText(getApplicationContext(), "Registrat amb èxit", Toast.LENGTH_SHORT).show();
+                                    nom.setText("");
+                                    mail.setText("");
+                                    contrasenya.setText("");
+                                    contrasenya2.setText("");
+                                    Intent processar_main = new Intent(view.getContext(), MainActivity.class);
+                                    startActivityForResult(processar_main, 0);
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "Has d'acceptar els termes i polítiques", Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                Toast.makeText(getApplicationContext(),"Contrasenya - mínim 8 caràcters, 1 majúscula, 1 minuscula, 1 numero", Toast.LENGTH_SHORT).show();
                             }
                         } else {
                             Toast.makeText(getApplicationContext(), "Correu no vàlid", Toast.LENGTH_SHORT).show();
