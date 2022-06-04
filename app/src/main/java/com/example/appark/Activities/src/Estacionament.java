@@ -4,6 +4,8 @@ import com.google.type.Date;
 
 public class Estacionament {
     private Date data;
+    private Date dataSortida;
+    private User user;
     private Location ubicacio;
     private double tempsAparcat;
 

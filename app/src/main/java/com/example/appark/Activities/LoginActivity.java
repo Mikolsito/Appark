@@ -60,4 +60,11 @@ public class LoginActivity extends Activity {
 
 
     }
+
+    public void onResume() {
+
+        super.onResume();
+
+        //this.finish();
+    }
 }

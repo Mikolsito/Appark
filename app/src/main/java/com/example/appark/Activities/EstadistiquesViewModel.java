@@ -1,9 +1,11 @@
 package com.example.appark.Activities;
 
 import android.app.Application;
+import android.util.Pair;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.appark.Activities.src.DatabaseAdapter;
 import com.example.appark.Activities.src.Location;
@@ -45,9 +47,11 @@ import java.util.List;
     */
 public class EstadistiquesViewModel extends AndroidViewModel implements vmInterface {
 
+    private final MutableLiveData<ArrayList<Pair<String, Long>>> mplacesbarris;
     public EstadistiquesViewModel(@NonNull Application application) {
         super(application);
         DatabaseAdapter da = new DatabaseAdapter(this);
+        mplacesbarris=new MutableLiveData<>();
     }
 
 
@@ -62,8 +66,9 @@ public class EstadistiquesViewModel extends AndroidViewModel implements vmInterf
     public void getPlacesBarrisDB(){
         DatabaseAdapter da = new DatabaseAdapter(this);
         List<String> barris=new ArrayList<String>();
-        barris.addAll(Arrays.asList("Eixample", "Sarrià", "Gracia", "Horta", "Sagrada Familia", "Sant Gervasi", "Poblenou", "Raval", "Sant Marti"));
-        for (int i=0;i<8;i++) {
+        barris.addAll(Arrays.asList("Eixample", "Gracia"));// "Sarrià", "Gracia", "Horta"));//"Sagrada Familia"));
+        //, "Sant Gervasi", "Poblenou", "Raval", "Sant Marti"));
+        for (int i=0;i<2;i++) {
             String barri = barris.get(i);
             da.getPlacesBarri(barri);
         }
@@ -71,8 +76,15 @@ public class EstadistiquesViewModel extends AndroidViewModel implements vmInterf
 
     }
 
+
+
     @Override
     public void setUser(User user) {
 
+    }
+
+    @Override
+    public void setBarris(ArrayList<Pair<String, Long>> placesbarri) {
+        mplacesbarris.setValue(placesbarri);
     }
 }

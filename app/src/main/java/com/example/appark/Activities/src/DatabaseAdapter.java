@@ -129,6 +129,7 @@ public class DatabaseAdapter extends Activity {
         //barris.addAll(Arrays.asList("Eixample", "Sarrià", "Gracia", "Horta", "Sagrada Familia", "Sant Gervasi", "Poblenou", "Raval", "Sant Marti"));
         //for (int i=0;i<8;i++) {
             //String barri=barris.get(i);
+
             Log.d(TAG, "getPosition method DatabaseAdapter");
             db.collection("Ubicacions")
                     .whereEqualTo("barri", barri)
@@ -137,18 +138,30 @@ public class DatabaseAdapter extends Activity {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
-                                Map<String, Object> data = task.getResult().getDocuments().iterator().next().getData();
-                                int places = (int) data.get("places");
-                                int placeslliures = (int) data.get("placeslliures");
-                                Pair<String, Integer> pair = new Pair<String, Integer>(barri, (places - placeslliures));
-                                EstadistiquesFragment.PlacesBarri.add(pair);
+
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    // Logging the ID of your desired document & the document data itself
+                                    Log.d(TAG, document.get("places") + " => " + document.get("placeslliures"));
+                                    long places=0;
+                                    long placeslliures=0;
+                                    places=(long) document.get("places");
+                                    placeslliures=(long) document.get("placeslliures");
+                                    Pair<String, Long> pair = new Pair<String, Long>(barri, (places - placeslliures));
+                                    EstadistiquesFragment.PlacesBarri.add(pair);
+                                }
+                                //Map<String, Object> data = task.getResult().getDocuments().iterator().next().getData();
+                                //int places = (int) data.get("places");
+                                //int placeslliures = (int) data.get("placeslliures");
+
+
 
                             } else {
                                 Log.d(TAG, "Error getting documents: ", task.getException());
                             }
                         }
                     });
-        }
+
+    }
 
     //}
 

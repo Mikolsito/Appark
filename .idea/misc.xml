@@ -24,17 +24,21 @@
         <entry key="app/src/main/res/drawable/floating_action_button.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/historial.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_menu_social.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_menu_tancasessio.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_paginaprincipal.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/seek_bar.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_register.xml" value="0.1" />
         <entry key="app/src/main/res/layout/app_bar_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_configuracio.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_estadistiques.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_historial.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_historialubis.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_paginaprincipal.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_social.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/item_ubicacio.xml" value="0.1" />
         <entry key="app/src/main/res/layout/nav_header_main.xml" value="0.1" />
         <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.25" />
         <entry key="app/src/main/res/menu/main.xml" value="0.1361111111111111" />
