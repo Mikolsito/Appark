@@ -5,6 +5,7 @@ import android.util.Pair;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.appark.Activities.src.DatabaseAdapter;
@@ -12,11 +13,11 @@ import com.example.appark.Activities.src.Location;
 import com.example.appark.Activities.src.User;
 
 import com.example.appark.Activities.src.vmInterface;
+import com.example.appark.Activities.src.vmInterfaceUbicacio;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.firestore.GeoPoint;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /*public class EstadistiquesViewModel extends ViewModel {
     public LiveData<Location> getLocation(){
@@ -45,26 +46,45 @@ import java.util.List;
 }
 
     */
-public class EstadistiquesViewModel extends AndroidViewModel implements vmInterface {
+public class EstadistiquesViewModel extends AndroidViewModel implements vmInterfaceUbicacio {
 
     private final MutableLiveData<ArrayList<Pair<String, Long>>> mplacesbarris;
+    private MutableLiveData<ArrayList<Location>> mUbicacions;
+
+    public static final String TAG = "ViewModel";
+
     public EstadistiquesViewModel(@NonNull Application application) {
         super(application);
-        DatabaseAdapter da = new DatabaseAdapter(this);
+        mUbicacions = new MutableLiveData<>();
+        PaginaPrincipalAdapter da = new PaginaPrincipalAdapter(this);
+        da.getCollection();
         mplacesbarris=new MutableLiveData<>();
     }
 
+    //public getter. Not mutable , read-only
+    public LiveData<ArrayList<Location>> getUbicacions(){
+        return mUbicacions;
+    }
+
+    public Location getUbicacio(LatLng idx) throws Exception {
+        for (Location l : mUbicacions.getValue()) {
+            if (l.getLatLng() == idx) {
+                return l;
+            }
+        }
+        throw new Exception("No s'ha trobat la ubicació");
+    }
 
 
-    public void createPositionDB(String id, User us, double latitude, double longitude) {
+   /* public void createPositionDB(String id, User us, double latitude, double longitude) {
         GeoPoint pos=new GeoPoint(latitude,longitude);
         Location location = new Location(id, us, pos, "Eixample", 23, 9);
         location.savePosition();
         //MainActivity.currentUser = user; //el currentUser es el usuario actual
     }
-
-    public void getPlacesBarrisDB(){
-        DatabaseAdapter da = new DatabaseAdapter(this);
+*/
+    public LiveData<ArrayList<Pair<String, Long>>> getPlacesBarrisDB(){
+       /* DatabaseAdapter da = new DatabaseAdapter(this);
         List<String> barris=new ArrayList<String>();
         barris.addAll(Arrays.asList("Eixample", "Gracia"));// "Sarrià", "Gracia", "Horta"));//"Sagrada Familia"));
         //, "Sant Gervasi", "Poblenou", "Raval", "Sant Marti"));
@@ -72,19 +92,20 @@ public class EstadistiquesViewModel extends AndroidViewModel implements vmInterf
             String barri = barris.get(i);
             da.getPlacesBarri(barri);
         }
+*/
+        return mplacesbarris;
 
 
     }
 
 
 
-    @Override
-    public void setUser(User user) {
 
-    }
 
+
+    //communicates user inputs and updates the result in the viewModel
     @Override
-    public void setBarris(ArrayList<Pair<String, Long>> placesbarri) {
-        mplacesbarris.setValue(placesbarri);
+    public void updateCollection(ArrayList<Location> l) {
+        mUbicacions.setValue(l);
     }
 }

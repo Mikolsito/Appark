@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     public Snackbar arrived;
 
+
     private MainActivityViewModel mainActVM;
 
     @Override

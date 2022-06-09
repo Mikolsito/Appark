@@ -97,7 +97,7 @@ public class DatabaseAdapter extends Activity {
                 });
     }
 
-    public void savePosition(Location l) {
+   /* public void savePosition(Location l) {
         Map<String, Object> localitzacio = new HashMap<>();
         localitzacio.put("id", l.getId());
         localitzacio.put("position", l.getPosition());
@@ -164,5 +164,5 @@ public class DatabaseAdapter extends Activity {
     }
 
     //}
-
+*/
 }

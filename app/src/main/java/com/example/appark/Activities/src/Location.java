@@ -1,48 +1,76 @@
 package com.example.appark.Activities.src;
 
-import com.google.firebase.firestore.GeoPoint;
+import android.util.Log;
+
+import com.example.appark.Activities.PaginaPrincipalAdapter;
+import com.google.android.gms.maps.model.LatLng;
 
 public class Location {
-    private String id;
-    private GeoPoint position;
-    private User user;
-    private String barri;
+    private String nom;
+    private LatLng ubi;     //Si
+    private String barri;   //Aixo es nou
+    private int placesLliures;
     private int places;
-    private int placeslliures;
+    private final PaginaPrincipalAdapter adapter = PaginaPrincipalAdapter.databaseAdapter;
 
-    private boolean isOccupied;
-    private final DatabaseAdapter adapter = DatabaseAdapter.databaseAdapter;
-    public Location(String id, User user, GeoPoint position, String barri, int places, int placeslliures) {
-        this.id = id;
-        this.user=user;
-        this.position=position;
-        this.barri=barri;
-        this.places=places;
-        this.placeslliures=placeslliures;
-
+    public Location(String nom, double lat, double lon, int placesTotals, int placesLliures, String barri) {
+        this.nom = nom;
+        ubi = new LatLng(lat, lon);
+        places = placesTotals;
+        this.placesLliures = placesLliures;
+        this.barri = barri;
     }
 
-    public GeoPoint getPosition() {
-        return position;
+    public void setNom(String nom) {
+        this.nom = nom;
     }
 
-    public String getId() {
-        return id;
-    }
-    public User getUser(){return user;}
-    public String getBarri(){return barri;}
-    public int getPlaces(){return places;}
-    public int getPlaceslliures(){return placeslliures;}
-
-    public void savePosition() {
-        adapter.savePosition(this);
+    public void setLatitude(double lat) {
+        ubi = new LatLng(lat, ubi.longitude);
     }
 
-    public void occupy(){
-        isOccupied = true;
+    public void setLongitude(double lon) {
+        ubi = new LatLng(ubi.latitude, lon);
     }
 
-    public void release(){
-        isOccupied = false;
+    public void setLatLon(LatLng l) {
+        ubi = l;
     }
+
+    public void updatePlacesLliures(int n) {    //todo Mirar que el nou nombre de places lliures no sigui superior al nombre de places, ni inferior a 0
+        placesLliures = n;                      //S'ha de fer des de la classe on es cridi updatePlacesLliures()
+    }
+
+    public void updatePlaces(int n) {
+        places = n;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public double getLatitude() {
+        return ubi.latitude;
+    }
+
+    public double getLongitude() {
+        return ubi.longitude;
+    }
+
+    public LatLng getLatLng() {
+        return ubi;
+    }
+
+    public int getPlacesLliures() {
+        return placesLliures;
+    }
+
+    public int getPlaces() {
+        return places;
+    }
+
+    public String getBarri(){
+        return barri;
+    }
+
 }
