@@ -107,7 +107,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onChanged(User us) {
                 if(us.getPwd().equals(contrasenya.getText().toString())){
-                    Toast.makeText(getApplicationContext(), "Login correcte", Toast.LENGTH_SHORT).show();
                     MainActivity.currentUser = us;
 
                     //Guardem el usuari a shared preferences per a que no calgui tornar a loguejar-se després
@@ -119,6 +118,7 @@ public class LoginActivity extends AppCompatActivity {
                     editor.putString("pwd", us.getPwd());
                     editor.apply();
                     progressBar.setVisibility(View.GONE);
+                    Toast.makeText(getApplicationContext(), "Login correcte", Toast.LENGTH_SHORT).show();
                     Intent processar_main = new Intent(context, MainActivity.class);
                     startActivityForResult(processar_main, 0);
                 }

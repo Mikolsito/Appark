@@ -212,6 +212,7 @@ public class PaginaPrincipalFragment extends Fragment implements OnMapReadyCallb
         mMapç.setMapType(GoogleMap.MAP_TYPE_HYBRID);
         mMapç.setIndoorEnabled(false);
 
+        for (int i = 0; i < 100000; i++); //delay
         mMapç.moveCamera(CameraUpdateFactory.newLatLngZoom(ubis.get(0).getLatLng(), 18));  //Activem un zoom inicial a la primera ubicacio
         mUiSettings.setZoomGesturesEnabled(true);   //Activa doble tap per fer zoom
         showUbis();
