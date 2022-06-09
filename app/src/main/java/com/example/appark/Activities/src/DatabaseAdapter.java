@@ -177,7 +177,6 @@ public class DatabaseAdapter extends Activity {
     public void saveProfImageUser(String email, String url){
         Log.d(TAG, "saveProfImageUser");
         Map<String, Object> map = new HashMap<>();
-        map.put("email", email);
         map.put("url", url);
 
         db.collection("Usuarios")
