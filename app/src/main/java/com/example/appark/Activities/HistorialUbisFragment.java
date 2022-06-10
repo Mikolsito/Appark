@@ -31,7 +31,7 @@ public class HistorialUbisFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerview);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        recyclerView.setAdapter(new HistorialAdapter(1234));
+        recyclerView.setAdapter(new HistorialAdapter());
 
         return view;
     }
