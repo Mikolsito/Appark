@@ -51,7 +51,7 @@ public class EstadistiquesFragment extends Fragment {
    private BarChart barchart;
    private BarDataSet barDataSet;
    private PieChart piechart;
-   private int Escounter;
+
    private PieDataSet pieDataSet;
     private PieDataSet pieDataSet2;
     long places;
@@ -62,13 +62,13 @@ public class EstadistiquesFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
         ArrayList<Entry> lineEntries = new ArrayList<Entry>();
-        Escounter=0;
+
         ArrayList<BarEntry> barEntries = new ArrayList<BarEntry>();
         ArrayList<PieEntry> pieEntries = new ArrayList<PieEntry>();
         ubis = new ArrayList<>();
         setLiveDataObservers();
         List<String> barris=new ArrayList<String>();
-        barris.addAll(Arrays.asList("Eixample", "Sarrià", "Gracia", "Horta", "Sagrada Familia", "Sant Gervasi", "Poblenou", "Raval", "Sant Marti"));
+        barris.addAll(Arrays.asList("Eixample", "Sarrià", "Gracia", "Horta", "Sagrada Familia", "Sant Gervasi", "Poblenou", "Raval", "Sant Marti", "Sant Andreu"));
         //PlacesBarri = new ArrayList<Pair<String, Long>>();
         //viewModel = new ViewModelProvider(this).get(EstadistiquesViewModel.class);
         //viewModel.getPlacesBarrisDB();
@@ -218,7 +218,7 @@ public class EstadistiquesFragment extends Fragment {
     }
 
     private PieData generatePieData(){
-        pieDataSet.setColors(ColorTemplate.PASTEL_COLORS);
+        pieDataSet2.setColors(ColorTemplate.PASTEL_COLORS);
         PieData p= new PieData(pieDataSet2);
         //getView().findViewById(R.id.textView4).setVisibility(View.INVISIBLE);
 
@@ -235,16 +235,53 @@ public class EstadistiquesFragment extends Fragment {
                 Log.d("OnChanged", "maps");
                 ubis = latLngLocationList;
                 ArrayList<PieEntry> pieEntries2 = new ArrayList<PieEntry>();
+                List<String> barris=new ArrayList<String>();
+                barris.addAll(Arrays.asList("Eixample", "Sarrià", "Gracia", "Horta", "Sagrada Familia", "Sant Gervasi", "Poblenou", "Raval", "Sant Marti", "Sant Andreu"));
+                int[] pBarris = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+                //Calculem quantes places lliures hi ha a cada barri sumant les de totes les ubis de cada barri
                 for (int h=0;h< ubis.size();h++){
+                    switch (ubis.get(h).getBarri()){
+                        case "Eixample":
+                            pBarris[0]+=ubis.get(h).getPlacesLliures();
+                            break;
+                        case "Sarrià":
+                            pBarris[1]+=ubis.get(h).getPlacesLliures();
+                            break;
+                        case "Gracia":
+                            pBarris[2]+=ubis.get(h).getPlacesLliures();
+                            break;
+                        case "Horta":
+                            pBarris[3]+=ubis.get(h).getPlacesLliures();
+                            break;
+                        case "Sagrada Familia":
+                            pBarris[4]+=ubis.get(h).getPlacesLliures();
+                            break;
+                        case "Sant Gervasi":
+                            pBarris[5]+=ubis.get(h).getPlacesLliures();
+                            break;
+                        case "Poblenou":
+                            pBarris[6]+=ubis.get(h).getPlacesLliures();
+                            break;
+                        case "Raval":
+                            pBarris[7]+=ubis.get(h).getPlacesLliures();
+                            break;
+                        case "Sant Marti":
+                            pBarris[8]+=ubis.get(h).getPlacesLliures();
+                            break;
+                        case "Sant Andreu":
+                            pBarris[9]+=ubis.get(h).getPlacesLliures();
+                            break;
+                    }
 
-                    pieEntries2.add(new PieEntry(ubis.get(h).getPlacesLliures(),"Eixample"));
-
+                }
+                //Agafem les places lliures totals de cada barri i les afegim al grafic
+                for (int k=0;k<=9;k++){
+                    pieEntries2.add(new PieEntry(pBarris[k],barris.get(k)));
                 }
                 pieDataSet2=new PieDataSet(pieEntries2, "Exemple zones 2");
                 piechart.setData(generatePieData());
                 Log.d("Barri", ubis.get(0).getBarri());
                 piechart.invalidate();
-
             }
         };
         viewModel.getUbicacions().observe(getViewLifecycleOwner(), observer);

@@ -1,17 +1,20 @@
 package com.example.appark.Activities.src;
 
+import com.google.firebase.Timestamp;
 import com.google.type.Date;
 
 public class Estacionament {
     private Date data;
     private Date dataSortida;
+    private Timestamp dataInici;
+    private Timestamp dataFinal;
     private User user;
     private Location ubicacio;
     private double tempsAparcat;
 
-    public Estacionament(Date data, Location ubicacio) {    //No afegim el tempsAparcat com a paràmetre
+    public Estacionament(Timestamp dataInici, Location ubicacio) {    //No afegim el tempsAparcat com a paràmetre
         //ja que només sabem el temps un cop marxem
-        this.data = data;
+        this.dataInici = dataInici;
         this.ubicacio = ubicacio;
         tempsAparcat = 0;
     }
