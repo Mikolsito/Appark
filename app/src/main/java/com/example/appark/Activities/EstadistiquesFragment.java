@@ -2,7 +2,6 @@ package com.example.appark.Activities;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.appark.Activities.src.Location;
-import com.example.appark.Activities.src.RegisterActivityViewModel;
 import com.example.appark.Activities.src.User;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
