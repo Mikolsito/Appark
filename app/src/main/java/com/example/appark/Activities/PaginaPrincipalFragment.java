@@ -1,37 +1,59 @@
 package com.example.appark.Activities;
 
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.PopupWindow;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.example.appark.Activities.src.Location;
 import com.example.appark.R;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputLayout;
 
-public class PaginaPrincipalFragment extends Fragment {
+import java.util.ArrayList;
 
-    FloatingActionButton mAddFab, mAddHistorial, mAddCotxe;
-    TextView addHistorialText, addCotxeText;
-    Boolean isAllFabsVisible;
-    Animation fabOpen, fabClose, rotateForward, rotateBackward;
-    SeekBar seekBar;
-    GoogleMap map;
+public class PaginaPrincipalFragment extends Fragment implements OnMapReadyCallback,
+        GoogleMap.OnMarkerClickListener,
+        GoogleMap.OnInfoWindowClickListener {
+
+    private UiSettings mUiSettings;
+    private SupportMapFragment mMapFragment;
+    private GoogleMap mMapç;
+    private FloatingActionButton mAddFab, mAddHistorial, mAddCotxe;
+    private TextView addHistorialText, addCotxeText;
+    private Boolean isAllFabsVisible;
+    private Animation fabOpen, fabClose, rotateForward, rotateBackward;
+    private SeekBar seekBar;
+    private ArrayList<Location> ubis;
+    private PaginaPrincipalViewModel viewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         //super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_main);
-
         View view = inflater.inflate(R.layout.fragment_paginaprincipal, container, false);
         mAddFab = (FloatingActionButton) view.findViewById(R.id.add_fab);
         mAddHistorial = (FloatingActionButton) view.findViewById(R.id.add_historial_fab);
@@ -49,17 +71,25 @@ public class PaginaPrincipalFragment extends Fragment {
 
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 progressChangedValue = progress;
-                Toast.makeText(getView().getContext(), progressChangedValue + " Km de radi", Toast.LENGTH_SHORT).show();
             }
 
             public void onStartTrackingTouch(SeekBar seekBar) { //Al començar a arrossegar
-
+                //progressChangedValue = seekBar.getProgress();
+                //Toast.makeText(getView().getContext(), progressChangedValue + " Km de radi", Toast.LENGTH_SHORT).show();
             }
 
             public void onStopTrackingTouch(SeekBar seekBar) {
-
+                progressChangedValue = seekBar.getProgress();
+                Toast.makeText(getView().getContext(), progressChangedValue + " Km de radi", Toast.LENGTH_SHORT).show();
             }
         });
+        ubis = new ArrayList<>();
+
+        mMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        mMapFragment.getMapAsync(this);
+
+        setLiveDataObservers();
+
 
         //Animacions
         fabOpen = AnimationUtils.loadAnimation(view.getContext(),R.anim.fab_open);
@@ -104,8 +134,7 @@ public class PaginaPrincipalFragment extends Fragment {
             }
         });
 
-        mAddCotxe.setOnClickListener(
-                new View.OnClickListener() {
+        mAddCotxe.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Toast.makeText(getView().getContext(), "Falta implementar aquesta funcionalitat", Toast.LENGTH_SHORT).show();
@@ -142,4 +171,71 @@ public class PaginaPrincipalFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onInfoWindowClick(@NonNull Marker marker) {
+        //Per futures implementacions
+    }
+
+    @Override
+    public boolean onMarkerClick(@NonNull Marker marker) {
+        View popup = getLayoutInflater().inflate(R.layout.popup_layout, null);
+        PopupWindow popupWindow = new PopupWindow(popup, 800, 600);
+        popupWindow.setFocusable(true);
+        popupWindow.setBackgroundDrawable(new ColorDrawable());
+        popupWindow.showAtLocation(getView().findViewById(R.id.map), Gravity.CENTER, 0, 0);
+
+        TextInputLayout saveDescr = popup.findViewById(R.id.note_description);
+        Button saveButton = popup.findViewById(R.id.save_button);
+        saveButton.setOnClickListener((v) -> {
+            String text = saveDescr.getEditText().getText().toString();
+            Toast.makeText(getActivity(), "Ubicació Guardada", Toast.LENGTH_SHORT).show();
+            popupWindow.dismiss();
+        });
+        return true;
+    }
+
+    /**
+     * Manipulates the map once available.
+     * This callback is triggered when the map is ready to be used.
+     * This is where we can add markers or lines, add listeners or move the camera.
+     * If Google Play services is not installed on the device, the user will be prompted to install
+     * it inside the SupportMapFragment. This method will only be triggered once the user has
+     * installed Google Play services and returned to the app.
+     */
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        Log.d("MAPA", "maps");
+        mMapç = googleMap;
+        mMapç.setOnMarkerClickListener(this);
+        mMapç.setOnInfoWindowClickListener(this);
+        mUiSettings = mMapç.getUiSettings();
+        mMapç.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        mMapç.setIndoorEnabled(false);
+
+        for (int i = 0; i < 100000; i++); //delay
+        mMapç.moveCamera(CameraUpdateFactory.newLatLngZoom(ubis.get(0).getLatLng(), 18));  //Activem un zoom inicial a la primera ubicacio
+        mUiSettings.setZoomGesturesEnabled(true);   //Activa doble tap per fer zoom
+        showUbis();
+    }
+
+    public void showUbis() {
+        //Log.d("SHOW UBIS", "maps");
+        for(Location u: ubis) {
+            mMapç.addMarker(new MarkerOptions().position(u.getLatLng()));
+        }
+    }
+
+    public void setLiveDataObservers() {
+        //Subscribe the activity to the observable
+        viewModel = new ViewModelProvider(getActivity()).get(PaginaPrincipalViewModel.class);
+
+        final Observer<ArrayList<Location>> observer = new Observer<ArrayList<Location>>() {
+            @Override
+            public void onChanged(ArrayList<Location> latLngLocationList) {
+                //Log.d("OnChanged", "maps");
+                ubis = latLngLocationList;
+            }
+        };
+        viewModel.getUbicacions().observe(getViewLifecycleOwner(), observer);
+    }
 }

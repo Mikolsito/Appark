@@ -69,8 +69,4 @@ public class Location {
         return places;
     }
 
-    public String getBarri(){
-        return barri;
-    }
-
 }

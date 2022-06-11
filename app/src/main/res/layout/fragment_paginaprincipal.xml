@@ -15,7 +15,6 @@
         will pop up. So this button is considered as parent FAB-->
 
 
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_fab"
         android:layout_width="wrap_content"
@@ -87,13 +86,13 @@
         to the add Person FAB button-->
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/map2"
+        android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="bottom"
         tools:context=".Activities.PaginaPrincipalFragment"
-        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteX="28dp"
         tools:layout_editor_absoluteY="0dp" />
 
     <TextView
@@ -132,13 +131,24 @@
         android:id="@+id/SeekBar"
         android:layout_width="353dp"
         android:layout_height="34dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="76dp"
         android:max="50"
         android:progress="25"
         android:progressDrawable="@drawable/seek_bar"
         android:thumb="@drawable/seek_thumb"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="128dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/logo_transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/SeekBar"
         app:layout_constraintTop_toTopOf="parent" />
 
 

@@ -16,14 +16,14 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/Theme.MiPerfil.PopupOverlay" />
+            android:background="@android:color/transparent"
+            android:visibility="gone"
+            app:popupTheme="@style/Theme.MiPerfil.PopupOverlay"
+            tools:visibility="gone" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <include layout="@layout/content_main" />
-
-
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
