@@ -44,17 +44,14 @@ import java.util.List;
 //Crea set de dades (ara random, despres en base a dades del firebase)
 public class EstadistiquesFragment extends Fragment {
     private static final String TAG = "EstadistiquesFragmentDB";
-    public static ArrayList<Pair<String, Long>> PlacesBarri = new ArrayList<Pair<String, Long>>();
    private LineChart linechart;
    public Bundle instance;
    private LineDataSet lineDataSet;
    private BarChart barchart;
    private BarDataSet barDataSet;
    private PieChart piechart;
-
    private PieDataSet pieDataSet;
-    private PieDataSet pieDataSet2;
-    long places;
+   private PieDataSet pieDataSet2;
    EstadistiquesViewModel viewModel;
     private ArrayList<Location> ubis;
     @Override
@@ -276,7 +273,9 @@ public class EstadistiquesFragment extends Fragment {
                 }
                 //Agafem les places lliures totals de cada barri i les afegim al grafic
                 for (int k=0;k<=9;k++){
-                    pieEntries2.add(new PieEntry(pBarris[k],barris.get(k)));
+                    if(pBarris[k]!=0){
+                        pieEntries2.add(new PieEntry(pBarris[k],barris.get(k)));
+                    }
                 }
                 pieDataSet2=new PieDataSet(pieEntries2, "Exemple zones 2");
                 piechart.setData(generatePieData());

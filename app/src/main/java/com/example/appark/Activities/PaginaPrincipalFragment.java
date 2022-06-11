@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.appark.R;
+import com.google.android.gms.maps.GoogleMap;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class PaginaPrincipalFragment extends Fragment {
@@ -23,12 +24,14 @@ public class PaginaPrincipalFragment extends Fragment {
     Boolean isAllFabsVisible;
     Animation fabOpen, fabClose, rotateForward, rotateBackward;
     SeekBar seekBar;
+    GoogleMap map;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         //super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_main);
+
         View view = inflater.inflate(R.layout.fragment_paginaprincipal, container, false);
         mAddFab = (FloatingActionButton) view.findViewById(R.id.add_fab);
         mAddHistorial = (FloatingActionButton) view.findViewById(R.id.add_historial_fab);
