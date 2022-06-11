@@ -7,13 +7,15 @@ import java.util.Date;
 public class Estacionament {
     private Date dataInici;
     private Date dataFinal;
-    private User user;
+    private String userEmail;
     private Location ubicacio;
+    private float tempsAparcat;
 
     public Estacionament(Location ubicacio) {
         this.dataInici = new Date();
         this.ubicacio = ubicacio;
-        this.user = MainActivity.currentUser;
+        this.userEmail = MainActivity.currentUser.getMail();
+        this.tempsAparcat = 0;
     }
 
     public void setDataFinal() {
@@ -32,12 +34,11 @@ public class Estacionament {
         return ubicacio;
     }
 
-    public User getUser() {
-        return user;
+    public String getUser() {
+        return userEmail;
     }
 
-    public float getTempsAparcat(){
-        float temps = ((dataFinal.getTime()-dataInici.getTime())/1000*60*60)%24;
-        return temps; //devuelve el tiempo en horas
+    public void setTempsAparcat(){
+        this.tempsAparcat = ((dataFinal.getTime()-dataInici.getTime())/1000*60*60)%24;
     }
 }
