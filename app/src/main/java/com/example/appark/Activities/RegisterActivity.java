@@ -67,6 +67,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     //Creem l'usuari i el guardem a la base de dades
                                     viewModel.createUserDB(name, correu, password);
                                     //Guardem l'user a SharedPreferences
+                                    /*
                                     SharedPreferences sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
                                     SharedPreferences.Editor editor = sharedPreferences.edit();
                                     editor.putBoolean("logged", true);
@@ -74,6 +75,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     editor.putString("user", correu);
                                     editor.putString("pwd", password);
                                     editor.apply();
+                                    */
                                     Toast.makeText(getApplicationContext(), "Registrat amb èxit", Toast.LENGTH_SHORT).show();
                                     //Fem l'intent
                                     Intent processar_main = new Intent(view.getContext(), MainActivity.class);

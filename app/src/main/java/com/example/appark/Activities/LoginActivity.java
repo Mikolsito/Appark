@@ -111,6 +111,7 @@ public class LoginActivity extends AppCompatActivity {
                     MainActivity.currentUser = us;
 
                     //Guardem el usuari a shared preferences per a que no calgui tornar a loguejar-se després
+                    /*
                     SharedPreferences sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putBoolean("logged", true);
@@ -118,6 +119,7 @@ public class LoginActivity extends AppCompatActivity {
                     editor.putString("user", us.getMail());
                     editor.putString("pwd", us.getPwd());
                     editor.apply();
+                     */
                     progressBar.setVisibility(View.GONE);
                     Intent processar_main = new Intent(context, MainActivity.class);
                     startActivityForResult(processar_main, 0);
