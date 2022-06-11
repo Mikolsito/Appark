@@ -1,12 +1,13 @@
 package com.example.appark.Activities;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.ColorDrawable;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -30,9 +31,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.appark.Activities.src.Location;
 import com.example.appark.R;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -40,8 +38,6 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -203,11 +199,19 @@ public class PaginaPrincipalFragment extends Fragment implements OnMapReadyCallb
         popupWindow.showAtLocation(getView().findViewById(R.id.map), Gravity.CENTER, 0, 0);
 
         TextInputLayout saveDescr = popup.findViewById(R.id.note_description);
-        Button saveButton = popup.findViewById(R.id.save_button);
+        Button saveButton = popup.findViewById(R.id.reserve_button);
         saveButton.setOnClickListener((v) -> {
             String text = saveDescr.getEditText().getText().toString();
-            Toast.makeText(getActivity(), "Ubicació Guardada", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Aparcament reservat", Toast.LENGTH_SHORT).show();
             popupWindow.dismiss();
+        });
+        Button iniciarRuta = popup.findViewById(R.id.ruta_button);
+        iniciarRuta.setOnClickListener((v) -> {
+            Uri gmmIntentUri = Uri.parse("geo:0,0?q=" + marker.getPosition().latitude + "," +
+                    marker.getPosition().longitude + marker.getTitle());
+            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+            mapIntent.setPackage("com.google.android.apps.maps");
+            this.getContext().startActivity(mapIntent);
         });
         return true;
     }
@@ -232,6 +236,9 @@ public class PaginaPrincipalFragment extends Fragment implements OnMapReadyCallb
         mMapç.setIndoorEnabled(false);
 
         mUiSettings.setZoomGesturesEnabled(true);   //Activa doble tap per fer zoom
+        mUiSettings.setMapToolbarEnabled(true);
+
+
         showUbis();
 
         if(mMapç != null){
@@ -268,7 +275,7 @@ public class PaginaPrincipalFragment extends Fragment implements OnMapReadyCallb
     }
 
     public void showUbis() {
-        //Log.d("SHOW UBIS", "maps");
+        Log.d(TAG, "showUbis");
         for(Location u: ubis) {
             mMapç.addMarker(new MarkerOptions().position(u.getLatLng()));
         }

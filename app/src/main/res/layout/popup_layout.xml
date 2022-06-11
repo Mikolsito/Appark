@@ -26,27 +26,26 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/save_button"
-        android:layout_width="143dp"
-        android:layout_height="75dp"
+        android:id="@+id/reserve_button"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="20dp"
-        android:text="@string/guardar_ubi"
+        android:layout_marginTop="32dp"
+        android:text="@string/reservar_ubi"
         android:textColor="#FFFFFF"
-        android:textSize="14sp"
+        android:textSize="10sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/note_description" />
 
     <Button
         android:id="@+id/ruta_button"
-        android:layout_width="140dp"
-        android:layout_height="74dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
         android:text="@string/iniciar_ruta"
-        android:textSize="14sp"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/note_description" />
+        app:layout_constraintTop_toBottomOf="@+id/reserve_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
