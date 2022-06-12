@@ -98,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onChanged(User us) {
                 if(us == null){
-                    Toast.makeText(getApplicationContext(), "Correu o contrasenya incorrectes 2", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Correu o contrasenya incorrectes", Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.GONE);
                 }
                 else if(us.getPwd().equals(contrasenya.getText().toString())){
