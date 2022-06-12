@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.appark.Activities.src.Estacionament;
 import com.example.appark.Activities.src.Location;
 import com.example.appark.Activities.src.User;
 import com.github.mikephil.charting.charts.BarChart;
@@ -37,6 +38,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.AbstractCollection;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 //Crea set de dades (ara random, despres en base a dades del firebase)
@@ -45,6 +47,7 @@ public class EstadistiquesFragment extends Fragment {
    private LineChart linechart;
    public Bundle instance;
    private LineDataSet lineDataSet;
+   private LineDataSet lineDataSet2;
    private BarChart barchart;
    private BarDataSet barDataSet;
    private PieChart piechart;
@@ -52,15 +55,18 @@ public class EstadistiquesFragment extends Fragment {
    private PieDataSet pieDataSet2;
    EstadistiquesViewModel viewModel;
     private ArrayList<Location> ubis;
+    private ArrayList<Estacionament> parkings;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         ArrayList<Entry> lineEntries = new ArrayList<Entry>();
-
+        ArrayList<Entry> lineEntries2 = new ArrayList<Entry>();
         ArrayList<BarEntry> barEntries = new ArrayList<BarEntry>();
+        ArrayList<BarEntry> barEntries2 = new ArrayList<BarEntry>();
         ArrayList<PieEntry> pieEntries = new ArrayList<PieEntry>();
         ubis = new ArrayList<>();
+        parkings=new ArrayList<>();
         setLiveDataObservers();
         List<String> barris=new ArrayList<String>();
         barris.addAll(Arrays.asList("Eixample", "Sarrià", "Gracia", "Horta", "Sagrada Familia", "Sant Gervasi", "Poblenou", "Raval", "Sant Marti", "Sant Andreu"));
@@ -68,32 +74,34 @@ public class EstadistiquesFragment extends Fragment {
         //viewModel = new ViewModelProvider(this).get(EstadistiquesViewModel.class);
         //viewModel.getPlacesBarrisDB();
        // setLiveDataObservers();
-       /* FirebaseFirestore db = FirebaseFirestore.getInstance();
+   /*    FirebaseFirestore db = FirebaseFirestore.getInstance();
         //String barri = barris.get(0);
         String barri = "Eixample";
-        db.collection("Ubicacions")
-                .whereEqualTo("barri", barri)
+        db.collection("Estacionaments")
+                //.whereEqualTo("User_email", MainActivity.currentUser.getMail())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-
+                            int count=0;
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 // Logging the ID of your desired document & the document data itself
-                                Log.d(TAG, document.get("places") + " => " + document.get("placeslliures"));
-                                //long places=0;
-                                long placeslliures=0;
-                                places=(long) document.get("places");
-                                placeslliures=(long) document.get("placeslliures");
+                                Log.d(TAG, document.get("dataInicia") + " => " + document.get("tempsAparcat"));
+                                float temps=0;
+                                temps=(float) document.get("tempsAparcat");
                                 //Pair<String, Long> pair = new Pair<String, Long>(barri, (places - placeslliures));
                                 //PlacesBarri.add(pair);
-                                pieEntries.add(new PieEntry((int)places,"Eixample"));
-                                pieDataSet=new PieDataSet(pieEntries, "Exemple zones");
+                                lineEntries2.add(new Entry((float)count, temps));
+                                count+=1;
+                                lineDataSet2=new LineDataSet(lineEntries2, "Exemple temps");
 
-                                PieData pp= new PieData(pieDataSet);
-                                piechart.setData(pp);
+                                LineData ll= new LineData(lineDataSet2);
+
+
                             }
+                            linechart.setData(generateLineData());
+                            linechart.invalidate();
                             //Map<String, Object> data = task.getResult().getDocuments().iterator().next().getData();
                             //int places = (int) data.get("places");
                             //int placeslliures = (int) data.get("placeslliures");
@@ -103,6 +111,7 @@ public class EstadistiquesFragment extends Fragment {
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
+                        //linechart.invalidate();
                     }
                 });
 
@@ -117,24 +126,24 @@ public class EstadistiquesFragment extends Fragment {
             //long places=0;
             pieEntries.add(new PieEntry((float)z,"Eixample"));
             lineEntries.add(new Entry((float) i,(float)y));
-            barEntries.add(new BarEntry((float) i, (float)x));
+            //barEntries.add(new BarEntry((float) i, (float)x));
         }
         //User user=new User("hola", "u@u.com", "pwd");
         //String id= "5";
         //viewModel.createPositionDB(id,user,345, 345);
-        pieDataSet=new PieDataSet(pieEntries, "Exemple zones");
+        //pieDataSet=new PieDataSet(pieEntries, "Exemple zones");
         barDataSet=new BarDataSet(barEntries, "Exemple aparcaments");
         lineDataSet=new LineDataSet(lineEntries,"Exemple temps");
         return inflater.inflate(R.layout.fragment_estadistiques, container, false);
     }
 /*
-    private void setLiveDataObservers() {
+    private void setLiveDataObservers2() {
         viewModel = new ViewModelProvider(this).get(EstadistiquesViewModel.class);
 
 
-        final Observer<ArrayList<Pair<String, Long>>> observer = new Observer<ArrayList<Pair<String, Long>>>() {
+        final Observer<ArrayList<Estacionament>> observer = new Observer<ArrayList<Estacionament>>() {
             @Override
-            public void onChanged(ArrayList<Pair<String, Long>> pairs) {
+            public void onChanged(ArrayList<Estacionament> parkings) {
                 viewModel.getPlacesBarrisDB().observe(this, observer);
             }
 
@@ -146,7 +155,7 @@ public class EstadistiquesFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState){
         super.onViewCreated(view,savedInstanceState);
-        instance=savedInstanceState;
+        //instance=savedInstanceState;
         // Ligar los graficos con el XML
         linechart=view.findViewById(R.id.linechart);
         barchart=view.findViewById(R.id.barchart);
@@ -157,8 +166,8 @@ public class EstadistiquesFragment extends Fragment {
         piechart.setEntryLabelTextSize(10f); // Establece el tamaño de fuente para dibujar Label
 
         // Unir set de datos a los graficos
-        barchart.setData(generateBarData());
-        linechart.setData(generateLineData());
+        //barchart.setData(generateBarData());
+        //linechart.setData(generateLineData());
         //piechart.setData(generatePieData());
        /* while (ubis.isEmpty()) {
             if(ubis.isEmpty()){
@@ -204,10 +213,10 @@ public class EstadistiquesFragment extends Fragment {
         return d;
     }
     private LineData generateLineData(){
-        lineDataSet.setColor(Color.rgb(60, 220, 78));
-        lineDataSet.setValueTextColor(Color.rgb(60, 220, 78));
-        lineDataSet.setValueTextSize(10f);
-        LineData l=new LineData(lineDataSet);
+        lineDataSet2.setColor(Color.rgb(60, 220, 78));
+        lineDataSet2.setValueTextColor(Color.rgb(60, 220, 78));
+        lineDataSet2.setValueTextSize(10f);
+        LineData l=new LineData(lineDataSet2);
         l.setHighlightEnabled(true);
         return l;
     }
@@ -223,6 +232,53 @@ public class EstadistiquesFragment extends Fragment {
     public void setLiveDataObservers() {
         //Subscribe the activity to the observable
         viewModel = new ViewModelProvider(getActivity()).get(EstadistiquesViewModel.class);
+
+        final Observer<ArrayList<Estacionament>> observer2=new Observer<ArrayList<Estacionament>>() {
+            @Override
+            public void onChanged(ArrayList<Estacionament> estacionaments) {
+                Log.d("OnChangedopo", estacionaments.toString());
+                parkings=estacionaments;
+                Log.d("OnChangedopo", parkings.get(0).getUserEmail());
+                Log.d("OnChangedopAAA", MainActivity.currentUser.getMail());
+                ArrayList<Entry> lineEntries2 = new ArrayList<Entry>();
+                ArrayList<BarEntry> barEntries = new ArrayList<BarEntry>();
+                Calendar cal=Calendar.getInstance();
+
+                int[] EstacionamentsPerDia = {0, 0, 0, 0, 0, 0, 0};
+                for (int f=0; f<parkings.size();f++){
+                    if(parkings.get(f).getUserEmail().equals(MainActivity.currentUser.getMail())) {
+                        lineEntries2.add(new Entry((float) f, parkings.get(f).getTempsAparcat()));
+                    }
+                    cal.setTime(parkings.get(f).getDataInici());
+                    Integer actualDay=cal.get(Calendar.DAY_OF_WEEK);
+                    switch (actualDay){
+                        case 1:
+                            EstacionamentsPerDia[6]+=1;
+                        case 2:EstacionamentsPerDia[0]+=1;
+                        case 3:EstacionamentsPerDia[1]+=1;
+                        case 4:EstacionamentsPerDia[2]+=1;
+                        case 5:EstacionamentsPerDia[3]+=1;
+                        case 6:EstacionamentsPerDia[4]+=1;
+                        case 7:EstacionamentsPerDia[5]+=1;
+                    }
+
+                    Log.d("LOLOLOLAAA", (actualDay.toString()));
+                }
+                for(int yu=0;yu<EstacionamentsPerDia.length;yu++){
+                    barEntries.add(new BarEntry((float) yu, (float)EstacionamentsPerDia[yu]));
+                }
+                barDataSet=new BarDataSet(barEntries,"Exemple dies");
+                barchart.setData(generateBarData());
+                barchart.invalidate();
+                //Genera el nou Linechart amb les hores aparcades per l'usuari
+                lineDataSet2=new LineDataSet(lineEntries2, "Exemple temps");
+                LineData ll= new LineData(lineDataSet2);
+                linechart.setData(ll);
+                linechart.invalidate();
+
+                //barDataSet2=new BarDataSet()
+            }
+        };
 
         final Observer<ArrayList<Location>> observer = new Observer<ArrayList<Location>>() {
             @Override
@@ -282,6 +338,7 @@ public class EstadistiquesFragment extends Fragment {
             }
         };
         viewModel.getUbicacions().observe(getViewLifecycleOwner(), observer);
+        viewModel.getEstacionaments().observe(getViewLifecycleOwner(),observer2);
     }
 
 }

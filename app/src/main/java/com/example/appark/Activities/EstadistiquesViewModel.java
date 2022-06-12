@@ -9,10 +9,12 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.appark.Activities.src.DatabaseAdapter;
+import com.example.appark.Activities.src.Estacionament;
 import com.example.appark.Activities.src.Location;
 import com.example.appark.Activities.src.User;
 
 import com.example.appark.Activities.src.vmInterface;
+import com.example.appark.Activities.src.vmInterfaceEstacionaments;
 import com.example.appark.Activities.src.vmInterfaceUbicacio;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.firestore.GeoPoint;
@@ -46,18 +48,22 @@ import java.util.ArrayList;
 }
 
     */
-public class EstadistiquesViewModel extends AndroidViewModel implements vmInterfaceUbicacio {
+public class EstadistiquesViewModel extends AndroidViewModel implements vmInterfaceEstacionaments {
 
     private final MutableLiveData<ArrayList<Pair<String, Long>>> mplacesbarris;
     private MutableLiveData<ArrayList<Location>> mUbicacions;
+    private MutableLiveData<ArrayList<Estacionament>> mEstacionaments;
 
     public static final String TAG = "ViewModel";
 
     public EstadistiquesViewModel(@NonNull Application application) {
         super(application);
         mUbicacions = new MutableLiveData<>();
-        PaginaPrincipalAdapter da = new PaginaPrincipalAdapter(this);
+        mEstacionaments=new MutableLiveData<>();
+        //PaginaPrincipalAdapter da = new PaginaPrincipalAdapter(this);
+        EstacionamentsAdapter da=new EstacionamentsAdapter(this);
         da.getCollection();
+        da.getCollection2();
         mplacesbarris=new MutableLiveData<>();
     }
 
@@ -65,7 +71,7 @@ public class EstadistiquesViewModel extends AndroidViewModel implements vmInterf
     public LiveData<ArrayList<Location>> getUbicacions(){
         return mUbicacions;
     }
-
+    public LiveData<ArrayList<Estacionament>> getEstacionaments(){return mEstacionaments;}
     public Location getUbicacio(LatLng idx) throws Exception {
         for (Location l : mUbicacions.getValue()) {
             if (l.getLatLng() == idx) {
@@ -99,9 +105,10 @@ public class EstadistiquesViewModel extends AndroidViewModel implements vmInterf
     }
 
 
-
-
-
+    @Override
+    public void updateCollection2(ArrayList<Estacionament> e) {
+        mEstacionaments.setValue(e);
+    }
 
     //communicates user inputs and updates the result in the viewModel
     @Override
