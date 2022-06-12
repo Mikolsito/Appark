@@ -1,28 +1,48 @@
 package com.example.appark.Activities.src;
 
+import com.example.appark.Activities.MainActivity;
+
 import java.util.Date;
 
 public class Estacionament {
-    private Date data;
+    private Date dataInici;
+    private Date dataFinal;
+    private String userEmail;
     private Location ubicacio;
-    private double tempsAparcat;
+    private float tempsAparcat;
 
-    public Estacionament(Date data, Location ubicacio) {    //No afegim el tempsAparcat com a paràmetre
-                                                            //ja que només sabem el temps un cop marxem
-        this.data = data;
+    public Estacionament(Location ubicacio) {
+        this.dataInici = new Date();
         this.ubicacio = ubicacio;
-        tempsAparcat = 0;
+        this.userEmail = MainActivity.currentUser.getMail();
+        this.tempsAparcat = 0;
     }
 
-    public void setTempsAparcat(double temps) {
-        tempsAparcat = temps;
+    public void setDataFinal() {
+        this.dataFinal = new Date();
     }
 
-    public Date getData() {
-        return data;
+    public Date getDataInici() {
+        return dataInici;
+    }
+
+    public Date getDataFinal(){
+        return dataFinal;
     }
 
     public Location getUbicacio() {
         return ubicacio;
+    }
+
+    public String getUser() {
+        return userEmail;
+    }
+
+    public float getTempsAparcat() {
+        return tempsAparcat;
+    }
+
+    public void setTempsAparcat(){
+        this.tempsAparcat = ((dataFinal.getTime()-dataInici.getTime())/1000*60*60)%24;
     }
 }

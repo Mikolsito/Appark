@@ -46,5 +46,7 @@
     <string name="add_description_msg">Note description</string>
     <string name="save_note">Save note</string>
     <string name="tancar_sessio">Tancant sessió…</string>
+    <string name="iniciar_ruta">Iniciar ruta</string>
+    <string name="reservar_ubi">Reservar ubicació</string>
 
 </resources>

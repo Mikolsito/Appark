@@ -17,21 +17,26 @@ import java.util.Map;
 public class PaginaPrincipalViewModel extends AndroidViewModel implements vmInterfaceUbicacio {
 
     private MutableLiveData<ArrayList<Location>> mUbicacions;
+    private MutableLiveData<ArrayList<Integer>> mInfoPlaces;
 
     public static final String TAG = "ViewModel";
+    PaginaPrincipalAdapter da;
 
     //Constructor
     public PaginaPrincipalViewModel(Application application){
         super(application);
 
         mUbicacions = new MutableLiveData<>();
-        PaginaPrincipalAdapter da = new PaginaPrincipalAdapter(this);
+        da = new PaginaPrincipalAdapter(this);
         da.getCollection();
     }
 
     //public getter. Not mutable , read-only
     public LiveData<ArrayList<Location>> getUbicacions(){
         return mUbicacions;
+    }
+    public LiveData<ArrayList<Integer>> getInfoPlaces(){
+        return mInfoPlaces;
     }
 
     public Location getUbicacio(LatLng idx) throws Exception {
@@ -43,9 +48,23 @@ public class PaginaPrincipalViewModel extends AndroidViewModel implements vmInte
         throw new Exception("No s'ha trobat la ubicació");
     }
 
+    public void createEstacionament(String nom){
+        da.createEstacionament(nom);
+
+    }
+
+    public void getInfoPlacesDB(String nom){
+        da.getPlacesUbicacio(nom);
+    }
+
     //communicates user inputs and updates the result in the viewModel
     @Override
     public void updateCollection(ArrayList<Location> l) {
         mUbicacions.setValue(l);
+    }
+
+    @Override
+    public void getPlacesBD(ArrayList<Integer> places) {
+        mInfoPlaces.setValue(places);
     }
 }

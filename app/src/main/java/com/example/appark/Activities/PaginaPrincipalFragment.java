@@ -1,6 +1,13 @@
 package com.example.appark.Activities;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.ColorDrawable;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -16,27 +23,32 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.appark.Activities.src.Location;
 import com.example.appark.R;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class PaginaPrincipalFragment extends Fragment implements OnMapReadyCallback,
         GoogleMap.OnMarkerClickListener,
         GoogleMap.OnInfoWindowClickListener {
+    public static final String TAG = "PaginaPrincipalFragment";
 
     private UiSettings mUiSettings;
     private SupportMapFragment mMapFragment;
@@ -48,6 +60,13 @@ public class PaginaPrincipalFragment extends Fragment implements OnMapReadyCallb
     private SeekBar seekBar;
     private ArrayList<Location> ubis;
     private PaginaPrincipalViewModel viewModel;
+    //private FusedLocationProviderClient client;
+    LocationManager locationManager;
+    private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
+    private boolean mLocationPermissionGranted;
+
+    private int placesTotals;
+    private int placesLliures;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -184,12 +203,27 @@ public class PaginaPrincipalFragment extends Fragment implements OnMapReadyCallb
         popupWindow.setBackgroundDrawable(new ColorDrawable());
         popupWindow.showAtLocation(getView().findViewById(R.id.map), Gravity.CENTER, 0, 0);
 
-        TextInputLayout saveDescr = popup.findViewById(R.id.note_description);
-        Button saveButton = popup.findViewById(R.id.save_button);
-        saveButton.setOnClickListener((v) -> {
-            String text = saveDescr.getEditText().getText().toString();
-            Toast.makeText(getActivity(), "Ubicació Guardada", Toast.LENGTH_SHORT).show();
+
+        TextView titleUbicacio = popup.findViewById(R.id.titleUbicacio);
+        titleUbicacio.setText(marker.getTitle());
+        TextView tilePlacesLliures = popup.findViewById(R.id.titlePlacesLliures);
+        tilePlacesLliures.setText("Places lliures: " + marker.getTag().toString());
+
+
+        Button reserveButton = popup.findViewById(R.id.reserve_button);
+        reserveButton.setOnClickListener((v) -> {
+            viewModel.createEstacionament(marker.getTitle());
+            marker.setTag((Integer) marker.getTag() - 1);
+            Toast.makeText(getActivity(), "Aparcament reservat: tens 15 minuts per arribar a la plaça", Toast.LENGTH_LONG).show();
             popupWindow.dismiss();
+        });
+        Button iniciarRuta = popup.findViewById(R.id.ruta_button);
+        iniciarRuta.setOnClickListener((v) -> {
+            Uri gmmIntentUri = Uri.parse("geo:0,0?q=" + marker.getPosition().latitude + "," +
+                    marker.getPosition().longitude + marker.getTitle());
+            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+            mapIntent.setPackage("com.google.android.apps.maps");
+            this.getContext().startActivity(mapIntent);
         });
         return true;
     }
@@ -202,6 +236,7 @@ public class PaginaPrincipalFragment extends Fragment implements OnMapReadyCallb
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
      */
+    @SuppressLint("MissingPermission")
     @Override
     public void onMapReady(GoogleMap googleMap) {
         Log.d("MAPA", "maps");
@@ -213,15 +248,51 @@ public class PaginaPrincipalFragment extends Fragment implements OnMapReadyCallb
         mMapç.setIndoorEnabled(false);
 
         for (int i = 0; i < 100000; i++); //delay
-        mMapç.moveCamera(CameraUpdateFactory.newLatLngZoom(ubis.get(0).getLatLng(), 18));  //Activem un zoom inicial a la primera ubicacio
+
         mUiSettings.setZoomGesturesEnabled(true);   //Activa doble tap per fer zoom
+        mUiSettings.setMapToolbarEnabled(true);
+
+
         showUbis();
+
+        if(mMapç != null){
+            if (ContextCompat.checkSelfPermission(this.getContext(),
+                    android.Manifest.permission.ACCESS_FINE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED) {
+                mLocationPermissionGranted = true;
+            } else {
+                ActivityCompat.requestPermissions(this.getActivity(),
+                        new String[] { android.Manifest.permission.ACCESS_FINE_LOCATION },
+                        PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+            }
+
+            if (!mLocationPermissionGranted) {
+                Toast.makeText(this.getActivity(), "The user has not granted location permission.", Toast.LENGTH_LONG).show();
+                Log.d(TAG, "errorMessage");
+                return;
+            }
+            if(mLocationPermissionGranted){
+                mMapç.setMyLocationEnabled(true); //permitimos seguimeinto localizacion
+
+                locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+                LocationListener locationListener = new LocationListener() {
+                    @Override
+                    public void onLocationChanged(@NonNull android.location.Location location) {
+                        LatLng myLocation = new LatLng(location.getLatitude(), location.getLongitude());
+                        mMapç.addMarker(new MarkerOptions().position(myLocation).title("Mi posicion"));
+                    }
+                };
+            }
+        }
+
+
     }
 
     public void showUbis() {
-        //Log.d("SHOW UBIS", "maps");
+        Log.d(TAG, "showUbis");
         for(Location u: ubis) {
-            mMapç.addMarker(new MarkerOptions().position(u.getLatLng()));
+            Marker marker = mMapç.addMarker(new MarkerOptions().position(u.getLatLng()).title(u.getNom()));
+            marker.setTag(u.getPlacesLliures());
         }
     }
 
@@ -236,6 +307,8 @@ public class PaginaPrincipalFragment extends Fragment implements OnMapReadyCallb
                 ubis = latLngLocationList;
             }
         };
+
         viewModel.getUbicacions().observe(getViewLifecycleOwner(), observer);
+
     }
 }
