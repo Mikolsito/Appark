@@ -64,10 +64,6 @@ public class HistorialDBAdapter {
                                 Log.d(TAG, "Get_data");
                                 DocumentReference ubicacio_id = (DocumentReference) data.get("Ubicacio");
                                 Log.d(TAG, "Ubicacio_id = " + ubicacio_id.getId());
-                                String user_email = (String) data.get("User_email");
-                                String acaba = (String) data.get("dataFinal");
-                                String inici = (String) data.get("dataInici");
-                                double temps = (double) data.get("tempsAparcat");
 
                                 db.collection("Ubicacions").document(ubicacio_id.getId()).get().
                                         addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
