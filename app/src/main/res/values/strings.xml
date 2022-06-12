@@ -48,8 +48,6 @@
     <string name="tancar_sessio">Tancant sessió…</string>
     <string name="iniciar_ruta">Iniciar ruta</string>
     <string name="reservar_ubi">Reservar ubicació</string>
-
-    <string name="iniciar_ruta">Iniciar ruta</string>
     <string name="guardar_ubi">Guardar ubicació</string>
 
 </resources>

@@ -32,6 +32,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.appark.Activities.src.Location;
 import com.example.appark.R;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -280,6 +281,7 @@ public class PaginaPrincipalFragment extends Fragment implements OnMapReadyCallb
                     public void onLocationChanged(@NonNull android.location.Location location) {
                         LatLng myLocation = new LatLng(location.getLatitude(), location.getLongitude());
                         mMapç.addMarker(new MarkerOptions().position(myLocation).title("Mi posicion"));
+                        mMapç.moveCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 18));  //Activem un zoom inicial a la primera ubicacio
                     }
                 };
             }
