@@ -48,6 +48,9 @@
         <entry key="..\:/Users/beatr/Documents/Ingenieria_Informatica/PIS/ApparkFINAL/app/src/main/res/layout/nav_header_main.xml" value="0.264" />
         <entry key="..\:/Users/beatr/Documents/Ingenieria_Informatica/PIS/ApparkFINAL/app/src/main/res/menu/activity_main_drawer.xml" value="0.4" />
         <entry key="..\:/Users/beatr/Documents/Ingenieria_Informatica/PIS/ApparkFINAL/app/src/main/res/menu/main.xml" value="0.1140625" />
+
+        <entry key="app/src/main/res/layout/fragment_estadistiques.xml" value="0.1" />
+
         <entry key="..\:/Users/beatr/Documents/Ingenieria_Informatica/PIS/Appark_Login/Appark/app/src/main/res/layout-v11/activity_main.xml" value="0.21302083333333333" />
         <entry key="..\:/Users/beatr/Documents/Ingenieria_Informatica/PIS/Appark_Login/Appark/app/src/main/res/layout/activity_main.xml" value="0.17037037037037037" />
         <entry key="..\:/Users/beatr/Documents/Ingenieria_Informatica/PIS/Appark_Login/Appark/app/src/main/res/layout/fragment_paginaprincipal.xml" value="0.25416666666666665" />
@@ -56,6 +59,7 @@
         <entry key="..\:/Users/beatr/Documents/Ingenieria_Informatica/PIS/Appark_Login/Appark/app/src/main/res/layout/popup_layout.xml" value="0.4" />
         <entry key="..\:/Users/beatr/Documents/Ingenieria_Informatica/PIS/Appark_Login/Appark/app/src/main/res/menu/activity_main_drawer.xml" value="0.20974358974358975" />
         <entry key="..\:/Users/beatr/Documents/Ingenieria_Informatica/PIS/Appark_Login/Appark/app/src/main/res/menu/main.xml" value="0.21302083333333333" />
+
       </map>
     </option>
   </component>

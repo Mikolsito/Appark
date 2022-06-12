@@ -6,6 +6,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.google.gms:google-services:4.3.10'  // Google Services plugin
+        classpath 'com.android.tools.build:gradle:7.2.1' //gradle download
     }
 }
 

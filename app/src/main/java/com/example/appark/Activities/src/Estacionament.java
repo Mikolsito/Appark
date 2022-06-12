@@ -54,4 +54,6 @@ public class Estacionament {
     public void setTempsAparcat(){
         this.tempsAparcat = ((dataFinal.getTime()-dataInici.getTime())/1000*60*60)%24;
     }
+
 }
+

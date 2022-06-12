@@ -65,6 +65,8 @@ public class PaginaPrincipalViewModel extends AndroidViewModel implements vmInte
 
     @Override
     public void getPlacesBD(ArrayList<Integer> places) {
+
         mInfoPlaces.setValue(places);
+
     }
 }

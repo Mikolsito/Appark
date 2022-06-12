@@ -128,4 +128,11 @@ public class LoginActivity extends AppCompatActivity {
         };
         viewModel.getUser().observe(this, observer);
     }
+
+    public void onResume() {
+
+        super.onResume();
+
+        //this.finish();
+    }
 }

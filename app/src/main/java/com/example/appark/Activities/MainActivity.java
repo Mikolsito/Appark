@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private CircleImageView profileImg;
     public Uri profImgUri;
 
+
     private MainActivityViewModel mainActVM;
 
     @Override
