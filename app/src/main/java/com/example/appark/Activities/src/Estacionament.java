@@ -13,6 +13,7 @@ public class Estacionament {
 
     public Estacionament(Location ubicacio) {
         this.dataInici = new Date();
+        this.dataFinal = dataInici;     //Per tenir un valor qualsevol. Es podria posar a 0
         this.ubicacio = ubicacio;
         this.userEmail = MainActivity.currentUser.getMail();
         this.tempsAparcat = 0;
@@ -20,6 +21,14 @@ public class Estacionament {
 
     public void setDataFinal() {
         this.dataFinal = new Date();
+    }
+
+    public void setDataFinal(Date d) {
+        dataFinal = d;
+    }
+
+    public void setDataInici(Date d) {
+        dataInici = d;
     }
 
     public Date getDataInici() {

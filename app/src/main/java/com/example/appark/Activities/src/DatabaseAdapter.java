@@ -3,6 +3,7 @@ package com.example.appark.Activities.src;
 import android.app.Activity;
 import android.net.Uri;
 import android.nfc.Tag;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -19,12 +20,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -121,7 +124,6 @@ public class DatabaseAdapter extends Activity {
                 });
     }
 
-
     public void saveUser(String name, String mail, String pwd, String url) {
         Map<String, Object> usuari = new HashMap<>();
         usuari.put("name", name);
@@ -181,6 +183,7 @@ public class DatabaseAdapter extends Activity {
             }
         });
     }
+
     public void saveProfImageUser(String email, String url){
         Log.d(TAG, "saveProfImageUser");
         Map<String, Object> map = new HashMap<>();
@@ -214,5 +217,4 @@ public class DatabaseAdapter extends Activity {
             }
         });
     }
-
 }

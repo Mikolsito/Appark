@@ -152,9 +152,10 @@ public class PaginaPrincipalAdapter extends Activity {
     private void saveEstacionamentDB(Estacionament es, DocumentReference locationRef){
         Log.d(TAG, "saveEstacionamentDB");
         Map<String, Object> estacionament = new HashMap<>();
-        estacionament.put("Ubicacio", locationRef.getPath());
+        estacionament.put("Ubicacio", locationRef);
         estacionament.put("User_mail", es.getUser());
         estacionament.put("dataInici", es.getDataInici().toString());
+        estacionament.put("dataFinal", es.getDataFinal().toString());
         estacionament.put("tempsAparcat", es.getTempsAparcat());
 
 

@@ -32,6 +32,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.appark.Activities.src.Location;
 import com.example.appark.R;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -247,11 +248,10 @@ public class PaginaPrincipalFragment extends Fragment implements OnMapReadyCallb
         mMapç.setMapType(GoogleMap.MAP_TYPE_HYBRID);
         mMapç.setIndoorEnabled(false);
 
+        for (int i = 0; i < 100000; i++); //delay
+
         mUiSettings.setZoomGesturesEnabled(true);   //Activa doble tap per fer zoom
         mUiSettings.setMapToolbarEnabled(true);
-
-
-        showUbis();
 
         if(mMapç != null){
             if (ContextCompat.checkSelfPermission(this.getContext(),
@@ -278,9 +278,13 @@ public class PaginaPrincipalFragment extends Fragment implements OnMapReadyCallb
                     public void onLocationChanged(@NonNull android.location.Location location) {
                         LatLng myLocation = new LatLng(location.getLatitude(), location.getLongitude());
                         mMapç.addMarker(new MarkerOptions().position(myLocation).title("Mi posicion"));
+                        mMapç.moveCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 18));  //Activem un zoom inicial a la primera ubicacio
                     }
                 };
             }
+
+            showUbis();
+
         }
 
 
