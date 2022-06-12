@@ -80,9 +80,13 @@ public class HistorialDBAdapter {
                                                         String nom = (String) data.get("nom");
                                                         Log.d(TAG, nom);
                                                         Long places = (Long) data.get("places");
-                                                        Long placesLliures = (Long) data.get("placeslliures");
+                                                        Log.d(TAG, places.toString());
+                                                        Double placesLliures = (Double) data.get("placeslliures");
+                                                        Long lo = placesLliures.longValue();
+
+
                                                         GeoPoint l = (GeoPoint) data.get("position");
-                                                        Location u = new Location(nom, l.getLatitude(), l.getLongitude(), places.intValue(), placesLliures.intValue(), barri);
+                                                        Location u = new Location(nom, l.getLatitude(), l.getLongitude(), places.intValue(), lo.intValue(), barri);
                                                         estacionaments.add(u);
                                                         Log.d(TAG, "listener");
                                                         listener.updateCollection(estacionaments);

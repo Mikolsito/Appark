@@ -208,7 +208,7 @@ public class PaginaPrincipalFragment extends Fragment implements OnMapReadyCallb
                                     @Override
                                     public void onComplete(@NonNull Task<DocumentSnapshot> tasko) {
 
-                                        double lliures=tasko.getResult().getDouble("placeslliures");
+                                        int lliures=tasko.getResult().getLong("placeslliures").intValue();
                                         document.getDocumentReference("Ubicacio").update("placeslliures", lliures+1 );
                                         Toast.makeText(getView().getContext(), "S'ha enregistrat la sortida", Toast.LENGTH_SHORT).show();
                                     }
