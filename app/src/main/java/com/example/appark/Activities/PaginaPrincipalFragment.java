@@ -40,10 +40,23 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.sql.Time;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 public class PaginaPrincipalFragment extends Fragment implements OnMapReadyCallback,
@@ -157,7 +170,8 @@ public class PaginaPrincipalFragment extends Fragment implements OnMapReadyCallb
         mAddCotxe.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Toast.makeText(getView().getContext(), "Falta implementar aquesta funcionalitat", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getView().getContext(), "Falta implementar aquesta funcionalitat", Toast.LENGTH_SHORT).show();
+                        updateTornada();
                     }
                 });
 
@@ -173,6 +187,58 @@ public class PaginaPrincipalFragment extends Fragment implements OnMapReadyCallb
                     }
                 });
         return view;
+    }
+
+    private void updateTornada(){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("Estacionaments").whereEqualTo("User_mail", MainActivity.currentUser.getMail()).get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            if(document.get("dataInici").equals(document.get("dataFinal"))){
+
+                                //Log.d("ENTRAO", document.get("dataInici") + " => " + document.get("tempsAparcat"));
+                                Date currentTime = Calendar.getInstance().getTime();
+                                db.collection("Estacionaments").document(document.getId()).update("dataFinal", currentTime.toString());
+                                DateFormat dateFormat = new SimpleDateFormat(
+                                        "EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
+                                try {
+                                    Date inici=dateFormat.parse(document.get("dataInici").toString());
+                                    Long secs=(currentTime.getTime()-inici.getTime())/1000;
+                                    //Log.d("TEMPUS", secs.toString());
+                                    int hours = (int)(secs/3600);
+                                    db.collection("Estacionaments").document(document.getId()).update("tempsAparcat", hours);
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
+                                Log.d("REFERENCIAAAA DOCUMENTOOO", document.get("Ubicacio").toString());
+                                /*double placesOld= ;
+                                        document.getDocumentReference("Ubicacio").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> tasko) {
+                                        for (QueryDocumentSnapshot document : tasko.getResult()) {
+                                            double placesOld= document.getDouble("placeslliures");
+                                        }
+                                    }
+                                });*/
+                                document.getDocumentReference("Ubicacio").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> tasko) {
+
+                                        double lliures=tasko.getResult().getDouble("placeslliures");
+                                        document.getDocumentReference("Ubicacio").update("placeslliures", lliures+1 );
+                                        Toast.makeText(getView().getContext(), "S'ha enregistrat la sortida", Toast.LENGTH_SHORT).show();
+
+                                    }
+                                });
+
+                                //Toast.makeText(getView().getContext(), "S'ha enregistrat la sortida", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                });
+
     }
 
     private void animateFab(){
