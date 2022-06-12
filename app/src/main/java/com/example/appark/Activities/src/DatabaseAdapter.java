@@ -176,9 +176,6 @@ public class DatabaseAdapter extends Activity {
                     Log.d(TAG, "successful upload task");
                     Uri downloadUri = task.getResult();
                     saveProfImageUser(mail, downloadUri.toString());
-                } else {
-                    // Handle failures
-                    // ...
                 }
             }
         });

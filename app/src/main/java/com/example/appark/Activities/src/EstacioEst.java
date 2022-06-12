@@ -9,7 +9,8 @@ public class EstacioEst {
     private String idUbicacio;
     private float tempsAparcat;
 
-    public EstacioEst(Date dataInici, String idUbicacio) {    //No afegim el tempsAparcat com a paràmetre
+    public EstacioEst(Date dataInici, String idUbicacio) {
+        //No afegim el tempsAparcat com a paràmetre
         //ja que només sabem el temps un cop marxem
         this.dataInici = dataInici;
         this.idUbicacio = idUbicacio;

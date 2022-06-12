@@ -14,7 +14,7 @@ public class User {
     private String mail;
     private String pwd;
     private String url;
-    private ArrayList<Estacionament> estacionaments;      //Aixo es nou
+    private ArrayList<Estacionament> estacionaments;
 
 
     private final DatabaseAdapter adapter = DatabaseAdapter.databaseAdapter;

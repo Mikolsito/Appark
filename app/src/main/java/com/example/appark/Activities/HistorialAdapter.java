@@ -24,9 +24,6 @@ public class HistorialAdapter extends RecyclerView.Adapter<RecyclerViewHolderHis
 
     public HistorialAdapter(ArrayList<Location> e) {
         historial = e;
-
-        //Location u = new Location("Universitat de Barcelona", 41.38723792822906, 2.164683452233139, 23, 9, "Eixample");
-        //historial.add(new Estacionament(u));
     }
 
     @Override
@@ -48,16 +45,6 @@ public class HistorialAdapter extends RecyclerView.Adapter<RecyclerViewHolderHis
         holder.getShareButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*
-                Uri gmmIntentUri = Uri.parse("geo:0,0?q=" + historial.get(holder.getAdapterPosition()).
-                        getUbicacio().getLatitude() + "," + historial.get(holder.getAdapterPosition()
-                        ).getUbicacio().getLongitude() + historial.get(holder.getAdapterPosition()
-                ).getUbicacio().getNom());
-                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-                mapIntent.setPackage("com.google.android.apps.maps");
-                view.getContext().startActivity(mapIntent);
-                */
-
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plain");
                 String shareBody = "Ubicació Aparcada";

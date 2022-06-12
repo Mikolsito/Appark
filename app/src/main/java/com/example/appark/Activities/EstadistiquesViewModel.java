@@ -22,33 +22,6 @@ import com.google.firebase.firestore.GeoPoint;
 
 import java.util.ArrayList;
 
-/*public class EstadistiquesViewModel extends ViewModel {
-    public LiveData<Location> getLocation(){
-        final MutableLiveData<Location> locationMutableLiveData=new MutableLiveData<>();
-        FirebaseFirestore db=FirebaseFirestore.getInstance();
-        DocumentReference docRef=db.collection("Locations").document();
-    }
-    private final MutableLiveData<Location> location;
-    //Constructor
-    public EstadistiquesViewModel(){
-
-        location = new MutableLiveData<>();
-        LocDatabaseAdapter da = new LocDatabaseAdapter(this);
-        da.getLocation();
-    }
-
-    public void updateStatistics(String oldPwd, String newPwd, String oldMail, String newMail){
-        MainActivity.currentUser.updateUser(oldPwd, newPwd, oldMail, newMail);
-
-    }
-
-
-    public void setLocation(Location lc) {
-        location.setValue(lc);
-    }
-}
-
-    */
 public class EstadistiquesViewModel extends AndroidViewModel implements vmInterfaceEstacionaments {
 
     private final MutableLiveData<ArrayList<Pair<String, Long>>> mplacesbarris;
@@ -83,28 +56,9 @@ public class EstadistiquesViewModel extends AndroidViewModel implements vmInterf
     }
 
 
-   /* public void createPositionDB(String id, User us, double latitude, double longitude) {
-        GeoPoint pos=new GeoPoint(latitude,longitude);
-        Location location = new Location(id, us, pos, "Eixample", 23, 9);
-        location.savePosition();
-        //MainActivity.currentUser = user; //el currentUser es el usuario actual
-    }
-*/
     public LiveData<ArrayList<Pair<String, Long>>> getPlacesBarrisDB(){
-       /* DatabaseAdapter da = new DatabaseAdapter(this);
-        List<String> barris=new ArrayList<String>();
-        barris.addAll(Arrays.asList("Eixample", "Gracia"));// "Sarrià", "Gracia", "Horta"));//"Sagrada Familia"));
-        //, "Sant Gervasi", "Poblenou", "Raval", "Sant Marti"));
-        for (int i=0;i<2;i++) {
-            String barri = barris.get(i);
-            da.getPlacesBarri(barri);
-        }
-*/
         return mplacesbarris;
-
-
     }
-
 
     @Override
     public void updateCollection2(ArrayList<EstacioEst> e) {

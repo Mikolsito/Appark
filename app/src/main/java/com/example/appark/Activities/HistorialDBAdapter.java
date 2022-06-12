@@ -90,28 +90,11 @@ public class HistorialDBAdapter {
                                                         estacionaments.add(u);
                                                         Log.d(TAG, "listener");
                                                         listener.updateCollection(estacionaments);
-                                                        /*
-                                                        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
-                                                        formatter.setTimeZone(TimeZone.getTimeZone("Spain/Barcelona"));
-                                                        try {
-                                                            Date date = formatter.parse(inici);
-                                                            Date date2 = formatter.parse(acaba);
-                                                            e.setDataInici(date);
-                                                            e.setDataFinal(date2);
-                                                            estacionaments.add(e);
-                                                            //Crear estacionament
-                                                        } catch (ParseException ex) {
-                                                            ex.printStackTrace();
-                                                        }*/
                                                     }
                                                 }
                                             }
                                         });
-
                             }
-
-                            //Log.d(TAG, "listener");
-                            //listener.updateCollection(estacionaments);
                         }
                     }
                 });

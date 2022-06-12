@@ -60,96 +60,15 @@ public class EstadistiquesFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
-
         ubis = new ArrayList<>();
         parkings=new ArrayList<>();
         setLiveDataObservers();
         List<String> barris=new ArrayList<String>();
         barris.addAll(Arrays.asList("Eixample", "Sarrià", "Gracia", "Horta", "Sagrada Familia", "Sant Gervasi", "Poblenou", "Raval", "Sant Marti", "Sant Andreu"));
-        //PlacesBarri = new ArrayList<Pair<String, Long>>();
-        //viewModel = new ViewModelProvider(this).get(EstadistiquesViewModel.class);
-        //viewModel.getPlacesBarrisDB();
-       // setLiveDataObservers();
-   /*    FirebaseFirestore db = FirebaseFirestore.getInstance();
-        //String barri = barris.get(0);
-        String barri = "Eixample";
-        db.collection("Estacionaments")
-                //.whereEqualTo("User_email", MainActivity.currentUser.getMail())
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            int count=0;
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                // Logging the ID of your desired document & the document data itself
-                                Log.d(TAG, document.get("dataInicia") + " => " + document.get("tempsAparcat"));
-                                float temps=0;
-                                temps=(float) document.get("tempsAparcat");
-                                //Pair<String, Long> pair = new Pair<String, Long>(barri, (places - placeslliures));
-                                //PlacesBarri.add(pair);
-                                lineEntries2.add(new Entry((float)count, temps));
-                                count+=1;
-                                lineDataSet2=new LineDataSet(lineEntries2, "Exemple temps");
-
-                                LineData ll= new LineData(lineDataSet2);
-
-
-                            }
-                            linechart.setData(generateLineData());
-                            linechart.invalidate();
-                            //Map<String, Object> data = task.getResult().getDocuments().iterator().next().getData();
-                            //int places = (int) data.get("places");
-                            //int placeslliures = (int) data.get("placeslliures");
-
-
-
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-                        }
-                        //linechart.invalidate();
-                    }
-                });
-
-*/
-
-      /*  for (int i = 0; i< 8; i++){
-            float y = (int) (Math.random()*8)+1;
-            float x = (int) (Math.random()*8)+1;
-            long z =  (int) (Math.random()*8)+1;//PlacesBarri.get(0).second;
-            //Integer Splaces=ubis.get(0).getPlaces();
-            //Log.d(TAG, ((Splaces.toString())));
-            //long places=0;
-            pieEntries.add(new PieEntry((float)z,"Eixample"));
-            lineEntries.add(new Entry((float) i,(float)y));
-            //barEntries.add(new BarEntry((float) i, (float)x));
-        }
-        //User user=new User("hola", "u@u.com", "pwd");
-        //String id= "5";
-        //viewModel.createPositionDB(id,user,345, 345);
-        //pieDataSet=new PieDataSet(pieEntries, "Exemple zones");
-        //barDataSet=new BarDataSet(barEntries, "Exemple aparcaments");
-        //lineDataSet=new LineDataSet(lineEntries,"Exemple temps");*/
         return inflater.inflate(R.layout.fragment_estadistiques, container, false);
 
     }
-/*
-    private void setLiveDataObservers2() {
-        viewModel = new ViewModelProvider(this).get(EstadistiquesViewModel.class);
 
-
-        final Observer<ArrayList<Estacionament>> observer = new Observer<ArrayList<Estacionament>>() {
-            @Override
-            public void onChanged(ArrayList<Estacionament> parkings) {
-                viewModel.getPlacesBarrisDB().observe(this, observer);
-            }
-
-
-        };
-        viewModel.getPlacesBarrisDB().observe(getViewLifecycleOwner(), observer);
-    }
-*/
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState){
         super.onViewCreated(view,savedInstanceState);
@@ -162,39 +81,6 @@ public class EstadistiquesFragment extends Fragment {
         piechart.setUsePercentValues(false); // Establecer valores como porcentaje
         piechart.setEntryLabelColor(Color.BLACK); // Establecer el color de la etiqueta dibujada
         piechart.setEntryLabelTextSize(10f); // Establece el tamaño de fuente para dibujar Label
-
-        // Unir set de datos a los graficos
-        //barchart.setData(generateBarData());
-        //linechart.setData(generateLineData());
-        //piechart.setData(generatePieData());
-       /* while (ubis.isEmpty()) {
-            if(ubis.isEmpty()){
-
-            }
-            else{
-                String Splaces = ubis.get(0).getNom();
-                Log.d(TAG, ((Splaces.toString())));
-            }
-
-        }
-            /*
-       viewModel = new ViewModelProvider(this).get(EstadistiquesViewModel.class);
-        //User user=new User("hola", "u@u.com", "pwd");
-        //String id= "7";
-        //viewModel.createPositionDB(id,user,30, 45);
-        viewModel.getPlacesBarrisDB();
-        ArrayList<PieEntry> pieEntries2 = new ArrayList<PieEntry>();
-        for (int j=0; j<1; j++){
-            pieEntries2.add(new PieEntry(PlacesBarri.get(j).second,PlacesBarri.get(j).first));
-        }
-        pieDataSet2=new PieDataSet(pieEntries2, "Exemple zones 2");
-        pieDataSet2.setColors(ColorTemplate.PASTEL_COLORS);
-        PieData pp= new PieData(pieDataSet2);
-        piechart.setData(pp);
-          */
-
-
-
     }
 
     private BarData generateBarData() {
@@ -234,10 +120,7 @@ public class EstadistiquesFragment extends Fragment {
         final Observer<ArrayList<EstacioEst>> observer2=new Observer<ArrayList<EstacioEst>>() {
             @Override
             public void onChanged(ArrayList<EstacioEst> estacionaments) {
-                //Log.d("OnChangedopo", estacionaments.toString());
                 parkings=estacionaments;
-                //Log.d("OnChangedopo", parkings.get(0).getUserEmail());
-                //Log.d("OnChangedopAAA", MainActivity.currentUser.getMail());
                 ArrayList<Entry> lineEntries2 = new ArrayList<Entry>();
                 ArrayList<BarEntry> barEntries = new ArrayList<BarEntry>();
                 Calendar cal=Calendar.getInstance();

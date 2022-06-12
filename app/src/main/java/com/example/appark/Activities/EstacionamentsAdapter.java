@@ -63,11 +63,10 @@ public class EstacionamentsAdapter extends Activity {
                             }
                         }
                     });
-        }
-        else{
-            //listener.setToast("Authentication with current user.");
+        } /*else{
+            listener.setToast("Authentication with current user.");
 
-        }
+        }*/
     }
 
     public void getCollection(){

@@ -87,16 +87,20 @@
 
         <CheckBox
             android:id="@+id/checkBox"
-            android:layout_width="371dp"
-            android:layout_height="38dp"
+            android:layout_width="372dp"
+            android:layout_height="45dp"
             android:layout_above="@+id/btn_register"
+            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
+            android:layout_marginStart="24dp"
             android:layout_marginTop="19dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="95dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="88dp"
+            android:fontFamily="@font/quicksand"
             android:text="@string/Termes"
-            android:textColor="#878585" />
+            android:textColor="#878585"
+            android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_register"
@@ -113,16 +117,18 @@
 
         <TextView
             android:id="@+id/textView5"
-            android:layout_width="163dp"
-            android:layout_height="wrap_content"
+            android:layout_width="166dp"
+            android:layout_height="45dp"
             android:layout_below="@+id/btn_register"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="88dp"
-            android:layout_marginTop="33dp"
-            android:layout_marginEnd="6dp"
+            android:layout_marginStart="76dp"
+            android:layout_marginTop="23dp"
+            android:layout_marginEnd="15dp"
             android:layout_toStartOf="@+id/btn_tornarLogin"
+            android:fontFamily="@font/quicksand"
             android:text="@string/ja_tens_compte"
-            android:textAlignment="viewEnd" />
+            android:textAlignment="viewEnd"
+            android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_tornarLogin"

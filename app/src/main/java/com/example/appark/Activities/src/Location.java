@@ -1,14 +1,12 @@
 package com.example.appark.Activities.src;
 
-import android.util.Log;
-
 import com.example.appark.Activities.PaginaPrincipalAdapter;
 import com.google.android.gms.maps.model.LatLng;
 
 public class Location {
     private String nom;
-    private LatLng ubi;     //Si
-    private String barri;   //Aixo es nou
+    private LatLng ubi;
+    private String barri;
     private int placesLliures;
     private int places;
     private final PaginaPrincipalAdapter adapter = PaginaPrincipalAdapter.databaseAdapter;
@@ -37,8 +35,8 @@ public class Location {
         ubi = l;
     }
 
-    public void updatePlacesLliures(int n) {    //todo Mirar que el nou nombre de places lliures no sigui superior al nombre de places, ni inferior a 0
-        placesLliures = n;                      //S'ha de fer des de la classe on es cridi updatePlacesLliures()
+    public void updatePlacesLliures(int n) {
+        placesLliures = n;
     }
 
     public void updatePlaces(int n) {
