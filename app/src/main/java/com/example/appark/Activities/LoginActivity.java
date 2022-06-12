@@ -110,13 +110,13 @@ public class LoginActivity extends AppCompatActivity {
                     MainActivity.currentUser = us;
 
                     //Guardem el usuari a shared preferences per a que no calgui tornar a loguejar-se després
-                    /*SharedPreferences sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
+                    SharedPreferences sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putBoolean("logged", true);
                     editor.putString("name", us.getName());
                     editor.putString("user", us.getMail());
                     editor.putString("pwd", us.getPwd());
-                    editor.apply();*/
+                    editor.apply();
                     progressBar.setVisibility(View.GONE);
                     Toast.makeText(getApplicationContext(), "Login correcte", Toast.LENGTH_SHORT).show();
                     Intent processar_main = new Intent(context, MainActivity.class);

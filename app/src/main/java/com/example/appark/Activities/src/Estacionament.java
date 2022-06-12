@@ -22,6 +22,14 @@ public class Estacionament {
         this.dataFinal = new Date();
     }
 
+    public void setDataFinal(Date d) {
+        dataFinal = d;
+    }
+
+    public void setDataInici(Date d) {
+        dataInici = d;
+    }
+
     public Date getDataInici() {
         return dataInici;
     }
