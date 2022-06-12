@@ -38,6 +38,10 @@ public class Estacionament {
         return userEmail;
     }
 
+    public float getTempsAparcat() {
+        return tempsAparcat;
+    }
+
     public void setTempsAparcat(){
         this.tempsAparcat = ((dataFinal.getTime()-dataInici.getTime())/1000*60*60)%24;
     }

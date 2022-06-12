@@ -26,6 +26,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -42,6 +43,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class PaginaPrincipalFragment extends Fragment implements OnMapReadyCallback,
         GoogleMap.OnMarkerClickListener,
@@ -62,6 +64,9 @@ public class PaginaPrincipalFragment extends Fragment implements OnMapReadyCallb
     LocationManager locationManager;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private boolean mLocationPermissionGranted;
+
+    private int placesTotals;
+    private int placesLliures;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -198,11 +203,18 @@ public class PaginaPrincipalFragment extends Fragment implements OnMapReadyCallb
         popupWindow.setBackgroundDrawable(new ColorDrawable());
         popupWindow.showAtLocation(getView().findViewById(R.id.map), Gravity.CENTER, 0, 0);
 
-        TextInputLayout saveDescr = popup.findViewById(R.id.note_description);
-        Button saveButton = popup.findViewById(R.id.reserve_button);
-        saveButton.setOnClickListener((v) -> {
-            String text = saveDescr.getEditText().getText().toString();
-            Toast.makeText(getActivity(), "Aparcament reservat", Toast.LENGTH_SHORT).show();
+
+        TextView titleUbicacio = popup.findViewById(R.id.titleUbicacio);
+        titleUbicacio.setText(marker.getTitle());
+        TextView tilePlacesLliures = popup.findViewById(R.id.titlePlacesLliures);
+        tilePlacesLliures.setText("Places lliures: " + marker.getTag().toString());
+
+
+        Button reserveButton = popup.findViewById(R.id.reserve_button);
+        reserveButton.setOnClickListener((v) -> {
+            viewModel.createEstacionament(marker.getTitle());
+            marker.setTag((Integer) marker.getTag() - 1);
+            Toast.makeText(getActivity(), "Aparcament reservat: tens 15 minuts per arribar a la plaça", Toast.LENGTH_LONG).show();
             popupWindow.dismiss();
         });
         Button iniciarRuta = popup.findViewById(R.id.ruta_button);
@@ -253,7 +265,7 @@ public class PaginaPrincipalFragment extends Fragment implements OnMapReadyCallb
             }
 
             if (!mLocationPermissionGranted) {
-                Toast.makeText(this.getActivity(), "Error loading Navigation SDK: The user has not granted location permission.", Toast.LENGTH_LONG).show();
+                Toast.makeText(this.getActivity(), "The user has not granted location permission.", Toast.LENGTH_LONG).show();
                 Log.d(TAG, "errorMessage");
                 return;
             }
@@ -277,7 +289,8 @@ public class PaginaPrincipalFragment extends Fragment implements OnMapReadyCallb
     public void showUbis() {
         Log.d(TAG, "showUbis");
         for(Location u: ubis) {
-            mMapç.addMarker(new MarkerOptions().position(u.getLatLng()));
+            Marker marker = mMapç.addMarker(new MarkerOptions().position(u.getLatLng()).title(u.getNom()));
+            marker.setTag(u.getPlacesLliures());
         }
     }
 
@@ -292,6 +305,8 @@ public class PaginaPrincipalFragment extends Fragment implements OnMapReadyCallb
                 ubis = latLngLocationList;
             }
         };
+
         viewModel.getUbicacions().observe(getViewLifecycleOwner(), observer);
+
     }
 }
