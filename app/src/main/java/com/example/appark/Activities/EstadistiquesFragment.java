@@ -60,11 +60,7 @@ public class EstadistiquesFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        ArrayList<Entry> lineEntries = new ArrayList<Entry>();
-        ArrayList<Entry> lineEntries2 = new ArrayList<Entry>();
-        ArrayList<BarEntry> barEntries = new ArrayList<BarEntry>();
-        ArrayList<BarEntry> barEntries2 = new ArrayList<BarEntry>();
-        ArrayList<PieEntry> pieEntries = new ArrayList<PieEntry>();
+
         ubis = new ArrayList<>();
         parkings=new ArrayList<>();
         setLiveDataObservers();
@@ -117,7 +113,7 @@ public class EstadistiquesFragment extends Fragment {
 
 */
 
-        for (int i = 0; i< 8; i++){
+      /*  for (int i = 0; i< 8; i++){
             float y = (int) (Math.random()*8)+1;
             float x = (int) (Math.random()*8)+1;
             long z =  (int) (Math.random()*8)+1;//PlacesBarri.get(0).second;
@@ -132,9 +128,10 @@ public class EstadistiquesFragment extends Fragment {
         //String id= "5";
         //viewModel.createPositionDB(id,user,345, 345);
         //pieDataSet=new PieDataSet(pieEntries, "Exemple zones");
-        barDataSet=new BarDataSet(barEntries, "Exemple aparcaments");
-        lineDataSet=new LineDataSet(lineEntries,"Exemple temps");
+        //barDataSet=new BarDataSet(barEntries, "Exemple aparcaments");
+        //lineDataSet=new LineDataSet(lineEntries,"Exemple temps");*/
         return inflater.inflate(R.layout.fragment_estadistiques, container, false);
+
     }
 /*
     private void setLiveDataObservers2() {
@@ -236,10 +233,10 @@ public class EstadistiquesFragment extends Fragment {
         final Observer<ArrayList<Estacionament>> observer2=new Observer<ArrayList<Estacionament>>() {
             @Override
             public void onChanged(ArrayList<Estacionament> estacionaments) {
-                Log.d("OnChangedopo", estacionaments.toString());
+                //Log.d("OnChangedopo", estacionaments.toString());
                 parkings=estacionaments;
-                Log.d("OnChangedopo", parkings.get(0).getUserEmail());
-                Log.d("OnChangedopAAA", MainActivity.currentUser.getMail());
+                //Log.d("OnChangedopo", parkings.get(0).getUserEmail());
+                //Log.d("OnChangedopAAA", MainActivity.currentUser.getMail());
                 ArrayList<Entry> lineEntries2 = new ArrayList<Entry>();
                 ArrayList<BarEntry> barEntries = new ArrayList<BarEntry>();
                 Calendar cal=Calendar.getInstance();
@@ -252,21 +249,33 @@ public class EstadistiquesFragment extends Fragment {
                     cal.setTime(parkings.get(f).getDataInici());
                     Integer actualDay=cal.get(Calendar.DAY_OF_WEEK);
                     switch (actualDay){
-                        case 1:
+                        case (1):
                             EstacionamentsPerDia[6]+=1;
-                        case 2:EstacionamentsPerDia[0]+=1;
-                        case 3:EstacionamentsPerDia[1]+=1;
-                        case 4:EstacionamentsPerDia[2]+=1;
-                        case 5:EstacionamentsPerDia[3]+=1;
-                        case 6:EstacionamentsPerDia[4]+=1;
-                        case 7:EstacionamentsPerDia[5]+=1;
+                            break;
+                        case (2):
+                            EstacionamentsPerDia[0]+=1;
+                            break;
+                        case (3):
+                            EstacionamentsPerDia[1]+=1;
+                            break;
+                        case (4):
+                            EstacionamentsPerDia[2]+=1;
+                            break;
+                        case (5):
+                            EstacionamentsPerDia[3]+=1;
+                            break;
+                        case (6):
+                            EstacionamentsPerDia[4]+=1;
+                            break;
+                        case (7):
+                            EstacionamentsPerDia[5]+=1;
+                            break;
                     }
-
-                    Log.d("LOLOLOLAAA", (actualDay.toString()));
                 }
                 for(int yu=0;yu<EstacionamentsPerDia.length;yu++){
-                    barEntries.add(new BarEntry((float) yu, (float)EstacionamentsPerDia[yu]));
+                    barEntries.add(new BarEntry((float) yu,(float)EstacionamentsPerDia[yu]));
                 }
+                //Genera el nou BarChart amb
                 barDataSet=new BarDataSet(barEntries,"Exemple dies");
                 barchart.setData(generateBarData());
                 barchart.invalidate();
@@ -276,7 +285,6 @@ public class EstadistiquesFragment extends Fragment {
                 linechart.setData(ll);
                 linechart.invalidate();
 
-                //barDataSet2=new BarDataSet()
             }
         };
 
