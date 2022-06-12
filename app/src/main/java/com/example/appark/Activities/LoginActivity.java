@@ -76,16 +76,7 @@ public class LoginActivity extends AppCompatActivity {
                     imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0); //treiem el teclat
                     viewModel.getRegisteredUserDB(mail);
                 }
-
-                /*if (info) {  { ???? viewModel.insertUserDB(mail, password) { ????
-
-                    //Intent processar_main = new Intent(view.getContext(), MainActivity.class);
-                    //startActivityForResult(processar_main, 0);
-                } else {
-                    Toast.makeText(getApplicationContext(), "Correu o contrasenya incorrectes", Toast.LENGTH_SHORT).show();
-                }*/
             }
-            // TODO: nos salta una excepcion al acabar el onClick pero todas las llamadas funcionan correctamente
         });
 
         registre.setOnClickListener(new View.OnClickListener() {
@@ -106,7 +97,11 @@ public class LoginActivity extends AppCompatActivity {
         final Observer<User> observer = new Observer<User>() {
             @Override
             public void onChanged(User us) {
-                if(us.getPwd().equals(contrasenya.getText().toString())){
+                if(us == null){
+                    Toast.makeText(getApplicationContext(), "Correu o contrasenya incorrectes 2", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
+                }
+                else if(us.getPwd().equals(contrasenya.getText().toString())){
                     Toast.makeText(getApplicationContext(), "Login correcte", Toast.LENGTH_SHORT).show();
                     MainActivity.currentUser = us;
 

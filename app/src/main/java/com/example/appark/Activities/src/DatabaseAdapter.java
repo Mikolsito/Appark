@@ -93,19 +93,26 @@ public class DatabaseAdapter extends Activity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            Log.d(TAG, "User found");
+                            List<DocumentSnapshot> list = task.getResult().getDocuments();
+                            if(list.size() > 0){
+                                Log.d(TAG, "User found");
+                                Map<String, Object> data = task.getResult().getDocuments().get(0).getData();
+                                String name = (String) data.get("name");
+                                String mail = (String) data.get("mail");
+                                String pwd = (String) data.get("pwd");
+                                String url = (String) data.get("url");
 
-                            Map<String, Object> data = task.getResult().getDocuments().get(0).getData();
-                            String name = (String) data.get("name");
-                            String mail = (String) data.get("mail");
-                            String pwd = (String) data.get("pwd");
-                            String url = (String) data.get("url");
-
-                            User retrieved_User = new User(name, mail, pwd);
-                            if(url != null){
-                                retrieved_User.setUrl(url);
+                                User retrieved_User = new User(name, mail, pwd);
+                                if(url != null){
+                                    retrieved_User.setUrl(url);
+                                }
+                                listener.getInfoUser(retrieved_User);
                             }
-                            listener.getInfoUser(retrieved_User);
+                            else{
+                                Log.d(TAG, "User not found");
+                                listener.getInfoUser(null);
+                            }
+
 
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
