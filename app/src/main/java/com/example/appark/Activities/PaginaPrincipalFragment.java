@@ -98,24 +98,6 @@ public class PaginaPrincipalFragment extends Fragment implements OnMapReadyCallb
         addHistorialText.setVisibility(View.GONE);
         addCotxeText.setVisibility(View.GONE);
         isAllFabsVisible = false;
-        seekBar =(SeekBar) view.findViewById(R.id.SeekBar);
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            int progressChangedValue = 0;
-
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                progressChangedValue = progress;
-            }
-
-            public void onStartTrackingTouch(SeekBar seekBar) { //Al començar a arrossegar
-                //progressChangedValue = seekBar.getProgress();
-                //Toast.makeText(getView().getContext(), progressChangedValue + " Km de radi", Toast.LENGTH_SHORT).show();
-            }
-
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                progressChangedValue = seekBar.getProgress();
-                Toast.makeText(getView().getContext(), progressChangedValue + " Km de radi", Toast.LENGTH_SHORT).show();
-            }
-        });
         ubis = new ArrayList<>();
 
         mMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);

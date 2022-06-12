@@ -22,12 +22,6 @@
         tools:layout="@layout/fragment_historial" />
 
     <fragment
-        android:id="@+id/nav_social"
-        android:name="com.example.appark.Activities.SocialFragment"
-        android:label="@string/menu_social"
-        tools:layout="@layout/fragment_social" />
-
-    <fragment
         android:id="@+id/nav_estadistiques"
         android:name="com.example.appark.Activities.EstadistiquesFragment"
         android:label="@string/menu_estadistiques"
