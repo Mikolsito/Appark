@@ -1,30 +1,49 @@
 package com.example.appark.Activities.src;
 
+import com.example.appark.Activities.MainActivity;
+
 import java.util.Date;
 
 public class Estacionament {
     private Date dataInici;
     private Date dataFinal;
     private String userEmail;
-    private String idUbicacio;
+    private Location ubicacio;
     private float tempsAparcat;
 
-    public Estacionament(Date dataInici, String idUbicacio) {    //No afegim el tempsAparcat com a paràmetre
-                                                            //ja que només sabem el temps un cop marxem
-        this.dataInici = dataInici;
-        this.idUbicacio = idUbicacio;
-        tempsAparcat = 0;
+    public Estacionament(Location ubicacio) {
+        this.dataInici = new Date();
+        this.dataFinal = dataInici;     //Per tenir un valor qualsevol. Es podria posar a 0
+        this.ubicacio = ubicacio;
+        this.userEmail = MainActivity.currentUser.getMail();
+        this.tempsAparcat = 0;
     }
 
-    public void setTempsAparcat(float temps) {
-        tempsAparcat = temps;
+    public void setDataFinal() {
+        this.dataFinal = new Date();
     }
 
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
+    public void setDataFinal(Date d) {
+        dataFinal = d;
     }
 
-    public String getUserEmail() {
+    public void setDataInici(Date d) {
+        dataInici = d;
+    }
+
+    public Date getDataInici() {
+        return dataInici;
+    }
+
+    public Date getDataFinal(){
+        return dataFinal;
+    }
+
+    public Location getUbicacio() {
+        return ubicacio;
+    }
+
+    public String getUser() {
         return userEmail;
     }
 
@@ -32,18 +51,7 @@ public class Estacionament {
         return tempsAparcat;
     }
 
-    public Date getDataInici() {
-        return dataInici;
+    public void setTempsAparcat(){
+        this.tempsAparcat = ((dataFinal.getTime()-dataInici.getTime())/1000*60*60)%24;
     }
-
-    public void setDataFinal(Date dataFinal) {
-        this.dataFinal = dataFinal;
-    }
-
-
-
-    public String getIdUbicacio() {
-        return idUbicacio;
-    }
-
 }

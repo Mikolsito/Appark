@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.appark.Activities.src.DatabaseAdapter;
+import com.example.appark.Activities.src.EstacioEst;
 import com.example.appark.Activities.src.Estacionament;
 import com.example.appark.Activities.src.Location;
 import com.example.appark.Activities.src.User;
@@ -52,7 +53,7 @@ public class EstadistiquesViewModel extends AndroidViewModel implements vmInterf
 
     private final MutableLiveData<ArrayList<Pair<String, Long>>> mplacesbarris;
     private MutableLiveData<ArrayList<Location>> mUbicacions;
-    private MutableLiveData<ArrayList<Estacionament>> mEstacionaments;
+    private MutableLiveData<ArrayList<EstacioEst>> mEstacionaments;
 
     public static final String TAG = "ViewModel";
 
@@ -71,7 +72,7 @@ public class EstadistiquesViewModel extends AndroidViewModel implements vmInterf
     public LiveData<ArrayList<Location>> getUbicacions(){
         return mUbicacions;
     }
-    public LiveData<ArrayList<Estacionament>> getEstacionaments(){return mEstacionaments;}
+    public LiveData<ArrayList<EstacioEst>> getEstacionaments(){return mEstacionaments;}
     public Location getUbicacio(LatLng idx) throws Exception {
         for (Location l : mUbicacions.getValue()) {
             if (l.getLatLng() == idx) {
@@ -106,7 +107,7 @@ public class EstadistiquesViewModel extends AndroidViewModel implements vmInterf
 
 
     @Override
-    public void updateCollection2(ArrayList<Estacionament> e) {
+    public void updateCollection2(ArrayList<EstacioEst> e) {
         mEstacionaments.setValue(e);
     }
 

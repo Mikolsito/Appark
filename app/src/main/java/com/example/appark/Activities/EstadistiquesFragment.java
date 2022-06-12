@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.appark.Activities.src.EstacioEst;
 import com.example.appark.Activities.src.Estacionament;
 import com.example.appark.Activities.src.Location;
 import com.example.appark.Activities.src.User;
@@ -55,7 +56,7 @@ public class EstadistiquesFragment extends Fragment {
    private PieDataSet pieDataSet2;
    EstadistiquesViewModel viewModel;
     private ArrayList<Location> ubis;
-    private ArrayList<Estacionament> parkings;
+    private ArrayList<EstacioEst> parkings;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -230,9 +231,9 @@ public class EstadistiquesFragment extends Fragment {
         //Subscribe the activity to the observable
         viewModel = new ViewModelProvider(getActivity()).get(EstadistiquesViewModel.class);
 
-        final Observer<ArrayList<Estacionament>> observer2=new Observer<ArrayList<Estacionament>>() {
+        final Observer<ArrayList<EstacioEst>> observer2=new Observer<ArrayList<EstacioEst>>() {
             @Override
-            public void onChanged(ArrayList<Estacionament> estacionaments) {
+            public void onChanged(ArrayList<EstacioEst> estacionaments) {
                 //Log.d("OnChangedopo", estacionaments.toString());
                 parkings=estacionaments;
                 //Log.d("OnChangedopo", parkings.get(0).getUserEmail());

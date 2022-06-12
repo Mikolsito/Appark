@@ -48,4 +48,9 @@ public class PaginaPrincipalViewModel extends AndroidViewModel implements vmInte
     public void updateCollection(ArrayList<Location> l) {
         mUbicacions.setValue(l);
     }
+
+    @Override
+    public void getPlacesBD(ArrayList<Integer> places) {
+
+    }
 }

@@ -4,4 +4,5 @@ import java.util.ArrayList;
 
 public interface vmInterfaceUbicacio {
     void updateCollection(ArrayList<Location> l);
+    void getPlacesBD(ArrayList<Integer> places);
 }

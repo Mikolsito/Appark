@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.util.Log;
 import androidx.annotation.NonNull;
 
+import com.example.appark.Activities.src.EstacioEst;
 import com.example.appark.Activities.src.Estacionament;
 import com.example.appark.Activities.src.Location;
 import com.example.appark.Activities.src.vmInterfaceEstacionaments;
@@ -114,8 +115,8 @@ public class EstacionamentsAdapter extends Activity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            ArrayList<Estacionament> aparcaments= new ArrayList<>();
-                            Estacionament aparcament;
+                            ArrayList<EstacioEst> aparcaments= new ArrayList<>();
+                            EstacioEst aparcament;
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                                 //double latitud = document.getGeoPoint("position").getLatitude();
@@ -126,7 +127,8 @@ public class EstacionamentsAdapter extends Activity {
                                 //String barri = document.getString("barri");
 
                                 Date data=new Date(document.getString("dataInici"));
-                                aparcament = new Estacionament(data, nom);
+
+                                aparcament = new EstacioEst(data, nom);
                                 aparcament.setTempsAparcat(temps);
                                 aparcament.setUserEmail(nom);
                                 aparcaments.add(aparcament);
