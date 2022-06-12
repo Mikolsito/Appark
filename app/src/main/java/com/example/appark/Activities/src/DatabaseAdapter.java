@@ -3,6 +3,7 @@ package com.example.appark.Activities.src;
 import android.app.Activity;
 import android.net.Uri;
 import android.nfc.Tag;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -19,12 +20,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -93,19 +96,26 @@ public class DatabaseAdapter extends Activity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            Log.d(TAG, "User found");
+                            List<DocumentSnapshot> list = task.getResult().getDocuments();
+                            if(list.size() > 0){
+                                Log.d(TAG, "User found");
+                                Map<String, Object> data = task.getResult().getDocuments().get(0).getData();
+                                String name = (String) data.get("name");
+                                String mail = (String) data.get("mail");
+                                String pwd = (String) data.get("pwd");
+                                String url = (String) data.get("url");
 
-                            Map<String, Object> data = task.getResult().getDocuments().get(0).getData();
-                            String name = (String) data.get("name");
-                            String mail = (String) data.get("mail");
-                            String pwd = (String) data.get("pwd");
-                            String url = (String) data.get("url");
-
-                            User retrieved_User = new User(name, mail, pwd);
-                            if(url != null){
-                                retrieved_User.setUrl(url);
+                                User retrieved_User = new User(name, mail, pwd);
+                                if(url != null){
+                                    retrieved_User.setUrl(url);
+                                }
+                                listener.getInfoUser(retrieved_User);
                             }
-                            listener.getInfoUser(retrieved_User);
+                            else{
+                                Log.d(TAG, "User not found");
+                                listener.getInfoUser(null);
+                            }
+
 
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
@@ -113,7 +123,6 @@ public class DatabaseAdapter extends Activity {
                     }
                 });
     }
-
 
     public void saveUser(String name, String mail, String pwd, String url) {
         Map<String, Object> usuari = new HashMap<>();
@@ -174,10 +183,10 @@ public class DatabaseAdapter extends Activity {
             }
         });
     }
+
     public void saveProfImageUser(String email, String url){
         Log.d(TAG, "saveProfImageUser");
         Map<String, Object> map = new HashMap<>();
-        map.put("email", email);
         map.put("url", url);
 
         db.collection("Usuarios")
@@ -208,5 +217,4 @@ public class DatabaseAdapter extends Activity {
             }
         });
     }
-
 }

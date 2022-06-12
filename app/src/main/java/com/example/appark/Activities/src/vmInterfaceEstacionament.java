@@ -2,9 +2,6 @@ package com.example.appark.Activities.src;
 
 import java.util.ArrayList;
 
-public interface vmInterfaceUbicacio {
+public interface vmInterfaceEstacionament {
     void updateCollection(ArrayList<Location> l);
-    void getPlacesBD(ArrayList<Integer> places);
-
 }
-

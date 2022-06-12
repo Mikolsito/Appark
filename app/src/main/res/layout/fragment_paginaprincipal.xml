@@ -92,8 +92,8 @@
         android:layout_height="match_parent"
         android:gravity="bottom"
         tools:context=".Activities.PaginaPrincipalFragment"
-        tools:layout_editor_absoluteX="28dp"
-        tools:layout_editor_absoluteY="0dp" />
+        tools:layout_editor_absoluteX="-147dp"
+        tools:layout_editor_absoluteY="16dp" />
 
     <TextView
         android:id="@+id/text_historial"
