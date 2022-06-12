@@ -247,6 +247,8 @@ public class PaginaPrincipalFragment extends Fragment implements OnMapReadyCallb
         mMapç.setMapType(GoogleMap.MAP_TYPE_HYBRID);
         mMapç.setIndoorEnabled(false);
 
+        for (int i = 0; i < 100000; i++); //delay
+
         mUiSettings.setZoomGesturesEnabled(true);   //Activa doble tap per fer zoom
         mUiSettings.setMapToolbarEnabled(true);
 
