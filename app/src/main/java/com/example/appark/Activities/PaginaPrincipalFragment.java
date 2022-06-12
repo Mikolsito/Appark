@@ -229,7 +229,6 @@ public class PaginaPrincipalFragment extends Fragment implements OnMapReadyCallb
                                         double lliures=tasko.getResult().getDouble("placeslliures");
                                         document.getDocumentReference("Ubicacio").update("placeslliures", lliures+1 );
                                         Toast.makeText(getView().getContext(), "S'ha enregistrat la sortida", Toast.LENGTH_SHORT).show();
-
                                     }
                                 });
 
