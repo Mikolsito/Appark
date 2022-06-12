@@ -253,9 +253,6 @@ public class PaginaPrincipalFragment extends Fragment implements OnMapReadyCallb
         mUiSettings.setZoomGesturesEnabled(true);   //Activa doble tap per fer zoom
         mUiSettings.setMapToolbarEnabled(true);
 
-
-        showUbis();
-
         if(mMapç != null){
             if (ContextCompat.checkSelfPermission(this.getContext(),
                     android.Manifest.permission.ACCESS_FINE_LOCATION)
@@ -285,6 +282,9 @@ public class PaginaPrincipalFragment extends Fragment implements OnMapReadyCallb
                     }
                 };
             }
+
+            showUbis();
+
         }
 
 
